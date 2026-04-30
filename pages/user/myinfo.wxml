@@ -1,0 +1,62 @@
+<view class="banner"></view>
+<view class="main">
+	<view class="form">
+		<view class="item">
+			<view class="l"><view class="title">头像</view></view>
+			<view class="r">
+				<button class="gettx" wx:if="{{user.tx}}">
+					<image src="{{user.tx?user.tx:'/pages/images/tx.png'}}" mode="widthFix" class="r"></image>
+				</button>
+				<button class="gettx2" bindtap="getUserProfile" wx:else>
+					<image src="../images/weixin.png" mode="widthFix" class="img"></image>获取微信昵称、头像
+				</button>
+			</view>
+		</view>
+		<view class="item" wx:if="{{user.username}}">
+			<view class="l"><view class="title">昵称</view></view>
+			<view class="r">
+				<input type="text" class="input" value="{{user.username}}" disabled="true" />
+				<!-- <image src="../images/sanjiao.png" mode="widthFix" class="sj"></image> -->
+			</view>
+		</view>
+		<view class="item">
+			<view class="l"><view class="title"><text style="color: red;">*</text> 公司名称</view></view>
+			<view class="r">
+				<input type="text" class="input" data-name="companyname" bindinput="inputchange" value="{{user.companyname}}" placeholder="请输入" />
+				<!-- <image src="../images/sanjiao.png" mode="widthFix" class="sj"></image> -->
+			</view>
+		</view>
+		<view class="item">
+			<view class="l"><view class="title">姓名</view></view>
+			<view class="r">
+				<input type="text" class="input" data-name="name" bindinput="inputchange" value="{{user.name}}" placeholder="请输入" />
+				<!-- <image src="../images/sanjiao.png" mode="widthFix" class="sj"></image> -->
+			</view>
+		</view>
+		<view class="item">
+			<view class="l"><view class="title">手机号</view></view>
+			<view class="r">
+				<!-- <input type="text" class="input" data-name="phone" bindinput="inputchange" value="{{user.phone}}" placeholder="请输入" /> -->
+				<view>{{user.phone}}</view>
+				<button  open-type="getPhoneNumber" class="gettel" bindgetphonenumber="getPhoneNumber" wx:if="{{!user.phone}}"><image src="../images/weixin.png" mode="widthFix" class="img"></image>获取手机号</button>
+				<!-- <image src="../images/sanjiao.png" mode="widthFix" class="sj"></image> -->
+			</view>
+		</view>
+		<view class="item">
+			<view class="l"><view class="title">职务</view></view>
+			<view class="r">
+				<input type="text" class="input" data-name="zhiwu" bindinput="inputchange" value="{{user.zhiwu}}" placeholder="请输入" />
+				<!-- <image src="../images/sanjiao.png" mode="widthFix" class="sj"></image> -->
+			</view>
+		</view>
+		<view class="item">
+			<view class="l"><view class="title">邮箱</view></view>
+			<view class="r">
+				<input type="text" class="input" data-name="email" bindinput="inputchange" value="{{user.email}}" placeholder="请输入" />
+				<!-- <image src="../images/sanjiao.png" mode="widthFix" class="sj"></image> -->
+			</view>
+		</view>
+	</view>
+	<view class="tips" wx:if="{{!user.companyname || !user.name || !user.phone}}">* 查看数据前请完善个人信息</view>
+	<view class="save" bindtap="doedit">提交</view>
+</view>

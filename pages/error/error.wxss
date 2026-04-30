@@ -1,0 +1,18 @@
+/* pages/error/error.wxss */
+page{
+	width: 100vw;
+	height: 100vh;
+	background-color: #f5f5f5;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+.pic{
+	width: 250rpx;
+	margin-bottom: 25rpx;
+}
+.text{
+	font-size: 14px;
+	color: #aaa;
+}

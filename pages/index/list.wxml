@@ -1,0 +1,42 @@
+<!--pages/yanbao/list.wxml-->
+<view class="sellist">
+	<!-- <view class="item" data-type='1'>热点</view>
+	<view class="item hover" bindtap="nextpage">研报</view>
+	<view class="item" data-type='3' bindtap="nextpage">数据维度</view> -->
+</view>
+<view class="con">
+	<view class="page-section page-section-spacing swiper">
+		<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}"
+			duration="{{duration}}" indicator-color="{{indicatorColor}}"
+			indicator-active-color="{{indicatorActiveColor}}">
+			<block wx:for="{{banner}}" wx:key="*this">
+				<swiper-item>
+					<view class="swiper-item">
+						<navigator url="{{item.url}}" class="swiper-item {{index}}"
+                            >
+						<image src="{{item.pic}}" mode="widthFix" class="pic"></image>
+						</navigator>
+					</view>
+				</swiper-item>
+			</block>
+		</swiper>
+	</view>
+	<view class="newsbox">
+		<view class="main">
+			<view class="down">
+				<block wx:for="{{newslist}}" wx:key="id">
+					<navigator url="../yanbao/view?id={{item.id}}" class="item">
+						<view class="l">
+							<view class="shang">
+								<view class="title"><image src="/pages/images/liststyle2.png" mode="widthFix" class="pic"></image>{{item.name}}</view>
+							</view>
+							<view class="xia">{{item.addtime}}</view>
+						</view>
+						<image src="{{item.pic}}" mode="widthFix" wx:if="{{item.pic}}" class="r"></image>
+					</navigator>
+				</block>
+				<view class="more" wx:if="{{!lastpage}}"  bindtap="getnews">查看更多></view>
+			</view>
+		</view>
+	</view>
+</view>

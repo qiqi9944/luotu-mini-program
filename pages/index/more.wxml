@@ -1,0 +1,169 @@
+<!--pages/index/more.wxml-->
+<view class="main">
+    <view class="box">
+        <view class="up up4">
+            <view class="l l1">
+                <view class="fk"></view>
+                <view class="fk2"></view>
+                <view class="title">智能硬件IOT</view>
+            </view>
+        </view>
+        <view class="down">
+            <view class="item" bindtap="nextpage" data-type='1'>
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic1.png"></image>
+                </view>
+                <view class="title">智能投影</view>
+            </view>
+            <view class="item" bindtap="nextpage" data-type='2'>
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic2.png"></image>
+                </view>
+                <view class="title">智能音箱</view>
+            </view>
+            <view class="item" bindtap="nextpage" data-type='14'>
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic14.png"></image>
+                </view>
+                <view class="title">智能平板</view>
+            </view>
+            <view class="item" bindtap="nextpage" data-type='3'>
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic3.png"></image>
+                </view>
+                <view class="title">智能门锁</view>
+            </view>
+            <view class="item" bindtap="nextpage" data-type='13'>
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic13.png"></image>
+                </view>
+                <view class="title">摄像头</view>
+            </view>
+            <view class="item" bindtap="nextpage" data-type='15'>
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic21.png"></image>
+                </view>
+                <view class="title">AR设备</view>
+            </view>
+            <view class="item" bindtap="nextpage" data-type='19'>
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic23.png"></image>
+                </view>
+                <view class="title">VR设备</view>
+            </view>
+            <!-- <view class="item" bindtap="nextpage" data-type='4'>
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic4.png"></image>
+                </view>
+                <view class="title">智能盒子</view>
+            </view> -->
+            <view class="item" bindtap="nextpage" data-type='16'>
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic20.png"></image>
+                </view>
+                <view class="title">回音壁</view>
+            </view>
+            <view class="item" bindtap="nextpage" data-type='20'>
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic24.png"></image>
+                </view>
+                <view class="title">无线蓝牙音箱</view>
+            </view>
+        </view>
+    </view>
+    <view class="box">
+        <view class="up up4">
+            <view class="l l2">
+                <view class="fk"></view>
+                <view class="fk2"></view>
+                <view class="title">商用显示PID</view>
+            </view>
+        </view>
+        <view class="down">
+            <view class="item" bindtap="nextpage" data-type='5'>
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic5.png"></image>
+                </view>
+                <view class="title">交互平板</view>
+            </view>
+            <view class="item" bindtap="nextpage" data-type='6'>
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic6.png"></image>
+                </view>
+                <view class="title">数字标牌</view>
+            </view>
+            <view class="item" bindtap="nextpage" data-type='7'>
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic7.png"></image>
+                </view>
+                <view class="title">商用激光投影</view>
+            </view>
+            <view class="item" bindtap="nextpage" data-type='18'>
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic15.png"></image>
+                </view>
+                <view class="title">小间距LED</view>
+            </view>
+            <!-- <view class="item" bindtap="nextpage" data-type='8'>
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic15.png"></image>
+                </view>
+                <view class="title">商用电视</view>
+            </view> -->
+            <!-- <view class="item" bindtap="error">
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic16.png"></image>
+                </view>
+                <view class="title">健身镜</view>
+            </view> -->
+        </view>
+    </view>
+    <view class="box">
+        <view class="up up4">
+            <view class="l l3">
+                <view class="fk"></view>
+                <view class="fk2"></view>
+                <view class="title">显示供应链DSC</view>
+            </view>
+        </view>
+        <view class="down">
+            <view class="item" bindtap="nextpage" data-type='9'>
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic9.png"></image>
+                </view>
+                <view class="title">电视供应链</view>
+            </view>
+            <view class="item" bindtap="nextpage" data-type='17'>
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic22.png"></image>
+                </view>
+                <view class="title">显示器供应链</view>
+            </view>
+            <view class="item" bindtap="nextpage" data-type='21'>
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic25.png"></image>
+                </view>
+                <view class="title">笔记本电脑供应链</view>
+            </view>
+            <view class="item" bindtap="nextpage" data-type='11'>
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic11.png"></image>
+                </view>
+                <view class="title">商用显示供应链</view>
+            </view>
+            <view class="item" bindtap="nextpage" data-type='12'>
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic8n.png"></image>
+                </view>
+                <view class="title">电子纸供应链</view>
+            </view>
+            <view class="item" bindtap="nextpage" data-type='10'>
+                <view class="pic">
+                    <image mode="aspectFit" src="/pages/images/pic10.png"></image>
+                </view>
+                <view class="title">手机供应链</view>
+            </view>
+        </view>
+    </view>
+
+</view>

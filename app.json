@@ -1,0 +1,63 @@
+{
+	"pages": [
+		"pages/index/index",
+		"pages/user/user",
+		"pages/tongji/tongji",
+		"pages/yanbao/yanbao",
+		"pages/news/news",
+		"pages/index/next",
+		"pages/index/next1",
+		"pages/index/next2",
+		"pages/index/list",
+		"pages/yanbao/redian",
+		"pages/yanbao/list",
+		"pages/yanbao/view",
+		"pages/user/myinfo",
+		"pages/user/history",
+		"pages/user/scdz",
+		"pages/error/error",
+		"pages/index/more",
+		"pages/user/about",
+		"pages/index/search",
+		"pages/user/join"
+	],
+	"tabBar": {
+		"selectedColor": "#055586",
+		"color": "#333",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"iconPath": "/pages/images/nav1.png",
+				"selectedIconPath": "/pages/images/nav1h.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/tongji/tongji",
+				"iconPath": "/pages/images/nav2.png",
+				"selectedIconPath": "/pages/images/nav2h.png",
+				"text": "数据"
+			},
+			{
+				"pagePath": "pages/yanbao/redian",
+				"iconPath": "/pages/images/nav3.png",
+				"selectedIconPath": "/pages/images/nav3h.png",
+				"text": "观研"
+			},
+			{
+				"pagePath": "pages/user/user",
+				"iconPath": "/pages/images/nav4.png",
+				"selectedIconPath": "/pages/images/nav4h.png",
+				"text": "我的"
+			}
+		]
+	},
+	"window": {
+		"backgroundTextStyle": "light",
+		"navigationBarBackgroundColor": "#055586",
+		"navigationBarTitleText": "洛图科技",
+		"navigationBarTextStyle": "white",
+		"enablePullDownRefresh": true
+	},
+	"style": "v2",
+	"sitemapLocation": "sitemap.json"
+}

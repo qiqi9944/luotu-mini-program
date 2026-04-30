@@ -1,0 +1,180 @@
+// pages/yanbao/list.js
+const app = getApp()
+Page({
+
+	/**
+	 * 页面的初始数据
+	 */
+	data: {
+		banner: [],
+		indicatorDots: true,
+		vertical: false,
+		autoplay: false,
+		interval: 2000,
+		duration: 500,
+		indicatorColor:'rgba(255, 255, 255, .3)',
+		indicatorActiveColor:'rgba(255, 255, 255, 1)',
+		p:1,
+		newslist:[],
+		lastpage:0
+	},
+	getbanner: function(){
+		let that = this;
+		wx.request({
+		  url: app.globalData.siteUrl + 'Wxapi/getbanner',
+		  data:{'wz':2},
+		  success:function(res){
+			console.log(res);
+			that.setData({
+			  banner:res.data.datalist
+			})
+			}
+		})
+	  },
+	  getnews: function(){
+		let that = this;
+		let p = that.data.p;
+		let sjtype = that.options.sjtype
+		let type = that.options.type
+		wx.request({
+		  url: app.globalData.siteUrl + 'Wxapi/getnews',
+		  data:{type:type,sjtype:sjtype,p:p},
+		  success:function(res){
+			console.log(res);
+			let oldData = that.data.newslist;
+			if(res.data.datalist.length>0){
+				p = p + 1;
+			}
+			that.setData({
+				p:p,
+				newslist:oldData.concat(res.data.datalist),
+				lastpage:res.data.lastpage
+			})
+			}
+		})
+	  },
+	/**
+	 * 生命周期函数--监听页面加载
+	 */
+	onLoad: function (options) {
+
+	},
+
+	/**
+	 * 生命周期函数--监听页面初次渲染完成
+	 */
+	onReady: function () {
+
+	},
+
+	/**
+	 * 生命周期函数--监听页面显示
+	 */
+	onShow: function () {
+		this.setData({
+			pagetype:this.options.type
+		})
+		let typename = this.options.typename
+		if(this.options.type==3){
+			app.gethistory('研报'+(typename?'-'+typename:'')+'-洛图月报','/pages/yanbao/list?type='+this.options.type,1)
+		}else if(this.options.type==4){
+			app.gethistory('研报'+(typename?'-'+typename:'')+'-洛图季报','/pages/yanbao/list?type='+this.options.type,1)
+		}else if(this.options.type==5){
+			app.gethistory('研报'+(typename?'-'+typename:'')+'-洛图年报','/pages/yanbao/list?type='+this.options.type,1)
+		}
+		this.getbanner()
+		this.getnews()
+	},
+
+	/**
+	 * 生命周期函数--监听页面隐藏
+	 */
+	onHide: function () {
+
+	},
+
+	/**
+	 * 生命周期函数--监听页面卸载
+	 */
+	onUnload: function () {
+
+	},
+
+	/**
+	 * 页面相关事件处理函数--监听用户下拉动作
+	 */
+	onPullDownRefresh: function () {
+		this.setData({
+			p:1,
+			newslist:[],
+		})
+		this.getbanner()
+		this.getnews()
+		wx.stopPullDownRefresh();
+	},
+
+	/**
+	 * 页面上拉触底事件的处理函数
+	 */
+	onReachBottom: function () {
+
+	},
+
+	/**
+	 * 用户点击右上角分享
+	 */
+	onShareAppMessage: function () {
+
+	},
+	onShareTimeline: function () {
+    
+	},
+	nextpage: function(e){
+		let type = e.currentTarget.dataset.type
+		console.log(type)
+		if(type==1){
+			var url = '/pages/yanbao/redian'
+			wx.navigateTo({
+				url: url,
+				success: (result) => {},
+				fail: (res) => {},
+				complete: (res) => {},
+			  })
+		}else if(type==2){
+			var url = '/pages/yanbao/yanbao'
+			wx.switchTab({
+				url: url,
+				success: (result) => {},
+				fail: (res) => {},
+				complete: (res) => {},
+			  })
+		}else if(type==3){
+			wx.navigateTo({
+				url: url,
+				success: (result) => {},
+				fail: (res) => {},
+				complete: (res) => {},
+			  })
+		}else{
+			var url = '/pages/yanbao/yanbao'
+			wx.navigateTo({
+				url: url,
+				success: (result) => {},
+				fail: (res) => {},
+				complete: (res) => {},
+			  })
+		}
+	},
+	typechange: function(e){
+		let type = e.currentTarget.dataset.type
+		let sjtype = this.options.sjtype
+		let typename = this.options.typename
+		console.log(type)
+		wx.redirectTo({
+		  url: '/pages/yanbao/list?type='+type+(sjtype?('&sjtype='+sjtype):'')+(typename?('&typename='+typename):''),
+		  success: (result) => {},
+		  fail: (res) => {},
+		  complete: (res) => {},
+		})
+	}
+})

@@ -1,0 +1,120 @@
+/* pages/user/user.wxss */
+page{
+	background-color: #f3f3f3;
+}
+.banner{
+	width: 100%;
+	height: 170rpx;
+	background-color: #055586;
+	position: absolute;
+	top: 0;
+	z-index: -1;
+}
+.top{
+	width: 100%;
+	margin-top: 30rpx;
+	background-color: #fff;
+	padding: 45rpx 25rpx;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 10px;
+	margin-bottom: 20rpx;
+}
+.top .l{
+	width: 100%;
+}
+.top .l .p1{
+	width: 100%;
+	font-size: 16px;
+	color: #333;
+	font-weight: bold;
+	margin-bottom: 20rpx;
+}
+.top .l .p2{
+	width: 100%;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	font-size: 14px;
+	color: #b3945f;
+}
+.top .l .p2 .tag{
+	padding: 2px 8px;
+	font-size: 11px;
+	color: #fff;
+	background-color: #b3945f;
+	border-radius: 3px;
+	margin-right: 10rpx;
+}
+.top .l .p3{
+	padding: 0 15rpx;
+	color: #fff;
+	font-size: 12px;
+	background-color: #07c160;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	height: 45rpx;
+	border-radius: 25rpx;
+	width: max-content;
+	box-sizing: border-box;
+	margin: 0;
+	margin-bottom: 10rpx;
+}
+.top .l .p3 .img{
+	width: 25rpx;
+	height: auto;
+	margin-right: 10rpx;
+	max-height: 13px;
+}
+.top .l .p4{
+	font-size: 12px;
+	color: #aaa;
+}
+.top .r{
+	width: 100rpx;
+	height: 100rpx;
+	flex-shrink: 0;
+	border-radius: 50%;
+	max-height: 55px;
+}
+.list{
+	width: 100%;
+	padding: 0 25rpx;
+	background-color: #fff;
+	border-radius: 10px;
+	margin-bottom: 20rpx;
+	box-sizing: border-box;
+}
+.list .item{
+	width: 100%;
+	height: 100rpx;
+	border-bottom: 1rpx solid #eee;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0;
+	background-color: inherit;
+	font-weight: normal;
+}
+.list .item:last-child{
+	border-bottom: 0;
+}
+.list .item .l{
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	font-size: 14px;
+	color: #333;
+}
+.list .item .l .img{
+	width: 35rpx;
+	margin-right: 15rpx;
+	max-height: 20px;
+}
+.list .item .r{
+	width: 10rpx;
+	max-height: 9px;
+}

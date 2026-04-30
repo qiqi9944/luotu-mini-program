@@ -1,0 +1,86 @@
+<!--pages/index/next2.wxml-->
+<view class="sellist">
+	<view class="item" bindtap="nextpage">数据</view>
+	<view class="item hover">报告</view>
+	<view class="item" bindtap="nextpage1">热点</view>
+</view>
+<view class="con">
+	<view class="page-section page-section-spacing swiper">
+		<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" indicator-color="{{indicatorColor}}" indicator-active-color="{{indicatorActiveColor}}">
+			<block wx:for="{{banner}}" wx:key="*this">
+				<swiper-item>
+					<view class="swiper-item">
+						<navigator url="{{item.url}}" class="swiper-item {{index}}"
+                            >
+						<image src="{{item.pic}}" mode="widthFix" class="pic"></image>
+						</navigator>
+					</view>
+				</swiper-item>
+			</block>
+		</swiper>
+	</view>
+	<view class="newsbox" wx:if="{{yuebao.length}}" >
+		<view class="main">
+			<view class="up">
+				<view class="title">洛图<view class="sp">月</view>报</view>
+				<navigator url="/pages/yanbao/list?type=3&sjtype={{sjtype}}&typename={{typename}}" class="more">
+					<image src="/pages/images/dian.png" mode="widthFix"></image>
+				</navigator>
+			</view>
+			<view class="down">
+				<block wx:for="{{yuebao}}" wx:key="id">
+					<navigator url="../yanbao/view?id={{item.id}}" class="item">
+						<view class="shang">
+							<image src="/pages/images/liststyle.png" mode="widthFix" class="pic"></image>
+							<view class="title">{{item.name}}</view>
+						</view>
+						<view class="xia">{{item.addtime}}</view>
+					</navigator>
+				</block>
+			</view>
+		</view>
+	</view>
+	<view class="newsbox" wx:if="{{jibao.length}}">
+		<view class="main">
+			<view class="up">
+				<view class="title">洛图<view class="sp">季</view>报</view>
+				<navigator url="/pages/yanbao/list?type=4&sjtype={{sjtype}}&typename={{typename}}" class="more">
+					<image src="/pages/images/dian.png" mode="widthFix"></image>
+				</navigator>
+			</view>
+			<view class="down">
+				<block wx:for="{{jibao}}" wx:key="id">
+					<navigator url="../yanbao/view?id={{item.id}}" class="item">
+						<view class="shang">
+							<image src="/pages/images/liststyle.png" mode="widthFix" class="pic"></image>
+							<view class="title">{{item.name}}</view>
+						</view>
+						<view class="xia">{{item.addtime}}</view>
+					</navigator>
+				</block>
+			</view>
+		</view>
+	</view>
+	<view class="newsbox" wx:if="{{nianbao.length}}">
+		<view class="main">
+			<view class="up">
+				<view class="title">洛图<view class="sp">年</view>报</view>
+				<navigator url="/pages/yanbao/list?type=5&sjtype={{sjtype}}&typename={{typename}}" class="more">
+					<image src="/pages/images/dian.png" mode="widthFix"></image>
+				</navigator>
+			</view>
+			<view class="down">
+				<block wx:for="{{nianbao}}" wx:key="id">
+					<navigator url="../yanbao/view?id={{item.id}}" class="item">
+						<view class="shang">
+							<image src="/pages/images/liststyle.png" mode="widthFix" class="pic"></image>
+							<view class="title">{{item.name}}</view>
+						</view>
+						<view class="xia">{{item.addtime}}</view>
+					</navigator>
+				</block>
+			</view>
+		</view>
+	</view>
+	<view class="blank20"></view>
+</view>

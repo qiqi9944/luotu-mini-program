@@ -1,0 +1,68 @@
+/* pages/user/history.wxss */
+page {
+	background-color: #ebf6fc;
+}
+
+.top {
+	width: 100%;
+	height: 175rpx;
+	background-color: #055586;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.con {
+	padding: 0 25rpx;
+	margin-top: 30rpx;
+	padding-bottom: 30rpx;
+	min-height: calc(100% - 30rpx);
+	position: relative;
+	z-index: 99;
+	border-radius: 35rpx 35rpx 0 0;
+	box-sizing: border-box;
+}
+.hislist{
+	width: 100%;
+	background-color: #fff;
+	border-radius: 25rpx;
+	padding: 0 25rpx;
+	box-sizing: border-box;
+}
+.hislist .item{
+	width: 100%;
+	padding: 20rpx 0;
+	border-bottom: 1rpx solid #eee;
+}
+.hislist .item .up{
+	width: 100%;
+	font-size: 10px;
+	color: #999;
+	margin-bottom: 8rpx;
+}
+.hislist .item .down{
+	width: 100%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	font-size: 12px;
+	color: #333;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.hislist .item .down .img{
+	width: 20rpx;
+	height: auto;
+	max-height: 20rpx;
+	margin-right: 10rpx;
+}
+.hislist .more{
+	width: 100%;
+	height: 120rpx;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 14px;
+	color: #333;
+}

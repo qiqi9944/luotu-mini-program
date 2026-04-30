@@ -1,0 +1,32 @@
+<!--pages/user/scdz.wxml-->
+<view class="sellist">
+	<view class="item {{type==1?'hover':''}}" data-type='1' bindtap="selchange">我的收藏</view>
+	<view class="item {{type==2?'hover':''}}" data-type='2' bindtap="selchange">我的点赞</view>
+</view>
+<view class="con">
+	<view hidden="{{type!=1}}">
+		<block wx:for="{{datalist1}}" wx:key="id">
+			<navigator url="/pages/yanbao/view?id={{item.id}}" class="item">
+				<image src="/pages/images/newspic.jpg" mode="widthFix" class="l" wx:if="{{item.pic}}"></image>
+				<view class="r">
+					<view class="p1">{{item.name}}</view>
+					<view class="p2">{{item.type}}    {{item.addtime}}</view>
+				</view>
+			</navigator>
+		</block>
+		<view wx:if="{{datalist1.length==0}}" class="tips">暂无收藏</view>
+	</view>
+	<view hidden="{{type!=2}}">
+		<block wx:for="{{datalist2}}" wx:key="id">
+			<navigator url="/pages/yanbao/view?id={{item.id}}" class="item">
+				<image src="/pages/images/newspic.jpg" mode="widthFix" class="l" wx:if="{{item.pic}}"></image>
+				<view class="r">
+					<view class="p1">{{item.name}}</view>
+					<view class="p2">{{item.type}}    {{item.addtime}}</view>
+				</view>
+			</navigator>
+		</block>
+		<view wx:if="{{datalist2.length==0}}" class="tips">暂无点赞</view>
+	</view>
+	<view class="blank20"></view>
+</view>

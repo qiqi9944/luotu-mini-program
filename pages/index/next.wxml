@@ -1,0 +1,105 @@
+<!--pages/index/next.wxml-->
+<view class="sellist">
+	<view class="item hover">数据</view>
+	<view class="item" bindtap="nextpage2">报告</view>
+	<view class="item" bindtap="nextpage1">热点</view>
+</view>
+
+<view class="con con2" wx:if="{{!xqData || xqData.length==0}}">
+	<image src="/pages/images/error.png" mode="widthFix" class="pic"></image>
+	<view class="text">正在建设中，敬请期待...</view>
+</view>
+<view class="con" wx:else>
+	<view class="bigtitle">
+		<view class="l">
+			<picker bindchange="bindPickerChange" data-name="val0" data-real="realval0" value="{{val0}}" range-key="name" range="{{arrval0}}">
+				<view class="picker">
+					{{arrval0[val0]['name']}}
+					<image src="/pages/images/sanjiao2.png" mode="widthFix" class="sanjiao" class="sj"></image>
+				</view>
+			</picker>
+		</view>
+		<view class="r">
+			<picker bindchange="bindPickerChange" data-name="val1" wx:if="{{realval0==9 || realval0==11 || realval0==12 || realval0==17}}" data-real="realval1" value="{{val1}}" range-key="name" range="{{arrval1}}">
+				<view class="picker">
+					{{arrval1[val1]['name']}}
+					<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
+				</view>
+			</picker>
+			<picker bindchange="bindPickerChange" data-name="val2" wx:if="{{(realval0!=5 && realval0!=6 && realval0!=7 && realval0!=9 && realval0!=10 && realval0!=11 && realval0!=12 && realval0!=18) || (realval0==12 && realval1==5)}}" data-real="realval2" value="{{val2}}" range-key="name" range="{{arrval2}}">
+				<view class="picker">
+					{{arrval2[val2]['name']}}
+					<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
+				</view>
+			</picker>
+			<picker bindchange="bindPickerChange" data-name="val3" data-real="realval3" value="{{val3}}" range-key="name" range="{{arrval3}}">
+				<view class="picker">
+					{{arrval3[val3]['name']}}
+					<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
+				</view>
+			</picker>
+		</view>
+	</view>
+	<view class="tjlist2">
+		<block wx:for="{{xqData}}" wx:key="this">
+			<view class="item {{xqData.length==1?'item2':''}}">
+				<view class="p1">{{item.t1}}</view>
+				<view class="you">
+					<view class="p2">
+						<view class="num">{{item.t2}}</view>
+						<view class="dw">{{item.dw}}</view>
+					</view>
+					<view class="p3">
+						<view class="a1">同比</view>
+						<view class="a2 {{item.t3zf=='+'?'hong':item.t3zf=='-'?'lv':null}}">{{item.t3}}</view>
+						<image src="../images/sheng1.png" mode="widthFix" class="a3" wx:if="{{item.t3zf=='+'}}"></image>
+						<image src="../images/jiang1.png" mode="widthFix" class="a3" wx:if="{{item.t3zf=='-'}}"></image>
+					</view>
+				</view>
+			</view>
+		</block>
+	</view>
+	<view class="box">
+		<view class="up up3">
+			<view class="l">
+				<view class="fk"></view>
+				<view class="fk2"></view>
+				<view class="title">市场规模（{{arr_sj2_dw}}）</view>
+			</view>
+		</view>
+		<view class="chart">
+			<ec-canvas id="mychart-dom-bar" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+		</view>
+	</view>
+	<view class="box" hidden="{{(!chart2x.length)?true:false}}">
+		<view class="up up3">
+			<view class="l">
+				<view class="fk"></view>
+				<view class="fk2"></view>
+				<view class="title">品牌销量份额(%)</view>
+			</view>
+		</view>
+		<view class="chart">
+			<ec-canvas id="mychart-dom-bar2" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-bar" ec="{{ ec2 }}"></ec-canvas>
+		</view>
+	</view>
+	<view class="box" hidden="{{(!arr_sj6.t1 && !arr_sj6.t2)?true:false}}">
+		<view class="up up3">
+			<view class="l">
+				<view class="fk"></view>
+				<view class="fk2"></view>
+				<view class="title" wx:if="{{realval1 == 10}}">地区出口量结构(%)</view>
+				<view class="title" wx:else>产品结构(%)</view>
+			</view>
+		</view>
+		<view class="chart chart2" style="height: 210px;{{!arr_sj6.t1?'display:none':''}}">
+			<ec-canvas id="mychart-dom-bar3" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-bar" ec="{{ ec3 }}"></ec-canvas>
+		</view>
+    <view style="margin:0 10px;height: 1px;background-color: #eee;{{!arr_sj6.t1 || !arr_sj6.t2?'display:none':''}}"></view>
+		<view class="chart chart2" style="height: 210px;{{!arr_sj6.t2?'display:none':''}}">
+			<ec-canvas id="mychart-dom-bar4" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-bar" ec="{{ ec4 }}"></ec-canvas>
+		</view>
+	</view>
+	<view class="tips">{{tips}}</view>
+	<view class="blank20"></view>
+</view>

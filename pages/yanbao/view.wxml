@@ -1,0 +1,21 @@
+<import src="../../wxParse/wxParse.wxml" />
+<block wx:if="{{url}}">
+	<web-view src="{{url}}"></web-view>
+</block>
+<block wx:else >
+	<!-- <view class="top"></view> -->
+	<!-- <view class="con"> -->
+		<view class="newsview">
+			<view class="title">{{name}}</view>
+			<view class="info">时间：{{addtime}}      浏览： {{click}}</view>
+			<!-- <rich-text nodes="{{content}}"></rich-text> -->
+			<view class="content">
+				<template is="wxParse" data="{{wxParseData:content.nodes}}" />
+			</view>
+			<view class="butlist">
+				<view class="item" bindtap="getscdz" data-type="1"><image src="{{sc==1?'/pages/images/cang2.png':'/pages/images/cang.png'}}" mode="widthFix" class="img"></image>{{sc==1?'取消收藏':'收藏'}}</view>
+				<view class="item" bindtap="getscdz" data-type="2"><image src="{{dz==1?'/pages/images/zan2.png':'/pages/images/zan.png'}}" mode="widthFix" class="img"></image>{{dz==1?'取消点赞':'点赞'}} {{dznum}}</view>
+			</view>
+		</view>
+	<!-- </view> -->
+</block>

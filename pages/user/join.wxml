@@ -1,0 +1,50 @@
+<!--pages/user/join.wxml-->
+<view class="back" bindtap="back">
+	<image src="/pages/images/back.png" mode="widthFix"></image>
+</view>
+<view class="tupian">
+	<image src="/pages/images/jointop.jpg" mode="widthFix"></image>
+</view>
+<view class="con">
+	<view class="item">
+		<image src="/pages/images/ewmbj.png" class="bj" mode="widthFix"></image>
+		<view class="neirong">
+			<view class="l">
+				<image src="/pages/images/ewm3.jpg" mode="widthFix" ></image>
+			</view>
+			<view class="r">
+				<view class="p"><image class="img" src="/pages/images/jian.png" mode="widthFix" ></image> 智能投影群</view>
+				<view class="p"><image class="img" src="/pages/images/jian.png" mode="widthFix" ></image> 智能音箱群</view>
+				<view class="p"><image class="img" src="/pages/images/jian.png" mode="widthFix" ></image> 智能门锁群</view>
+			</view>
+		</view>
+	</view>
+	<view class="item">
+		<image src="/pages/images/ewmbj.png" class="bj" mode="widthFix"></image>
+		<view class="neirong">
+			<view class="l">
+				<image src="/pages/images/ewm1.jpg" mode="widthFix" ></image>
+			</view>
+			<view class="r">
+				<view class="p"><image class="img" src="/pages/images/jian.png" mode="widthFix" ></image> 交互平板群</view>
+				<view class="p"><image class="img" src="/pages/images/jian.png" mode="widthFix" ></image> 数字标牌群</view>
+				<view class="p"><image class="img" src="/pages/images/jian.png" mode="widthFix" ></image> 商用电视群</view>
+			</view>
+		</view>
+	</view>
+	<view class="item">
+		<image src="/pages/images/ewmbj.png" class="bj" mode="widthFix"></image>
+		<view class="neirong">
+			<view class="l">
+				<image src="/pages/images/ewm2.jpg" mode="widthFix" ></image>
+			</view>
+			<view class="r">
+				<view class="p"><image class="img" src="/pages/images/jian.png" mode="widthFix" ></image> 电视供应链群</view>
+				<view class="p"><image class="img" src="/pages/images/jian.png" mode="widthFix" ></image> 电子纸供应链群</view>
+			</view>
+		</view>
+	</view>
+</view>
+<view class="tupian">
+	<image src="/pages/images/joinbottom.jpg" mode="widthFix"></image>
+</view>

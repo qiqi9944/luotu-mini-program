@@ -1,0 +1,78 @@
+<!--pages/user/about.wxml-->
+<view class="aa">
+	<view class="abcon1">
+		<view class="p1">
+			<image src="/pages/images/logo2.png" mode="widthFix"></image>
+		</view>
+		<view class="box">
+			<view class="pubtitle">
+				<image src="/pages/images/bgl.png" mode="widthFix" class="bj"></image>
+				<view class="text">
+					<view class="a1">洛图简介</view>
+					<!-- <view class="a2">Introduce</view> -->
+				</view>
+			</view>
+			<view class="p2">洛图科技（RUNTO）是一个全球科技产业包括半导体显示、互联网、多媒体、消费电子等领域内，以产品、服务与前沿研究见长，兼具全局视野与局部场景深度洞察，致力于价值挖掘的科技产业生态服务平台。</view>
+			<view class="p2">受益于气象万千的华夏文化，立足于中国科技创新一线阵地，动态跟踪全球头部科技企业运用产业大数据改造经典经营决策逻辑之案例，并长期探索泛显示和消费电子产业健康发展之路径。</view>
+		</view>
+	</view>
+	<view class="box">
+		<view class="pubtitle">
+			<image src="/pages/images/fanwei.png" mode="widthFix" class="bj"></image>
+			<view class="text">
+				<view class="a1">业务范围</view>
+				<!-- <view class="a2">Business</view> -->
+			</view>
+		</view>
+		<view class="abcon2">
+			<view class="item">
+				<image class="img" mode="widthFix" src="/pages/images/ab1.jpg"></image>
+				<view class="title">报告</view>
+			</view>
+			<view class="item">
+				<image class="img" mode="widthFix" src="/pages/images/ab2.jpg"></image>
+				<view class="title">投融资服务</view>
+			</view>
+			<view class="item">
+				<image class="img" mode="widthFix" src="/pages/images/ab3.jpg"></image>
+				<view class="title">媒体</view>
+			</view>
+			<view class="item">
+				<image class="img" mode="widthFix" src="/pages/images/ab4.jpg"></image>
+				<view class="title">品牌推广</view>
+			</view>
+			<view class="item">
+				<image class="img" mode="widthFix" src="/pages/images/ab5.jpg"></image>
+				<view class="title">会议发展</view>
+			</view>
+			<view class="item">
+				<image class="img" mode="widthFix" src="/pages/images/ab6.jpg"></image>
+				<view class="title">资讯</view>
+			</view>
+			<view class="item">
+				<image class="img" mode="widthFix" src="/pages/images/ab7.jpg"></image>
+				<view class="title">培训</view>
+			</view>
+			<view class="item">
+				<image class="img" mode="widthFix" src="/pages/images/ab8.jpg"></image>
+				<view class="title">资源对接</view>
+			</view>
+			<view class="item">
+				<image class="img" mode="widthFix" src="/pages/images/ab9.jpg"></image>
+				<view class="title">高端猎头</view>
+			</view>
+			<view class="item">
+				<image class="img" mode="widthFix" src="/pages/images/ab10.jpg"></image>
+				<view class="title">直播</view>
+			</view>
+			<view class="item">
+				<image class="img" mode="widthFix" src="/pages/images/ab11.jpg"></image>
+				<view class="title">会员</view>
+			</view>
+			<view class="item">
+				<image class="img" mode="widthFix" src="/pages/images/ab12.jpg"></image>
+				<view class="title">商学院</view>
+			</view>
+		</view>
+	</view>
+</view>

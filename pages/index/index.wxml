@@ -1,0 +1,151 @@
+<!--index.wxml-->
+<!-- banner -->
+<view class="banner">
+    <image src="/pages/images/banner.jpg" mode="widthFix" class="img"></image>
+    <!-- <view class="form">
+        <view class="sub">
+            <image src="/pages/images/fdj.png" mode="widthFix"></image>
+        </view>
+        <input type="text" class="input" placeholder="搜索" />
+    </view> -->
+</view>
+<view class="con">
+    <!-- 导航菜单 -->
+    <view class="menulist">
+        <view class="item" bindtap="nextpage" data-type='1'>
+            <view class="pic">
+                <image mode="aspectFit" src="/pages/images/pic1.png"></image>
+            </view>
+            <view class="title">智能投影</view>
+        </view>
+        <view class="item" bindtap="nextpage" data-type='2'>
+            <view class="pic">
+                <image mode="aspectFit" src="/pages/images/pic2.png"></image>
+            </view>
+            <view class="title">智能音箱</view>
+        </view>
+        <view class="item" bindtap="nextpage" data-type='14'>
+            <view class="pic">
+                <image mode="aspectFit" src="/pages/images/pic14.png"></image>
+            </view>
+            <view class="title">智能平板</view>
+        </view>
+        <view class="item" bindtap="nextpage" data-type='3'>
+            <view class="pic">
+                <image mode="aspectFit" src="/pages/images/pic3.png"></image>
+            </view>
+            <view class="title">智能门锁</view>
+        </view>
+
+    </view>
+    <view class="menulist">
+        <view class="item" bindtap="nextpage" data-type='5'>
+            <view class="pic">
+                <image mode="aspectFit" src="/pages/images/pic5.png"></image>
+            </view>
+            <view class="title">交互平板</view>
+        </view>
+        <view class="item" bindtap="nextpage" data-type='6'>
+            <view class="pic">
+                <image mode="aspectFit" src="/pages/images/pic6.png"></image>
+            </view>
+            <view class="title">数字标牌</view>
+        </view>
+        <view class="item" bindtap="nextpage" data-type='7'>
+            <view class="pic">
+                <image mode="aspectFit" src="/pages/images/pic7.png"></image>
+            </view>
+            <view class="title">商用激光投影</view>
+        </view>
+        <view class="item" bindtap="nextpage" data-type='18'>
+            <view class="pic">
+                <image mode="aspectFit" src="/pages/images/pic15.png"></image>
+            </view>
+            <view class="title">小间距LED</view>
+        </view>
+        <!-- <view class="item" bindtap="nextpage" data-type='8'>
+            <view class="pic">
+                <image mode="aspectFit" src="/pages/images/pic15.png"></image>
+            </view>
+            <view class="title">商用电视</view>
+        </view> -->
+        <!-- <view class="item" bindtap="error" data-type='8'>
+            <view class="pic">
+                <image mode="aspectFit" src="/pages/images/pic8.png"></image>
+            </view>
+            <view class="title">电子纸</view>
+        </view> -->
+    </view>
+    <view class="menulist">
+        <view class="item" bindtap="nextpage" data-type='9'>
+            <view class="pic">
+                <image mode="aspectFit" src="/pages/images/pic9.png"></image>
+            </view>
+            <view class="title">电视供应链</view>
+        </view>
+        <view class="item" bindtap="nextpage" data-type='17'>
+            <view class="pic">
+                <image mode="aspectFit" src="/pages/images/pic22.png"></image>
+            </view>
+            <view class="title">显示器供应链</view>
+        </view>
+        <view class="item" bindtap="nextpage" data-type='11'>
+            <view class="pic">
+                <image mode="aspectFit" src="/pages/images/pic11.png"></image>
+            </view>
+            <view class="title">商用显示供应链</view>
+        </view>
+        <view class="item" bindtap="more">
+            <view class="pic">
+                <image mode="aspectFit" src="/pages/images/pic12.png"></image>
+            </view>
+            <view class="title">更多</view>
+        </view>
+    </view>
+    <!-- 广告 -->
+    <view class="ad">
+        <!-- <image src="/pages/images/ad.jpg" mode="widthFix"></image> -->
+        <view class="page-section page-section-spacing swiper swiper1">
+            <swiper indicator-dots="{{banner.indicatorDots}}" autoplay="{{banner.autoplay}}" circular="{{banner.circular}}" vertical="{{banner.vertical}}" interval="{{banner.interval}}" duration="{{banner.duration}}" previous-margin="{{banner.previousMargin}}px" next-margin="{{banner.nextMargin}}px" indicator-color="{{banner.indicatorColor}}" indicator-active-color="{{banner.indicatorActiveColor}}" display-multiple-items="{{banner.itemnum}}">
+                <block wx:for="{{lunbo}}" wx:key="*this">
+                    <swiper-item>
+                        <navigator url="{{item.url}}" class="swiper-item {{index}}">
+                            <image src="{{item.pic}}" mode="widthFix"></image>
+                        </navigator>
+                    </swiper-item>
+
+                </block>
+            </swiper>
+        </view>
+    </view>
+    <!-- 搜索 -->
+    <view class="sousuo">
+        <view class="fdj" bindtap="search">
+            <image src="/pages/images/fdj.png" mode="widthFix"></image>
+        </view>
+        <input type="text" data-name="keywords" class="input" bindinput="inputchange" bindconfirm="search" value="{{keywords}}" />
+    </view>
+    <!-- 行业洞察 -->
+    <view class="dc">
+        <view class="pubtitle">
+            <view class="l">
+                <image src="/pages/images/hot.png" mode="widthFix"></image>行业洞察
+            </view>
+            <view class="r" bindtap="toNews">
+                <image src="/pages/images/dian.png" mode="widthFix"></image>
+            </view>
+        </view>
+        <view class="dclist">
+            <block wx:for="{{newslist}}" wx:key="id">
+                <navigator url="../yanbao/view?id={{item.id}}" class="item">
+                    <view class="p1">
+                        <view class="tag t{{item.tag}}" wx:if="{{item.tag!=0}}">{{item.tag==1?'HOT':''}}{{item.tag==2?'NEW':''}}</view>
+                        <view class="title">{{item.name}}</view>
+                    </view>
+                    <view class="p2">{{item.addtime}}</view>
+                </navigator>
+            </block>
+        </view>
+    </view>
+    <view class="blank20"></view>
+</view>

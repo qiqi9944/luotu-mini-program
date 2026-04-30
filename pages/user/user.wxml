@@ -1,0 +1,87 @@
+<!--pages/user/user.wxml-->
+<view class="banner"></view>
+<view class="main">
+	<view class="top">
+		<view class="l" wx:if="{{islogin}}">
+			<view class="p1">{{user.name?user.name:user.username}}</view>
+			<view class="p2" >
+				{{user.companyname}}
+			</view>
+			<view class="p4" wx:if="{{!user.companyname}}" >
+				请先完善您的个人信息
+			</view>
+		</view>
+		<view class="l" wx:else >
+			<!-- <button class="p3" bindtap="getUserProfile"><image src="../images/weixin.png" mode="widthFix" class="img"></image>微信授权登录</button> -->
+			<button class="p3" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" >
+      <!-- <image src="../images/weixin.png" mode="widthFix" class="img"></image> -->
+      手机号快捷登录</button>
+			<view class="p4">
+				您还未登录账号
+			</view>
+		</view>
+		<image src="{{user.tx?user.tx:'/pages/images/tx.png'}}" mode="widthFix" class="r"></image>
+	</view>
+	<view class="list">
+		<view class="item" bindtap="nextpage" data-url="../user/myinfo" >
+			<view class="l">
+				<image mode="widthFix" class="img" src="/pages/images/u7.png"></image>我的信息
+			</view>
+			<image src="/pages/images/jiantou.png" mode="widthFix" class="r"></image>
+		</view>
+		<!-- <view class="item" bindtap="nextpage" data-url="../error/error" >
+			<view class="l">
+				<image mode="widthFix" class="img" src="/pages/images/u8.png"></image>我的洛图币
+			</view>
+			<image src="/pages/images/jiantou.png" mode="widthFix" class="r"></image>
+		</view> -->
+		<!-- <view class="item" bindtap="nextpage" data-url="../user/scdz" >
+			<view class="l">
+				<image mode="widthFix" class="img" src="/pages/images/u1.png"></image>我的收藏/赞
+			</view>
+			<image src="/pages/images/jiantou.png" mode="widthFix" class="r"></image>
+		</view> -->
+		<navigator class="item" url="../user/history" wx:if="{{islogin}}">
+			<view class="l">
+				<image mode="widthFix" class="img" src="/pages/images/u2.png"></image>浏览记录
+			</view>
+			<image src="/pages/images/jiantou.png" mode="widthFix" class="r"></image>
+		</navigator>
+		<!-- <view class="item">
+			<view class="l">
+				<image mode="widthFix" class="img" src="/pages/images/u3.png"></image>洛图金币
+			</view>
+			<image src="/pages/images/jiantou.png" mode="widthFix" class="r"></image>
+		</view> -->
+		
+	</view>
+	<view class="list">
+		<navigator class="item" url="../user/about">
+			<view class="l">
+				<image mode="widthFix" class="img" src="/pages/images/u4.png"></image>关于我们
+			</view>
+			<image src="/pages/images/jiantou.png" mode="widthFix" class="r"></image>
+		</navigator>
+	</view>
+	<view class="list">
+		<button class="item"  open-type="share">
+			<view class="l">
+				<image mode="widthFix" class="img" src="/pages/images/u5.png"></image>推荐给朋友
+			</view>
+			<image src="/pages/images/jiantou.png" mode="widthFix" class="r"></image>
+		</button>
+		<navigator class="item" url="../user/join" >
+			<view class="l">
+				<image mode="widthFix" class="img" src="/pages/images/u6.png"></image>加入行业交流群
+			</view>
+			<image src="/pages/images/jiantou.png" mode="widthFix" class="r"></image>
+		</navigator>
+    <button class="item" bindtap="logout" wx:if="{{islogin}}">
+			<view class="l">
+				<image mode="widthFix" class="img" src="/pages/images/u9.png"></image>退出登录
+			</view>
+			<image src="/pages/images/jiantou.png" mode="widthFix" class="r"></image>
+		</button>
+	</view>
+	
+</view>
