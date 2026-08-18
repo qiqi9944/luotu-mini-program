@@ -74,9 +74,78 @@
   font-size: 12px;
   color: #666;
 }
+.menulist--buttons{
+  display: block;
+  padding: 22rpx 24rpx 26rpx;
+  background-color: #fff;
+  border-radius: 18rpx;
+  margin-bottom: 20rpx;
+  box-sizing: border-box;
+}
+.menulist--buttons .menu-title{
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1f1f1f;
+}
+.menulist--buttons .menu-title::before{
+  content: "";
+  width: 10rpx;
+  height: 28rpx;
+  margin-right: 12rpx;
+  border-radius: 6rpx;
+  background-color: #055586;
+  flex-shrink: 0;
+}
+.menulist--buttons .menu-grid{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.menulist--buttons .item{
+  width: calc((100% - 44rpx) / 3);
+  height: 84rpx;
+  box-sizing: border-box;
+  border: 4rpx solid #0f5f8a;
+  border-radius: 16rpx;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12rpx;
+  margin-right: 22rpx;
+  margin-bottom: 22rpx;
+}
+.menulist--buttons .item:nth-child(3n){
+  margin-right: 0;
+}
+.menulist--buttons .item .title{
+  width: 100%;
+  text-align: center;
+  font-size: 28rpx;
+  line-height: 1.2;
+  color: #2a2a2a;
+  white-space: normal;
+  word-break: break-all;
+}
 .ad{
   width: 100%;
   margin-bottom: 20rpx;
+}
+.ad-top{
+  width: 100%;
+  margin-bottom: 0;
+}
+.ad-top .swiper {
+  height: calc(100vw / 1.923);
+}
+.ad-top .swiper image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
 }
 .ad image{
   width: 100%;

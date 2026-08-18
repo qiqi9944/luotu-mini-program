@@ -23,7 +23,7 @@ Page({
 		let p = that.data.p;
 		let keywords = that.options.keywords;
 		wx.request({
-			url: app.globalData.siteUrl + 'Wxapi/getsearch',
+			url: app.globalData.siteUrl + '/Wxapi/getsearch',
 			data: { keywords: keywords, p: p },
 			success: function (res) {
 				console.log(res);
@@ -42,7 +42,7 @@ Page({
 	getbanner: function(){
 		let that = this;
 		wx.request({
-		  url: app.globalData.siteUrl + 'Wxapi/getbanner',
+		  url: app.globalData.siteUrl + '/Wxapi/getbanner',
 		  data:{'wz':2},
 		  success:function(res){
 			console.log(res);

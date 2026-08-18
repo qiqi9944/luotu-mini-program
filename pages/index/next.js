@@ -19,7 +19,7 @@ Page({
 		arrval0: [
 			// {
 			// 	id: 1,
-			// 	name: '智能投影'
+			// 	name: '投影智能'
 			// },
 			// {
 			// 	id: 2,
@@ -590,7 +590,7 @@ Page({
 		const bg = () => {
 			return new Promise((resolve, reject) => {
 				wx.request({
-					url: app.globalData.siteUrl + 'Wxapi/getybnews',
+					url: app.globalData.siteUrl + '/Wxapi/getybnews',
 					data: { sjtype: type },
 					success(res1) {
 						resolve(res1.data)
@@ -613,7 +613,7 @@ Page({
 		const rd = () => {
 			return new Promise((resolve, reject) => {
 				wx.request({
-					url: app.globalData.siteUrl + 'Wxapi/getnews',
+					url: app.globalData.siteUrl + '/Wxapi/getnews',
 					data: { type: 2, sjtype: type, p: 1 },
 					success(res1) {
 						resolve(res1.data)

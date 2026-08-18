@@ -31,7 +31,7 @@ Page({
 			var p = that.data.p2;
 		}
 		wx.request({
-			url: app.globalData.siteUrl + 'Wxapi/getscdzlist',
+			url: app.globalData.siteUrl + '/Wxapi/getscdzlist',
 			data:{type:type,uid:userData.id,p:p},
 			success:function(res){
 			  console.log(res);

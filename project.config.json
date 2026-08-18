@@ -47,15 +47,20 @@
     "useCompilerPlugins": false,
     "ignoreUploadUnusedFiles": true,
     "useStaticServer": true,
-    "condition": false
+    "condition": false,
+    "compileWorklet": false,
+    "localPlugins": false,
+    "swc": false,
+    "disableSWC": true
   },
   "compileType": "miniprogram",
-  "libVersion": "3.6.3",
-  "appid": "wx4d4ce62d4d883da5",
+  "libVersion": "3.0.2",
+  "appid": "wxdfca185511c9fd17",
   "projectname": "%E6%B4%9B%E5%9B%BE%E7%A7%91%E6%8A%80",
   "condition": {},
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
-  }
+  },
+  "simulatorPluginLibVersion": {}
 }

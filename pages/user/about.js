@@ -12,7 +12,7 @@ Page({
 	getcon:function(){
 		let that = this
 		wx.request({
-			url: app.globalData.siteUrl + 'Wxapi/getgylt',
+			url: app.globalData.siteUrl + '/Wxapi/getgylt',
 			success: function (res) {
 				console.log(res);
 				if(res.data.status==1){

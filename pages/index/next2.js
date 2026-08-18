@@ -22,7 +22,7 @@ Page({
 	getbanner: function () {
 		let that = this;
 		wx.request({
-			url: app.globalData.siteUrl + 'Wxapi/getbanner',
+			url: app.globalData.siteUrl + '/Wxapi/getbanner',
 			data: { 'wz': 2 },
 			success: function (res) {
 				console.log(res);
@@ -38,7 +38,7 @@ Page({
 		let sjtype = that.options.type
 		
 		wx.request({
-			url: app.globalData.siteUrl + 'Wxapi/getybnews',
+			url: app.globalData.siteUrl + '/Wxapi/getybnews',
 			data: { sjtype: sjtype },
 			success: function (res) {
 				console.log(res);

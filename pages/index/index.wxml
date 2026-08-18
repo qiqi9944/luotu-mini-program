@@ -1,123 +1,58 @@
 <!--index.wxml-->
-<!-- banner -->
-<view class="banner">
-    <image src="/pages/images/banner.jpg" mode="widthFix" class="img"></image>
-    <!-- <view class="form">
-        <view class="sub">
-            <image src="/pages/images/fdj.png" mode="widthFix"></image>
-        </view>
-        <input type="text" class="input" placeholder="搜索" />
-    </view> -->
+<!-- banner 轮播（含洛图科技顶图作为第一项）-->
+<view class="ad ad-top">
+    <view class="page-section page-section-spacing swiper swiper1">
+        <swiper indicator-dots="{{banner.indicatorDots}}" autoplay="{{banner.autoplay}}" circular="{{banner.circular}}" vertical="{{banner.vertical}}" interval="{{banner.interval}}" duration="{{banner.duration}}" previous-margin="{{banner.previousMargin}}px" next-margin="{{banner.nextMargin}}px" indicator-color="{{banner.indicatorColor}}" indicator-active-color="{{banner.indicatorActiveColor}}" display-multiple-items="{{banner.itemnum}}">
+            <swiper-item>
+                <view class="swiper-item">
+                    <image src="/pages/images/banner.jpg" mode="widthFix"></image>
+                </view>
+            </swiper-item>
+            <block wx:for="{{lunbo}}" wx:key="*this">
+                <swiper-item>
+                    <navigator url="{{item.url}}" class="swiper-item {{index}}">
+                        <image src="{{item.pic}}" mode="widthFix"></image>
+                    </navigator>
+                </swiper-item>
+            </block>
+        </swiper>
+    </view>
 </view>
 <view class="con">
     <!-- 导航菜单 -->
-    <view class="menulist">
-        <view class="item" bindtap="nextpage" data-type='1'>
-            <view class="pic">
-                <image mode="aspectFit" src="/pages/images/pic1.png"></image>
+    <view class="menulist menulist--buttons">
+        <view class="menu-title">市场数据</view>
+        <view class="menu-grid">
+            <view class="item" bindtap="nextpage" data-type='1'>
+                <view class="title">影音娱乐</view>
             </view>
-            <view class="title">智能投影</view>
-        </view>
-        <view class="item" bindtap="nextpage" data-type='2'>
-            <view class="pic">
-                <image mode="aspectFit" src="/pages/images/pic2.png"></image>
+            <view class="item" bindtap="nextpage" data-type='2'>
+                <view class="title">电子教育</view>
             </view>
-            <view class="title">智能音箱</view>
-        </view>
-        <view class="item" bindtap="nextpage" data-type='14'>
-            <view class="pic">
-                <image mode="aspectFit" src="/pages/images/pic14.png"></image>
+            <view class="item" bindtap="nextpage" data-type='14'>
+                <view class="title">商务办公</view>
             </view>
-            <view class="title">智能平板</view>
-        </view>
-        <view class="item" bindtap="nextpage" data-type='3'>
-            <view class="pic">
-                <image mode="aspectFit" src="/pages/images/pic3.png"></image>
+            <view class="item" bindtap="nextpage" data-type='3'>
+                <view class="title">智能穿戴</view>
             </view>
-            <view class="title">智能门锁</view>
-        </view>
-
-    </view>
-    <view class="menulist">
-        <view class="item" bindtap="nextpage" data-type='5'>
-            <view class="pic">
-                <image mode="aspectFit" src="/pages/images/pic5.png"></image>
+            <view class="item" bindtap="nextpage" data-type='5'>
+                <view class="title">安防监控</view>
             </view>
-            <view class="title">交互平板</view>
-        </view>
-        <view class="item" bindtap="nextpage" data-type='6'>
-            <view class="pic">
-                <image mode="aspectFit" src="/pages/images/pic6.png"></image>
+            <view class="item" bindtap="nextpage" data-type='6'>
+                <view class="title">运动户外</view>
             </view>
-            <view class="title">数字标牌</view>
-        </view>
-        <view class="item" bindtap="nextpage" data-type='7'>
-            <view class="pic">
-                <image mode="aspectFit" src="/pages/images/pic7.png"></image>
+            <view class="item" bindtap="nextpage" data-type='7'>
+                <view class="title">商用显示</view>
             </view>
-            <view class="title">商用激光投影</view>
-        </view>
-        <view class="item" bindtap="nextpage" data-type='18'>
-            <view class="pic">
-                <image mode="aspectFit" src="/pages/images/pic15.png"></image>
+            <view class="item" bindtap="nextpage" data-type='18'>
+                <view class="title">品质生活</view>
             </view>
-            <view class="title">小间距LED</view>
-        </view>
-        <!-- <view class="item" bindtap="nextpage" data-type='8'>
-            <view class="pic">
-                <image mode="aspectFit" src="/pages/images/pic15.png"></image>
+            <view class="item" bindtap="nextpage" data-type='9'>
+                <view class="title">核心器件</view>
             </view>
-            <view class="title">商用电视</view>
-        </view> -->
-        <!-- <view class="item" bindtap="error" data-type='8'>
-            <view class="pic">
-                <image mode="aspectFit" src="/pages/images/pic8.png"></image>
-            </view>
-            <view class="title">电子纸</view>
-        </view> -->
-    </view>
-    <view class="menulist">
-        <view class="item" bindtap="nextpage" data-type='9'>
-            <view class="pic">
-                <image mode="aspectFit" src="/pages/images/pic9.png"></image>
-            </view>
-            <view class="title">电视供应链</view>
-        </view>
-        <view class="item" bindtap="nextpage" data-type='17'>
-            <view class="pic">
-                <image mode="aspectFit" src="/pages/images/pic22.png"></image>
-            </view>
-            <view class="title">显示器供应链</view>
-        </view>
-        <view class="item" bindtap="nextpage" data-type='11'>
-            <view class="pic">
-                <image mode="aspectFit" src="/pages/images/pic11.png"></image>
-            </view>
-            <view class="title">商用显示供应链</view>
-        </view>
-        <view class="item" bindtap="more">
-            <view class="pic">
-                <image mode="aspectFit" src="/pages/images/pic12.png"></image>
-            </view>
-            <view class="title">更多</view>
         </view>
     </view>
-    <!-- 广告 -->
-    <view class="ad">
-        <!-- <image src="/pages/images/ad.jpg" mode="widthFix"></image> -->
-        <view class="page-section page-section-spacing swiper swiper1">
-            <swiper indicator-dots="{{banner.indicatorDots}}" autoplay="{{banner.autoplay}}" circular="{{banner.circular}}" vertical="{{banner.vertical}}" interval="{{banner.interval}}" duration="{{banner.duration}}" previous-margin="{{banner.previousMargin}}px" next-margin="{{banner.nextMargin}}px" indicator-color="{{banner.indicatorColor}}" indicator-active-color="{{banner.indicatorActiveColor}}" display-multiple-items="{{banner.itemnum}}">
-                <block wx:for="{{lunbo}}" wx:key="*this">
-                    <swiper-item>
-                        <navigator url="{{item.url}}" class="swiper-item {{index}}">
-                            <image src="{{item.pic}}" mode="widthFix"></image>
-                        </navigator>
-                    </swiper-item>
-
-                </block>
-            </swiper>
-        </view>
-    </view>
+    <!-- 广告（原轮播已移至顶部，此处保留空view维持con结构） -->
     <!-- 搜索 -->
     <view class="sousuo">
         <view class="fdj" bindtap="search">

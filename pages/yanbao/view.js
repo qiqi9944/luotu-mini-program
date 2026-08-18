@@ -19,7 +19,7 @@ Page({
 		let userData = wx.getStorageSync('userData')
 		console.log(id)
 		wx.request({
-			url: app.globalData.siteUrl + 'Wxapi/getnewscon',
+			url: app.globalData.siteUrl + '/Wxapi/getnewscon',
 			data: {id: id,uid:userData.id },
 			success: function (res) {
 				console.log(res);
@@ -55,7 +55,7 @@ Page({
 		let type = e.currentTarget.dataset.type
 		console.log(id,userData.id,type)
 		wx.request({
-			url: app.globalData.siteUrl + 'Wxapi/getscdz',
+			url: app.globalData.siteUrl + '/Wxapi/getscdz',
 			data: {nid: id,uid:userData.id,type:type },
 			success: function (res) {
 				console.log(res);

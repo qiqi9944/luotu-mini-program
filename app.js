@@ -132,8 +132,8 @@ App({
   globalData: {
     userData: null,//用户数据库信息
     userInfo: null,//用户微信信息
-    siteUrl: 'https://luotu.tianjin8.com/',
-    sitePath: 'https://luotu.tianjin8.com',
+    siteUrl: 'https://api.runtotech.com',
+    sitePath: 'https://api.runtotech.com',
     // siteUrl:'http://www.luotu.com/',
     // sitePath:'http://www.luotu.com',
   }

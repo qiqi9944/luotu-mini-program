@@ -175,17 +175,21 @@ Page({
     let that = this
     console.log(e)
     wx.request({
-      url: app.globalData.siteUrl + '/Wxapi/test', //接口地址
+      url: app.globalData.siteUrl + '/Wxapi/test',
       data: {
         code: e.detail.code,
       },
       success: function (res) {
-        console.log(res.data.phone_info.phoneNumber)
-        // let tel = res.data.phone_info.phoneNumber
-        // that.setData({
-        // 	['user.phone']:tel
-        // })
-        that.dologin(res.data.phone_info)
+        console.log(res.data)
+        const phoneInfo = res.data && res.data.phone_info
+        if (!phoneInfo || !phoneInfo.phoneNumber) {
+          wx.showToast({ title: '获取手机号失败，请重试', icon: 'none', duration: 2000 })
+          return
+        }
+        that.dologin(phoneInfo)
+      },
+      fail: function () {
+        wx.showToast({ title: '网络请求失败', icon: 'none', duration: 2000 })
       }
     })
   },

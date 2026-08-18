@@ -28,7 +28,7 @@ Page({
 	getbanner: function () {
 		let that = this;
 		wx.request({
-			url: app.globalData.siteUrl + 'Wxapi/getbanner',
+			url: app.globalData.siteUrl + '/Wxapi/getbanner',
 			data: { 'wz': 2 },
 			success: function (res) {
 				console.log(res);
@@ -42,7 +42,7 @@ Page({
 		let that = this;
 		let p = that.data.p;
 		wx.request({
-			url: app.globalData.siteUrl + 'Wxapi/getnews',
+			url: app.globalData.siteUrl + '/Wxapi/getnews',
 			data: { type: 2, p: p },
 			success: function (res) {
 				console.log(res);
@@ -61,7 +61,7 @@ Page({
 	getnews2: function () {
 		let that = this;
 		wx.request({
-			url: app.globalData.siteUrl + 'Wxapi/getybnews',
+			url: app.globalData.siteUrl + '/Wxapi/getybnews',
 			success: function (res) {
 				that.setData({
 					yuebao: res.data.datalist.yuebao,
@@ -75,7 +75,7 @@ Page({
 		let that = this;
 		let p = that.data.p2;
 		wx.request({
-			url: app.globalData.siteUrl + 'Wxapi/getnews',
+			url: app.globalData.siteUrl + '/Wxapi/getnews',
 			data: { type: 1, p: p },
 			success: function (res) {
 				console.log(res);

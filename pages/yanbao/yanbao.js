@@ -21,7 +21,7 @@ Page({
 	getbanner: function(){
 		let that = this;
 		wx.request({
-		  url: app.globalData.siteUrl + 'Wxapi/getbanner',
+		  url: app.globalData.siteUrl + '/Wxapi/getbanner',
 		  data:{'wz':2},
 		  success:function(res){
 			console.log(res);
@@ -102,7 +102,7 @@ Page({
 	getnews: function(){
 		let that = this;
 		wx.request({
-		  url: app.globalData.siteUrl + 'Wxapi/getybnews',
+		  url: app.globalData.siteUrl + '/Wxapi/getybnews',
 		  success:function(res){
 				that.setData({
 					yuebao:res.data.datalist.yuebao,

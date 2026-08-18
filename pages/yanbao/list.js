@@ -21,7 +21,7 @@ Page({
 	getbanner: function(){
 		let that = this;
 		wx.request({
-		  url: app.globalData.siteUrl + 'Wxapi/getbanner',
+		  url: app.globalData.siteUrl + '/Wxapi/getbanner',
 		  data:{'wz':2},
 		  success:function(res){
 			console.log(res);
@@ -37,7 +37,7 @@ Page({
 		let sjtype = that.options.sjtype
 		let type = that.options.type
 		wx.request({
-		  url: app.globalData.siteUrl + 'Wxapi/getnews',
+		  url: app.globalData.siteUrl + '/Wxapi/getnews',
 		  data:{type:type,sjtype:sjtype,p:p},
 		  success:function(res){
 			console.log(res);

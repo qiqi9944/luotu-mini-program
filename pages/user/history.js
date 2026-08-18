@@ -15,7 +15,7 @@ Page({
 		let p = that.data.p;
 		let userData = wx.getStorageSync('userData')
 		wx.request({
-		  url: app.globalData.siteUrl + 'Wxapi/getliulanlist',
+		  url: app.globalData.siteUrl + '/Wxapi/getliulanlist',
 		  data:{p:p,uid:userData.id},
 		  success:function(res){
 			console.log(res);

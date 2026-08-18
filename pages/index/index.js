@@ -66,7 +66,7 @@ Page({
   getnews: function () {
     let that = this;
     wx.request({
-      url: app.globalData.siteUrl + 'Wxapi/getindexnews',
+      url: app.globalData.siteUrl + '/Wxapi/getindexnews',
       success: function (res) {
         console.log(res);
         that.setData({
@@ -78,7 +78,7 @@ Page({
   getbanner: function () {
     let that = this;
     wx.request({
-      url: app.globalData.siteUrl + 'Wxapi/getbanner',
+      url: app.globalData.siteUrl + '/Wxapi/getbanner',
       data: { 'wz': 1 },
       success: function (res) {
         console.log(res);

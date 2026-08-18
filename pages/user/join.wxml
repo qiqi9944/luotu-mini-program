@@ -13,7 +13,7 @@
 				<image src="/pages/images/ewm3.jpg" mode="widthFix" ></image>
 			</view>
 			<view class="r">
-				<view class="p"><image class="img" src="/pages/images/jian.png" mode="widthFix" ></image> 智能投影群</view>
+				<view class="p"><image class="img" src="/pages/images/jian.png" mode="widthFix" ></image> 投影智能群</view>
 				<view class="p"><image class="img" src="/pages/images/jian.png" mode="widthFix" ></image> 智能音箱群</view>
 				<view class="p"><image class="img" src="/pages/images/jian.png" mode="widthFix" ></image> 智能门锁群</view>
 			</view>
