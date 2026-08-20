@@ -13,9 +13,9 @@
 		</view>
 		<view class="l" wx:else >
 			<!-- <button class="p3" bindtap="getUserProfile"><image src="../images/weixin.png" mode="widthFix" class="img"></image>微信授权登录</button> -->
-			<button class="p3" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" >
+			<button class="p3" bindtap="dologin" >
       <!-- <image src="../images/weixin.png" mode="widthFix" class="img"></image> -->
-      手机号快捷登录</button>
+      微信快捷登录</button>
 			<view class="p4">
 				您还未登录账号
 			</view>

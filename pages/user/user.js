@@ -7,7 +7,8 @@ Page({
    */
   data: {
     user: {},
-    islogin: false
+    islogin: false,
+    phoneLoading: false
   },
   // PrefixInteger: function(num, n) {
   // 	return (Array(n).join(0) + num).slice(-n);
@@ -173,15 +174,30 @@ Page({
   },
   getPhoneNumber(e) {
     let that = this
+    if (that.data.phoneLoading) {
+      return
+    }
+    const phoneCode = e && e.detail && e.detail.code
+    if (!phoneCode) {
+      wx.showToast({ title: '手机号授权失败，请重试', icon: 'none', duration: 2000 })
+      return
+    }
+    that.setData({
+      phoneLoading: true
+    })
     console.log(e)
     wx.request({
       url: app.globalData.siteUrl + '/Wxapi/test',
       data: {
-        code: e.detail.code,
+        code: phoneCode,
       },
       success: function (res) {
         console.log(res.data)
-        const phoneInfo = res.data && res.data.phone_info
+        if (!res.data || res.data.status !== 1 || !res.data.phone_info) {
+          wx.showToast({ title: '获取手机号失败，请重试', icon: 'none', duration: 2000 })
+          return
+        }
+        const phoneInfo = res.data.phone_info
         if (!phoneInfo || !phoneInfo.phoneNumber) {
           wx.showToast({ title: '获取手机号失败，请重试', icon: 'none', duration: 2000 })
           return
@@ -190,11 +206,17 @@ Page({
       },
       fail: function () {
         wx.showToast({ title: '网络请求失败', icon: 'none', duration: 2000 })
+      },
+      complete: function () {
+        that.setData({
+          phoneLoading: false
+        })
       }
     })
   },
   dologin(arr) {
     let that = this
+    arr = arr || {}
     wx.login({
       success(res) {
         if (res.code) {
@@ -206,7 +228,7 @@ Page({
               code: res.code,
               // nickName: arr.nickName,
               // avatarUrl: arr.avatarUrl,
-              phone: arr.phoneNumber,
+              phone: arr.phoneNumber || '',
             },
             fail(res) {
               console.log(res);
