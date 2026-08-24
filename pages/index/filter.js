@@ -31,6 +31,7 @@ Page({
     selTimeName: '',
     ytd: 0,
     needSnap: false,
+    ver: '1.3.7',
     marketIdx: 1,
     lxIdx: 1,
     typeIdx: 0,

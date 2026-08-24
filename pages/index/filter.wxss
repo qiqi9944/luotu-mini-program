@@ -82,6 +82,12 @@ page{
   color:#0f5f8a;
   font-weight: bold;
 }
+.cursel .ver{
+  margin-left: 12rpx;
+  font-size: 20rpx;
+  color:#c0c6cf;
+  font-weight: normal;
+}
 /* 指标卡 */
 .ind{
   margin-top:20rpx;

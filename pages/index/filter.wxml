@@ -68,7 +68,7 @@
 
     <view class="con" wx:else>
         <!-- 当前选择摘要 -->
-        <view class="cursel">当前：{{selTypeName?selTypeName:'未选品类'}}{{selMarket?' · '+selMarket:''}}{{selLx?' · '+selLx:''}}{{selTimeName?' · '+selTimeName:''}}{{ytd==1?' · 年累计':''}}</view>
+        <view class="cursel">当前：{{selTypeName?selTypeName:'未选品类'}}{{selMarket?' · '+selMarket:''}}{{selLx?' · '+selLx:''}}{{selTimeName?' · '+selTimeName:''}}{{ytd==1?' · 年累计':''}}<text class="ver">v{{ver}}</text></view>
         <!-- 指标卡 -->
         <view class="ind">
             <view class="inditem {{xqData.length==1?'ind2':''}}" wx:for="{{xqData}}" wx:key="t1">
