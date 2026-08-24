@@ -267,59 +267,52 @@ Page({
   setTimeout(fn, ms) { setTimeout(fn, ms) },
 
   renderCharts() {
-    // 图1 市场规模（柱状）
-    if (this.barComp) {
-      this.barComp.init((canvas, width, height) => {
-        const chart = echarts.init(canvas, null, { width, height })
-        canvas.setChart(chart)
-        chart.setOption({
-          grid: { left: 10, right: 10, top: 20, bottom: 20, containLabel: true },
-          tooltip: { trigger: 'axis' },
-          xAxis: { type: 'category', data: this.data.chart1y.length ? this.data.chart1x : [], axisLabel: { fontSize: 10 } },
-          yAxis: { type: 'value', axisLabel: { fontSize: 10 } },
-          series: [{
-            type: 'bar',
-            data: this.data.chart1y,
-            itemStyle: { color: '#1a9fe8' },
-            barWidth: '40%'
-          }]
-        })
-        return chart
-      })
-    }
+    // 图1 市场规模（柱状）— 实例只建一次，之后 setOption 更新
+    this.ensureChart('bar1', this.barComp, this.optionBar())
     // 图2 品牌份额（饼图）
-    if (this.barComp2 && this.data.chart3.length) {
-      this.barComp2.init((canvas, width, height) => {
-        const chart = echarts.init(canvas, null, { width, height })
-        canvas.setChart(chart)
-        chart.setOption({
-          tooltip: { trigger: 'item' },
-          legend: { orient: 'vertical', left: 'left', textStyle: { fontSize: 11 } },
-          series: [{
-            type: 'pie', radius: '60%', center: ['60%', '50%'],
-            data: this.data.chart3,
-            label: { fontSize: 11 }
-          }]
-        })
-        return chart
-      })
-    }
+    if (this.data.chart3.length) this.ensureChart('bar2', this.barComp2, this.optionPie(this.data.chart3))
     // 图3 产品结构（饼图）
-    if (this.barComp3 && this.data.chart4.length) {
-      this.barComp3.init((canvas, width, height) => {
-        const chart = echarts.init(canvas, null, { width, height })
-        canvas.setChart(chart)
-        chart.setOption({
-          tooltip: { trigger: 'item' },
-          legend: { orient: 'vertical', left: 'left', textStyle: { fontSize: 11 } },
-          series: [{
-            type: 'pie', radius: '60%', center: ['60%', '50%'],
-            data: this.data.chart4,
-            label: { fontSize: 11 }
-          }]
-        })
-        return chart
-      })
+    if (this.data.chart4.length) this.ensureChart('bar3', this.barComp3, this.optionPie(this.data.chart4))
+  },
+  ensureChart(key, comp, option) {
+    if (!comp) return
+    const that = this
+    if (that[key]) {
+      try { that[key].resize && that[key].resize() } catch (e) {}
+      that[key].setOption(option, true)
+      return
+    }
+    comp.init((canvas, width, height) => {
+      const chart = echarts.init(canvas, null, { width, height })
+      canvas.setChart(chart)
+      chart.setOption(option)
+      that[key] = chart
+      return chart
+    })
+  },
+  optionBar() {
+    return {
+      grid: { left: 10, right: 10, top: 20, bottom: 20, containLabel: true },
+      tooltip: { trigger: 'axis' },
+      xAxis: { type: 'category', data: this.data.chart1y.length ? this.data.chart1x : [], axisLabel: { fontSize: 10 } },
+      yAxis: { type: 'value', axisLabel: { fontSize: 10 } },
+      series: [{
+        type: 'bar',
+        data: this.data.chart1y,
+        itemStyle: { color: '#1a9fe8' },
+        barWidth: '40%'
+      }]
+    }
+  },
+  optionPie(data) {
+    return {
+      tooltip: { trigger: 'item' },
+      legend: { orient: 'vertical', left: 'left', textStyle: { fontSize: 11 } },
+      series: [{
+        type: 'pie', radius: '60%', center: ['60%', '50%'],
+        data: data,
+        label: { fontSize: 11 }
+      }]
     }
   }
 })

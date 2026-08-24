@@ -75,6 +75,13 @@ page{
   flex-shrink:0;
   margin-left: 8rpx;
 }
+/* 当前选择摘要 */
+.cursel{
+  margin: 20rpx 0 0;
+  font-size: 24rpx;
+  color:#0f5f8a;
+  font-weight: bold;
+}
 /* 指标卡 */
 .ind{
   margin-top:20rpx;

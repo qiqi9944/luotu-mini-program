@@ -67,6 +67,8 @@
     </view>
 
     <view class="con" wx:else>
+        <!-- 当前选择摘要 -->
+        <view class="cursel">当前：{{selTypeName?selTypeName:'未选品类'}}{{selMarket?' · '+selMarket:''}}{{selLx?' · '+selLx:''}}{{selTimeName?' · '+selTimeName:''}}{{ytd==1?' · 年累计':''}}</view>
         <!-- 指标卡 -->
         <view class="ind">
             <view class="inditem {{xqData.length==1?'ind2':''}}" wx:for="{{xqData}}" wx:key="t1">
@@ -87,7 +89,7 @@
         </view>
 
         <!-- 品牌份额 -->
-        <view class="box" wx:if="{{chart2x.length}}">
+        <view class="box" hidden="{{!chart2x.length}}">
             <view class="btitle">品牌销量份额(%)</view>
             <view class="chart">
                 <ec-canvas id="mychart-dom-bar2" class="chartdom" canvas-id="bar2" ec="{{ec2}}"></ec-canvas>
@@ -95,7 +97,7 @@
         </view>
 
         <!-- 产品结构 -->
-        <view class="box" wx:if="{{chart4.length}}">
+        <view class="box" hidden="{{!chart4.length}}">
             <view class="btitle">产品/价格结构(%)</view>
             <view class="chart">
                 <ec-canvas id="mychart-dom-bar3" class="chartdom" canvas-id="bar3" ec="{{ec3}}"></ec-canvas>
