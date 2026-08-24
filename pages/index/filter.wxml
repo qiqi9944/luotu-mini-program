@@ -13,48 +13,42 @@
             <!-- 市场 -->
             <picker mode="selector" range="{{marketList}}" range-key="name" value="{{marketIdx}}" bindchange="onPickerMarket">
                 <view class="fsel">
-                    <text class="flabel">市场</text>
-                    <text class="fval">{{marketDisp}}</text>
+                    <text class="fval">市场：{{marketDisp}}</text>
                     <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
                 </view>
             </picker>
             <!-- 品径 -->
             <picker mode="selector" range="{{lxList}}" range-key="name" value="{{lxIdx}}" bindchange="onPickerLx">
                 <view class="fsel">
-                    <text class="flabel">品径</text>
-                    <text class="fval">{{lxDisp}}</text>
+                    <text class="fval">品径：{{lxDisp}}</text>
                     <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
                 </view>
             </picker>
             <!-- 品类 -->
             <picker mode="selector" range="{{typeList}}" range-key="name" value="{{typeIdx}}" bindchange="onPickerType">
                 <view class="fsel">
-                    <text class="flabel">品类</text>
-                    <text class="fval">{{typeDisp}}</text>
+                    <text class="fval">品类：{{typeDisp}}</text>
                     <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
                 </view>
             </picker>
             <!-- 指标 -->
             <picker mode="selector" range="{{xlList}}" range-key="name" value="{{xlIdx}}" bindchange="onPickerXl">
                 <view class="fsel">
-                    <text class="flabel">指标</text>
-                    <text class="fval">{{xlDisp}}</text>
+                    <text class="fval">指标：{{xlDisp}}</text>
                     <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
                 </view>
             </picker>
             <!-- 时间 -->
             <picker mode="selector" range="{{timeList}}" range-key="name" value="{{timeIdx}}" bindchange="onPickerTime">
                 <view class="fsel">
-                    <text class="flabel">时间</text>
-                    <text class="fval">{{timeDisp}}</text>
+                    <text class="fval">时间：{{timeDisp}}</text>
                     <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
                 </view>
             </picker>
             <!-- 年累计 -->
             <picker mode="selector" range="{{ytdList}}" range-key="name" value="{{ytdIdx}}" bindchange="onPickerYtd">
                 <view class="fsel">
-                    <text class="flabel">累计</text>
-                    <text class="fval">{{ytd==1?'年累计':'当期'}}</text>
+                    <text class="fval">累计：{{ytd==1?'年累计':'当期'}}</text>
                     <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
                 </view>
             </picker>
@@ -65,8 +59,6 @@
     </view>
 
     <view class="con" wx:else>
-        <!-- 当前选择摘要 -->
-        <view class="cursel">当前：{{selTypeName?selTypeName:'未选品类'}}{{selMarket?' · '+selMarket:''}}{{selLx?' · '+selLx:''}}{{selTimeName?' · '+selTimeName:''}}{{ytd==1?' · 年累计':''}}<text class="ver">v{{ver}}</text></view>
         <!-- 指标卡 -->
         <view class="ind">
             <view class="inditem {{xqData.length==1?'ind2':''}}" wx:for="{{xqData}}" wx:key="t1">
