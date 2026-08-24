@@ -145,8 +145,8 @@ Page({
   },
 
   // 筛选变化（下拉）
-  onPickerMarket(e) { this.setData({ selMarket: this.data.marketList[e.detail.value].id }); this.loadData() },
-  onPickerLx(e) { this.setData({ selLx: this.data.lxList[e.detail.value].id }); this.loadData() },
+  onPickerMarket(e) { this.setData({ selMarket: this.data.marketList[e.detail.value].id, needSnap: false }); this.loadData() },
+  onPickerLx(e) { this.setData({ selLx: this.data.lxList[e.detail.value].id, needSnap: false }); this.loadData() },
   onPickerType(e) {
     const t = this.data.typeList[e.detail.value]
     const q = ['5', '6', '7', '8', '18']
@@ -162,7 +162,7 @@ Page({
   },
   onPickerXl(e) {
     const x = this.data.xlList[e.detail.value]
-    this.setData({ selXl: x.id, selXlName: x.name })
+    this.setData({ selXl: x.id, selXlName: x.name, needSnap: false })
     this.loadData()
   },
   onPickerTime(e) {
@@ -174,13 +174,14 @@ Page({
       selPeriod: t.period,
       selYear: t.year,
       selQuarter: t.quarter || '',
-      selMonth: t.month || ''
+      selMonth: t.month || '',
+      needSnap: false
     })
     this.loadData()
   },
   onPickerYtd(e) {
     const y = this.data.ytdList[e.detail.value]
-    this.setData({ ytd: y.id })
+    this.setData({ ytd: y.id, needSnap: false })
     this.loadData()
   },
   onTypeTapForMenu(e) {
