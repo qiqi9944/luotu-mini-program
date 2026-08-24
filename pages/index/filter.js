@@ -16,9 +16,9 @@ Page({
     typeList: [],
     // 时间选项(月度/季度平铺)
     timeList: [],
-    // 选中值
-    selMarket: '',
-    selLx: '',
+    // 选中值（默认对齐存量口径：中国市场·线上零售）
+    selMarket: '中国',
+    selLx: '零售',
     selXl: '1',
     selXlName: '销量',
     selType: '',
