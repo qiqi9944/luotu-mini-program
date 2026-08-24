@@ -30,6 +30,7 @@ Page({
     timeIdx: 0,
     selTimeName: '',
     ytd: 0,
+    needSnap: false,
 
     empty: false,
     xqData: [],
@@ -56,33 +57,44 @@ Page({
         this.setData({ selPeriod: '2' })
       }
     }
-    // 时间选项：近5年(月/季)平铺
+    // 时间下拉按当前月/季构建；首次加载自动吸附到最新有数据时间
+    this.buildTimeList(this.data.selPeriod)
+    this.setData({ needSnap: true })
+  },
+
+  buildTimeList(period) {
     const now = new Date().getFullYear()
     const timeList = []
     let curIdx = 0
+    let curMonth = String(new Date().getMonth() + 1)
+    let curQuarter = '1'
     for (let y = now; y >= now - 4; y--) {
       const yr = String(y)
-      if (this.data.selPeriod === '2') {
+      if (period === '2') {
         for (let q = 1; q <= 4; q++) {
           const item = { id: yr + 'Q' + q, name: y + '年 Q' + q, year: yr, period: '2', quarter: String(q) }
           timeList.push(item)
-          if (y === now && q === 1) curIdx = timeList.length - 1
         }
       } else {
         for (let m = 12; m >= 1; m--) {
           const item = { id: yr + '.' + m, name: y + '年' + m + '月', year: yr, period: '1', month: String(m) }
           timeList.push(item)
-          if (y === now && m === 1) curIdx = timeList.length - 1
         }
       }
     }
+    // 默认定位当前日历月/季
+    const nowY = String(now)
+    timeList.forEach((it, i) => {
+      if (period === '2' && it.year === nowY && it.quarter === curQuarter) curIdx = i
+      if (period !== '2' && it.year === nowY && it.month === curMonth) curIdx = i
+    })
     this.setData({
       timeList,
       timeIdx: curIdx,
       selTimeName: timeList[curIdx] ? timeList[curIdx].name : '',
-      selYear: String(now),
-      selMonth: String((new Date().getMonth() + 1)),
-      selQuarter: '1'
+      selYear: nowY,
+      selMonth: curMonth,
+      selQuarter: curQuarter
     })
   },
 
@@ -137,7 +149,15 @@ Page({
   onPickerLx(e) { this.setData({ selLx: this.data.lxList[e.detail.value].id }); this.loadData() },
   onPickerType(e) {
     const t = this.data.typeList[e.detail.value]
-    this.setData({ selType: t.id, selTypeName: t.name })
+    const q = ['5', '6', '7', '8', '18']
+    const period = q.indexOf(t.id) >= 0 ? '2' : '1'
+    const patch = { selType: t.id, selTypeName: t.name }
+    if (period !== this.data.selPeriod) {
+      this.buildTimeList(period)
+      patch.selPeriod = period
+      patch.needSnap = true
+    }
+    this.setData(patch)
     this.loadData()
   },
   onPickerXl(e) {
@@ -202,6 +222,24 @@ Page({
         if (d.status != 1) {
           that.setData({ empty: true, xqData: [] })
           return
+        }
+        // 首次/换品类：吸附到最新有数据的时间，避免默认当前月无数据而空白
+        if (that.data.needSnap && (d.latest_year)) {
+          const ly = String(d.latest_year)
+          const period = that.data.selPeriod === '2' ? '2' : '1'
+          let target = -1
+          const tl = that.data.timeList
+          tl.forEach((it, i) => {
+            if (period === '2' && it.year === ly && it.quarter === String(d.latest_quarter || 1)) target = i
+            if (period !== '2' && it.year === ly && it.month === String(d.latest_month || 1)) target = i
+          })
+          that.setData({ needSnap: false })
+          if (target >= 0 && target !== that.data.timeIdx) {
+            const t = tl[target]
+            that.setData({ timeIdx: target, selTimeName: t.name, selYear: t.year, selMonth: t.month || '', selQuarter: t.quarter || '' })
+            that.loadData()
+            return
+          }
         }
         const arr1 = d.arr_sj1 || []
         const s2 = d.arr_sj2 || []
