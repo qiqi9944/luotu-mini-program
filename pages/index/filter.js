@@ -16,9 +16,9 @@ Page({
     typeList: [],
     // 时间选项(月度/季度平铺)
     timeList: [],
-    // 选中值（默认对齐存量口径：中国市场·线上零售）
-    selMarket: '中国',
-    selLx: '零售',
+    // 选中值
+    selMarket: '',
+    selLx: '',
     selXl: '1',
     selXlName: '销量',
     selType: '',
@@ -31,9 +31,9 @@ Page({
     selTimeName: '',
     ytd: 0,
     needSnap: false,
-    ver: '1.3.7',
-    marketIdx: 1,
-    lxIdx: 1,
+    ver: '1.3.8',
+    marketIdx: 0,
+    lxIdx: 0,
     typeIdx: 0,
     xlIdx: 0,
     ytdIdx: 0,
@@ -264,9 +264,11 @@ Page({
         const s2 = d.arr_sj2 || []
         const s3 = d.arr_sj3 || {}
         const s6 = d.arr_sj6 || {}
+        // 有实际数值才算有数据
+        const hasNum = (arr1.some(it => Number(it.t2) !== 0)) || (Array.isArray(s2) && s2.some(r => Number(r.num) !== 0))
         that.setData({
           xqData: arr1,
-          empty: arr1.length === 0,
+          empty: !hasNum,
           chart1x: s2.x ? s2.x : (Array.isArray(s2) ? s2.map(r => r.id) : []),
           chart1y: s2.x ? s2.y : (Array.isArray(s2) ? s2.map(r => r.num) : []),
           chart2x: s3.x || [],

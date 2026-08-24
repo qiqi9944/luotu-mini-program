@@ -63,7 +63,7 @@
 
     <!-- 内容 -->
     <view class="con empty" wx:if="{{empty}}">
-        <view class="text">暂无数据，敬请期待...</view>
+        <view class="text">该口径暂无数据，敬请期待...</view>
     </view>
 
     <view class="con" wx:else>
