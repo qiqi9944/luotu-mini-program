@@ -106,25 +106,54 @@
 }
 .menulist--buttons .item{
   width: calc((100% - 44rpx) / 3);
-  height: 84rpx;
+  height: 168rpx;
   box-sizing: border-box;
-  border: 4rpx solid #0f5f8a;
-  border-radius: 16rpx;
+  border: 2rpx solid #eef1f6;
+  border-radius: 20rpx;
   background-color: #fff;
+  box-shadow: 0 6rpx 16rpx rgba(15,95,138,0.06);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 12rpx;
+  padding: 16rpx 8rpx;
   margin-right: 22rpx;
   margin-bottom: 22rpx;
 }
 .menulist--buttons .item:nth-child(3n){
   margin-right: 0;
 }
+.menulist--buttons .item .item-icon{
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12rpx;
+  background: linear-gradient(135deg, #1a9fe8 0%, #0f5f8a 100%);
+}
+.menulist--buttons .item .item-icon image{
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.menulist--buttons .item .item-icon-letter{
+  color: #fff;
+  font-size: 44rpx;
+  font-weight: bold;
+}
+.menulist--buttons .item .item-icon-c0{ background: linear-gradient(135deg,#ff9a56 0%,#ff6a3d 100%); }
+.menulist--buttons .item .item-icon-c1{ background: linear-gradient(135deg,#5bc0a3 0%,#2f9e79 100%); }
+.menulist--buttons .item .item-icon-c2{ background: linear-gradient(135deg,#8e7cf3 0%,#6a5ae0 100%); }
+.menulist--buttons .item .item-icon-c3{ background: linear-gradient(135deg,#f06a8d 0%,#e04a74 100%); }
+.menulist--buttons .item .item-icon-c4{ background: linear-gradient(135deg,#4fb3e0 0%,#2b8fc2 100%); }
+.menulist--buttons .item .item-icon-c5{ background: linear-gradient(135deg,#e8b23e 0%,#d1941f 100%); }
 .menulist--buttons .item .title{
   width: 100%;
   text-align: center;
-  font-size: 28rpx;
+  font-size: 26rpx;
   line-height: 1.2;
   color: #2a2a2a;
   white-space: normal;

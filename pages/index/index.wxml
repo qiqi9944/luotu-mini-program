@@ -23,33 +23,15 @@
     <view class="menulist menulist--buttons">
         <view class="menu-title">市场数据</view>
         <view class="menu-grid">
-            <view class="item" bindtap="nextpage" data-type='1'>
-                <view class="title">影音娱乐</view>
-            </view>
-            <view class="item" bindtap="nextpage" data-type='2'>
-                <view class="title">电子教育</view>
-            </view>
-            <view class="item" bindtap="nextpage" data-type='14'>
-                <view class="title">商务办公</view>
-            </view>
-            <view class="item" bindtap="nextpage" data-type='3'>
-                <view class="title">智能穿戴</view>
-            </view>
-            <view class="item" bindtap="nextpage" data-type='5'>
-                <view class="title">安防监控</view>
-            </view>
-            <view class="item" bindtap="nextpage" data-type='6'>
-                <view class="title">运动户外</view>
-            </view>
-            <view class="item" bindtap="nextpage" data-type='7'>
-                <view class="title">商用显示</view>
-            </view>
-            <view class="item" bindtap="nextpage" data-type='18'>
-                <view class="title">品质生活</view>
-            </view>
-            <view class="item" bindtap="nextpage" data-type='9'>
-                <view class="title">核心器件</view>
-            </view>
+            <block wx:for="{{menulist}}" wx:key="id">
+                <view class="item" bindtap="nextpage" data-type="{{item.type}}">
+                    <view class="item-icon">
+                        <image wx:if="{{item.pic}}" src="{{item.pic}}" mode="aspectFill"></image>
+                        <view wx:else class="item-icon-letter item-icon-c{{(index % 6)}}">{{item.name[0]}}</view>
+                    </view>
+                    <view class="title">{{item.name}}</view>
+                </view>
+            </block>
         </view>
     </view>
     <!-- 广告（原轮播已移至顶部，此处保留空view维持con结构） -->

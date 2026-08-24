@@ -22,6 +22,7 @@ Page({
       { id: 1, url: '', picurl: '/pages/images/ad.jpg' },
       { id: 2, url: '', picurl: '/pages/images/ad.jpg' },
     ],
+    menulist: [],
     newslist: []
   },
   onLoad() {
@@ -46,12 +47,14 @@ Page({
   },
   onShow: function () {
     this.getnews();
-    this.getbanner()
+    this.getbanner();
+    this.getmenu();
     // app.gethistory('首页','/pages/index/index',2)
   },
   onPullDownRefresh: function () {
     this.getbanner()
     this.getnews()
+    this.getmenu()
     wx.stopPullDownRefresh();
   },
   /**
@@ -85,6 +88,20 @@ Page({
         that.setData({
           lunbo: res.data.datalist
         })
+      }
+    })
+  },
+  getmenu: function () {
+    let that = this;
+    wx.request({
+      url: app.globalData.siteUrl + '/Wxapi/getindexmenu',
+      success: function (res) {
+        console.log(res);
+        if (res.data.status == 1 && res.data.datalist) {
+          that.setData({
+            menulist: res.data.datalist
+          })
+        }
       }
     })
   },
