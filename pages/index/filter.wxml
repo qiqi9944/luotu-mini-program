@@ -1,0 +1,126 @@
+<!-- pages/index/filter.wxml -->
+<view class="page">
+
+    <!-- 搜索框 -->
+    <view class="search">
+        <input placeholder="搜索品牌 / 关键词" value="{{keywords}}" bindinput="onSearchInput" bindconfirm="onSearch" />
+        <view class="btn" bindtap="onSearch">搜索</view>
+    </view>
+
+    <!-- 筛选条件 -->
+    <view class="filters">
+
+        <!-- 市场 -->
+        <view class="frow">
+            <view class="flabel">市场</view>
+            <scroll-view scroll-x class="fopts" enable-flick>
+                <view wx:for="{{marketList}}" wx:key="id"
+                      class="fchip {{selMarket==item.id?'on':''}}"
+                      data-v="{{item.id}}" bindtap="onMarketTap">{{item.name}}</view>
+            </scroll-view>
+        </view>
+
+        <!-- 品径 -->
+        <view class="frow">
+            <view class="flabel">品径</view>
+            <scroll-view scroll-x class="fopts">
+                <view wx:for="{{lxList}}" wx:key="id"
+                      class="fchip {{selLx==item.id?'on':''}}"
+                      data-v="{{item.id}}" bindtap="onLxTap">{{item.name}}</view>
+            </scroll-view>
+        </view>
+
+        <!-- 品类 -->
+        <view class="frow">
+            <view class="flabel">品类</view>
+            <scroll-view scroll-x class="fopts">
+                <view wx:for="{{typeList}}" wx:key="id"
+                      class="fchip {{selType==item.id?'on':''}}"
+                      data-v="{{item.id}}" bindtap="onTypeTap">{{item.name}}</view>
+            </scroll-view>
+        </view>
+
+        <!-- 指标 -->
+        <view class="frow">
+            <view class="flabel">指标</view>
+            <scroll-view scroll-x class="fopts">
+                <view wx:for="{{xlList}}" wx:key="id"
+                      class="fchip {{selXl==item.id?'on':''}}"
+                      data-v="{{item.id}}" bindtap="onXlTap">{{item.name}}</view>
+            </scroll-view>
+        </view>
+
+        <!-- 时间：月/季 -->
+        <view class="frow">
+            <view class="flabel">时间</view>
+            <scroll-view scroll-x class="fopts">
+                <view wx:for="{{periodList}}" wx:key="id"
+                      class="fchip {{selPeriod==item.id?'on':''}}"
+                      data-v="{{item.id}}" bindtap="onPeriodTap">{{item.name}}</view>
+                <!-- 年份 -->
+                <picker mode="selector" range="{{yrList}}" range-key="name"
+                        bindchange="onYearTap">
+                    <view class="fchip on">{{selYear}}年</view>
+                </picker>
+                <!-- 月 or 季 -->
+                <block wx:if="{{selPeriod==1}}">
+                    <picker mode="selector" range="{{monthList}}" range-key="name" bindchange="onMonthTap">
+                        <view class="fchip on">{{selMonth?selMonth+'月':'选择月份'}}</view>
+                    </picker>
+                </block>
+                <block wx:else>
+                    <picker mode="selector" range="{{quarterList}}" range-key="name" bindchange="onQuarterTap">
+                        <view class="fchip on">{{selQuarter?'Q'+selQuarter:'选择季度'}}</view>
+                    </picker>
+                </block>
+                <!-- 年累计 -->
+                <view class="fchip {{ytd==1?'on':''}}" data-v="{{ytd==1?0:1}}" bindtap="onYtdTap">年累计</view>
+            </scroll-view>
+        </view>
+    </view>
+
+    <!-- 内容 -->
+    <view class="con empty" wx:if="{{empty}}">
+        <view class="text">暂无数据，敬请期待...</view>
+    </view>
+
+    <view class="con" wx:else>
+        <!-- 指标卡 -->
+        <view class="ind">
+            <view class="inditem {{xqData.length==1?'ind2':''}}" wx:for="{{xqData}}" wx:key="t1">
+                <view class="p1">{{item.t1}}</view>
+                <view class="p2">
+                    <text class="num">{{item.t2}}</text><text class="dw">{{item.dw}}</text>
+                </view>
+                <view class="p3 {{item.t3[0]=='+'?'up':item.t3[0]=='-'?'down':''}}">同比 {{item.t3}}</view>
+            </view>
+        </view>
+
+        <!-- 市场规模 -->
+        <view class="box">
+            <view class="btitle">市场规模趋势（{{arr_sj2_dw}}）</view>
+            <view class="chart">
+                <ec-canvas id="mychart-dom-bar" class="chartdom" canvas-id="bar1" ec="{{ec}}"></ec-canvas>
+            </view>
+        </view>
+
+        <!-- 品牌份额 -->
+        <view class="box" wx:if="{{chart2x.length}}">
+            <view class="btitle">品牌销量份额(%)</view>
+            <view class="chart">
+                <ec-canvas id="mychart-dom-bar2" class="chartdom" canvas-id="bar2" ec="{{ec2}}"></ec-canvas>
+            </view>
+        </view>
+
+        <!-- 产品结构 -->
+        <view class="box" wx:if="{{chart4.length}}">
+            <view class="btitle">产品/价格结构(%)</view>
+            <view class="chart">
+                <ec-canvas id="mychart-dom-bar3" class="chartdom" canvas-id="bar3" ec="{{ec3}}"></ec-canvas>
+            </view>
+        </view>
+
+        <view class="tips" wx:if="{{tips}}">{{tips}}</view>
+        <view class="blank20"></view>
+    </view>
+</view>

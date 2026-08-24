@@ -1,0 +1,124 @@
+/* pages/index/filter.wxss */
+page{
+  background:#f5f7fa;
+}
+.page{
+  padding: 20rpx 24rpx;
+  box-sizing: border-box;
+}
+/* 搜索框 */
+.search{
+  display:flex;
+  align-items:center;
+  background:#fff;
+  border-radius: 40rpx;
+  padding: 6rpx 8rpx 6rpx 28rpx;
+  box-shadow: 0 4rpx 12rpx rgba(15,95,138,.06);
+}
+.search input{
+  flex:1;
+  height: 64rpx;
+  font-size: 26rpx;
+}
+.search .btn{
+  background: linear-gradient(135deg,#1a9fe8,#0f5f8a);
+  color:#fff;
+  font-size: 26rpx;
+  padding: 0 32rpx;
+  height: 64rpx;
+  line-height:64rpx;
+  border-radius: 40rpx;
+}
+/* 筛选 */
+.filters{
+  margin-top: 20rpx;
+  background:#fff;
+  border-radius: 16rpx;
+  padding: 10rpx 24rpx;
+  box-shadow: 0 4rpx 12rpx rgba(15,95,138,.05);
+}
+.frow{
+  display:flex;
+  align-items:center;
+  padding: 14rpx 0;
+  border-bottom: 1rpx solid #f2f4f7;
+}
+.frow:last-child{ border-bottom:none; }
+.flabel{
+  width: 90rpx;
+  font-size: 26rpx;
+  color:#8a919f;
+  flex-shrink:0;
+}
+.fopts{
+  flex:1;
+  white-space: nowrap;
+  width: 100%;
+}
+.fopts .fchip{
+  display:inline-block;
+  padding: 10rpx 26rpx;
+  margin-right: 14rpx;
+  font-size: 25rpx;
+  color:#3a4556;
+  background:#f2f4f7;
+  border-radius: 30rpx;
+}
+.fopts .fchip.on{
+  background: linear-gradient(135deg,#1a9fe8,#0f5f8a);
+  color:#fff;
+}
+/* 指标卡 */
+.ind{
+  margin-top:20rpx;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+}
+.inditem{
+  width: calc((100% - 24rpx) / 3);
+  background:#fff;
+  border-radius:16rpx;
+  padding: 24rpx;
+  box-sizing:border-box;
+  box-shadow:0 4rpx 12rpx rgba(15,95,138,.05);
+}
+.ind2{ width:100%; }
+.inditem .p1{ font-size:26rpx; color:#8a919f; }
+.inditem .p2{ margin:14rpx 0; }
+.inditem .num{ font-size:40rpx; font-weight:bold; color:#0f5f8a; }
+.inditem .dw{ font-size:22rpx; color:#8a919f; margin-left:6rpx; }
+.inditem .p3{ font-size:24rpx; }
+.inditem .p3.up{ color:#e04a5c; }
+.inditem .p3.down{ color:#2f9e79; }
+/* 图表 */
+.box{
+  margin-top:20rpx;
+  background:#fff;
+  border-radius:16rpx;
+  padding: 24rpx;
+  box-shadow:0 4rpx 12rpx rgba(15,95,138,.05);
+}
+.btitle{
+  font-size:28rpx;
+  font-weight:bold;
+  color:#2a2a2a;
+  margin-bottom:16rpx;
+  padding-left:12rpx;
+  border-left:6rpx solid #1a9fe8;
+}
+.chart{ width:100%; height:420rpx; }
+.chartdom{ width:100%; height:100%; }
+.tips{
+  margin-top:20rpx;
+  font-size:24rpx;
+  color:#9aa1ad;
+  text-align:center;
+}
+.empty{
+  margin-top:60rpx;
+  text-align:center;
+  color:#9aa1ad;
+  font-size:26rpx;
+}
+.blank20{ height:40rpx; }

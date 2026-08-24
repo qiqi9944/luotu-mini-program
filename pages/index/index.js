@@ -165,7 +165,7 @@ Page({
             return
           }
           wx.navigateTo({
-            url: '/pages/index/next?type=' + type,
+            url: '/pages/index/filter?type=' + type,
             success: (result) => { },
             fail: (res) => { },
             complete: (res) => { },

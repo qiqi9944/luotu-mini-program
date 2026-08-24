@@ -19,6 +19,7 @@
 		"pages/index/more",
 		"pages/user/about",
 		"pages/index/search",
+		"pages/index/filter",
 		"pages/user/join"
 	],
 	"tabBar": {
