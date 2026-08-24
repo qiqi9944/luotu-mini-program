@@ -11,7 +11,7 @@
     <view class="filters">
         <view class="fgrid">
             <!-- 市场 -->
-            <picker mode="selector" range="{{marketList}}" range-key="name" bindchange="onPickerMarket">
+            <picker mode="selector" range="{{marketList}}" range-key="name" value="{{marketIdx}}" bindchange="onPickerMarket">
                 <view class="fsel">
                     <text class="flabel">市场</text>
                     <text class="fval">{{selMarket||'不限'}}</text>
@@ -19,7 +19,7 @@
                 </view>
             </picker>
             <!-- 品径 -->
-            <picker mode="selector" range="{{lxList}}" range-key="name" bindchange="onPickerLx">
+            <picker mode="selector" range="{{lxList}}" range-key="name" value="{{lxIdx}}" bindchange="onPickerLx">
                 <view class="fsel">
                     <text class="flabel">品径</text>
                     <text class="fval">{{selLx||'不限'}}</text>
@@ -27,7 +27,7 @@
                 </view>
             </picker>
             <!-- 品类 -->
-            <picker mode="selector" range="{{typeList}}" range-key="name" bindchange="onPickerType">
+            <picker mode="selector" range="{{typeList}}" range-key="name" value="{{typeIdx}}" bindchange="onPickerType">
                 <view class="fsel">
                     <text class="flabel">品类</text>
                     <text class="fval">{{selTypeName||'请选择'}}</text>
@@ -35,7 +35,7 @@
                 </view>
             </picker>
             <!-- 指标 -->
-            <picker mode="selector" range="{{xlList}}" range-key="name" bindchange="onPickerXl">
+            <picker mode="selector" range="{{xlList}}" range-key="name" value="{{xlIdx}}" bindchange="onPickerXl">
                 <view class="fsel">
                     <text class="flabel">指标</text>
                     <text class="fval">{{selXlName}}</text>
@@ -43,7 +43,7 @@
                 </view>
             </picker>
             <!-- 时间 -->
-            <picker mode="selector" range="{{timeList}}" range-key="name" bindchange="onPickerTime">
+            <picker mode="selector" range="{{timeList}}" range-key="name" value="{{timeIdx}}" bindchange="onPickerTime">
                 <view class="fsel">
                     <text class="flabel">时间</text>
                     <text class="fval">{{selTimeName}}</text>
@@ -51,7 +51,7 @@
                 </view>
             </picker>
             <!-- 年累计 -->
-            <picker mode="selector" range="{{ytdList}}" range-key="name" bindchange="onPickerYtd">
+            <picker mode="selector" range="{{ytdList}}" range-key="name" value="{{ytdIdx}}" bindchange="onPickerYtd">
                 <view class="fsel">
                     <text class="flabel">累计</text>
                     <text class="fval">{{ytd==1?'年累计':'当期'}}</text>

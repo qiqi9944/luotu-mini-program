@@ -31,6 +31,11 @@ Page({
     selTimeName: '',
     ytd: 0,
     needSnap: false,
+    marketIdx: 1,
+    lxIdx: 1,
+    typeIdx: 0,
+    xlIdx: 0,
+    ytdIdx: 0,
 
     empty: false,
     xqData: [],
@@ -139,19 +144,29 @@ Page({
     })
     // 若已带初始品类(从首页菜单来)，回填名称
     let selTypeName = ''
-    tl.forEach(t => { if (t.id === String(this.data.selType)) selTypeName = t.name })
-    this.setData({ typeList: tl, selTypeName })
+    let typeIdx = 0
+    tl.forEach((t, i) => { if (t.id === String(this.data.selType)) { selTypeName = t.name; typeIdx = i } })
+    this.setData({ typeList: tl, selTypeName, typeIdx })
     this.loadData()
   },
 
   // 筛选变化（下拉）
-  onPickerMarket(e) { this.setData({ selMarket: this.data.marketList[e.detail.value].id, needSnap: false }); this.loadData() },
-  onPickerLx(e) { this.setData({ selLx: this.data.lxList[e.detail.value].id, needSnap: false }); this.loadData() },
+  onPickerMarket(e) {
+    const i = e.detail.value
+    this.setData({ selMarket: this.data.marketList[i].id, marketIdx: i, needSnap: false })
+    this.loadData()
+  },
+  onPickerLx(e) {
+    const i = e.detail.value
+    this.setData({ selLx: this.data.lxList[i].id, lxIdx: i, needSnap: false })
+    this.loadData()
+  },
   onPickerType(e) {
-    const t = this.data.typeList[e.detail.value]
+    const i = e.detail.value
+    const t = this.data.typeList[i]
     const q = ['5', '6', '7', '8', '18']
     const period = q.indexOf(t.id) >= 0 ? '2' : '1'
-    const patch = { selType: t.id, selTypeName: t.name }
+    const patch = { selType: t.id, selTypeName: t.name, typeIdx: i }
     if (period !== this.data.selPeriod) {
       this.buildTimeList(period)
       patch.selPeriod = period
@@ -161,8 +176,9 @@ Page({
     this.loadData()
   },
   onPickerXl(e) {
-    const x = this.data.xlList[e.detail.value]
-    this.setData({ selXl: x.id, selXlName: x.name, needSnap: false })
+    const i = e.detail.value
+    const x = this.data.xlList[i]
+    this.setData({ selXl: x.id, selXlName: x.name, xlIdx: i, needSnap: false })
     this.loadData()
   },
   onPickerTime(e) {
@@ -180,8 +196,9 @@ Page({
     this.loadData()
   },
   onPickerYtd(e) {
-    const y = this.data.ytdList[e.detail.value]
-    this.setData({ ytd: y.id, needSnap: false })
+    const i = e.detail.value
+    const y = this.data.ytdList[i]
+    this.setData({ ytd: y.id, ytdIdx: i, needSnap: false })
     this.loadData()
   },
   onTypeTapForMenu(e) {
