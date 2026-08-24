@@ -3,7 +3,7 @@
 
     <!-- 搜索框 -->
     <view class="search">
-        <input placeholder="搜索品牌 / 关键词" value="{{keywords}}" bindinput="onSearchInput" bindconfirm="onSearch" />
+        <input placeholder="按品牌搜索 · v1.4.2" value="{{keywords}}" bindinput="onSearchInput" bindconfirm="onSearch" />
         <view class="btn" bindtap="onSearch">搜索</view>
     </view>
 
