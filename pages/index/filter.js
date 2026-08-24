@@ -37,6 +37,7 @@ Page({
     typeIdx: 0,
     xlIdx: 0,
     ytdIdx: 0,
+    selTags: [],
 
     empty: false,
     xqData: [],
@@ -147,19 +148,19 @@ Page({
     let selTypeName = ''
     let typeIdx = 0
     tl.forEach((t, i) => { if (t.id === String(this.data.selType)) { selTypeName = t.name; typeIdx = i } })
-    this.setData({ typeList: tl, selTypeName, typeIdx })
+    this.setData({ typeList: tl, selTypeName, typeIdx }); this.refreshTags()
     this.loadData()
   },
 
   // 筛选变化（下拉）
   onPickerMarket(e) {
     const i = e.detail.value
-    this.setData({ selMarket: this.data.marketList[i].id, marketIdx: i, needSnap: false })
+    this.setData({ selMarket: this.data.marketList[i].id, marketIdx: i, needSnap: false }); this.refreshTags()
     this.loadData()
   },
   onPickerLx(e) {
     const i = e.detail.value
-    this.setData({ selLx: this.data.lxList[i].id, lxIdx: i, needSnap: false })
+    this.setData({ selLx: this.data.lxList[i].id, lxIdx: i, needSnap: false }); this.refreshTags()
     this.loadData()
   },
   onPickerType(e) {
@@ -173,13 +174,13 @@ Page({
       patch.selPeriod = period
       patch.needSnap = true
     }
-    this.setData(patch)
+    this.setData(patch); this.refreshTags()
     this.loadData()
   },
   onPickerXl(e) {
     const i = e.detail.value
     const x = this.data.xlList[i]
-    this.setData({ selXl: x.id, selXlName: x.name, xlIdx: i, needSnap: false })
+    this.setData({ selXl: x.id, selXlName: x.name, xlIdx: i, needSnap: false }); this.refreshTags()
     this.loadData()
   },
   onPickerTime(e) {
@@ -193,13 +194,13 @@ Page({
       selQuarter: t.quarter || '',
       selMonth: t.month || '',
       needSnap: false
-    })
+    }); this.refreshTags()
     this.loadData()
   },
   onPickerYtd(e) {
     const i = e.detail.value
     const y = this.data.ytdList[i]
-    this.setData({ ytd: y.id, ytdIdx: i, needSnap: false })
+    this.setData({ ytd: y.id, ytdIdx: i, needSnap: false }); this.refreshTags()
     this.loadData()
   },
   onTypeTapForMenu(e) {
@@ -285,6 +286,18 @@ Page({
     })
   },
   setTimeout(fn, ms) { setTimeout(fn, ms) },
+
+  // 在筛选条件区展示已选内容
+  refreshTags() {
+    const t = []
+    if (this.data.selMarket) t.push({ label: '市场', text: this.data.selMarket })
+    if (this.data.selLx) t.push({ label: '品径', text: this.data.selLx })
+    if (this.data.selTypeName) t.push({ label: '品类', text: this.data.selTypeName })
+    if (this.data.selTimeName) t.push({ label: '时间', text: this.data.selTimeName })
+    t.push({ label: '指标', text: this.data.selXlName })
+    if (this.data.ytd == 1) t.push({ label: '累计', text: '年累计' })
+    this.setData({ selTags: t })
+  },
 
   renderCharts() {
     // 图1 市场规模（柱状）— 实例只建一次，之后 setOption 更新

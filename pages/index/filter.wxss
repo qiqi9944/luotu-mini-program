@@ -75,6 +75,27 @@ page{
   flex-shrink:0;
   margin-left: 8rpx;
 }
+/* 已选内容标签条 */
+.seltags{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  margin-top: 4rpx;
+}
+.seltags .stitle{
+  font-size: 24rpx;
+  color:#8a919f;
+  margin-right: 12rpx;
+}
+.seltags .stag{
+  font-size: 22rpx;
+  color:#0f5f8a;
+  background: rgba(31,159,232,0.12);
+  border: 1rpx solid #9fd2f0;
+  border-radius: 6rpx;
+  padding: 4rpx 14rpx;
+  margin: 0 10rpx 8rpx 0;
+}
 /* 当前选择摘要 */
 .cursel{
   margin: 20rpx 0 0;

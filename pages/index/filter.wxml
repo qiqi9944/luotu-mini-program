@@ -59,9 +59,12 @@
                 </view>
             </picker>
         </view>
+        <!-- 已选内容展示 -->
+        <view class="seltags" wx:if="{{selTags.length}}">
+            <text class="stitle">已选</text>
+            <view class="stag" wx:for="{{selTags}}" wx:key="label">{{item.label}} {{item.text}}</view>
+        </view>
     </view>
-
-    <!-- 内容 -->
     <view class="con empty" wx:if="{{empty}}">
         <view class="text">该口径暂无数据，敬请期待...</view>
     </view>
