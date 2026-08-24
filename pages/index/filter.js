@@ -37,7 +37,11 @@ Page({
     typeIdx: 0,
     xlIdx: 0,
     ytdIdx: 0,
-    selTags: [],
+    marketDisp: '不限',
+    lxDisp: '不限',
+    typeDisp: '请选择',
+    xlDisp: '销量',
+    timeDisp: '',
 
     empty: false,
     xqData: [],
@@ -148,19 +152,19 @@ Page({
     let selTypeName = ''
     let typeIdx = 0
     tl.forEach((t, i) => { if (t.id === String(this.data.selType)) { selTypeName = t.name; typeIdx = i } })
-    this.setData({ typeList: tl, selTypeName, typeIdx }); this.refreshTags()
+    this.setData({ typeList: tl, selTypeName, typeIdx }); this.refreshDisp()
     this.loadData()
   },
 
   // 筛选变化（下拉）
   onPickerMarket(e) {
     const i = e.detail.value
-    this.setData({ selMarket: this.data.marketList[i].id, marketIdx: i, needSnap: false }); this.refreshTags()
+    this.setData({ selMarket: this.data.marketList[i].id, marketIdx: i, needSnap: false }); this.refreshDisp()
     this.loadData()
   },
   onPickerLx(e) {
     const i = e.detail.value
-    this.setData({ selLx: this.data.lxList[i].id, lxIdx: i, needSnap: false }); this.refreshTags()
+    this.setData({ selLx: this.data.lxList[i].id, lxIdx: i, needSnap: false }); this.refreshDisp()
     this.loadData()
   },
   onPickerType(e) {
@@ -174,13 +178,13 @@ Page({
       patch.selPeriod = period
       patch.needSnap = true
     }
-    this.setData(patch); this.refreshTags()
+    this.setData(patch); this.refreshDisp()
     this.loadData()
   },
   onPickerXl(e) {
     const i = e.detail.value
     const x = this.data.xlList[i]
-    this.setData({ selXl: x.id, selXlName: x.name, xlIdx: i, needSnap: false }); this.refreshTags()
+    this.setData({ selXl: x.id, selXlName: x.name, xlIdx: i, needSnap: false }); this.refreshDisp()
     this.loadData()
   },
   onPickerTime(e) {
@@ -194,13 +198,13 @@ Page({
       selQuarter: t.quarter || '',
       selMonth: t.month || '',
       needSnap: false
-    }); this.refreshTags()
+    }); this.refreshDisp()
     this.loadData()
   },
   onPickerYtd(e) {
     const i = e.detail.value
     const y = this.data.ytdList[i]
-    this.setData({ ytd: y.id, ytdIdx: i, needSnap: false }); this.refreshTags()
+    this.setData({ ytd: y.id, ytdIdx: i, needSnap: false }); this.refreshDisp()
     this.loadData()
   },
   onTypeTapForMenu(e) {
@@ -279,6 +283,7 @@ Page({
           arr_sj2_dw: d.arr_sj2_dw || '万台',
           tips: d.arr_sj ? d.arr_sj : ''
         })
+        that.refreshDisp();
         that.setTimeout(() => {
           that.renderCharts()
         }, 100)
@@ -287,16 +292,15 @@ Page({
   },
   setTimeout(fn, ms) { setTimeout(fn, ms) },
 
-  // 在筛选条件区展示已选内容
-  refreshTags() {
-    const t = []
-    if (this.data.selMarket) t.push({ label: '市场', text: this.data.selMarket })
-    if (this.data.selLx) t.push({ label: '品径', text: this.data.selLx })
-    if (this.data.selTypeName) t.push({ label: '品类', text: this.data.selTypeName })
-    if (this.data.selTimeName) t.push({ label: '时间', text: this.data.selTimeName })
-    t.push({ label: '指标', text: this.data.selXlName })
-    if (this.data.ytd == 1) t.push({ label: '累计', text: '年累计' })
-    this.setData({ selTags: t })
+  // 同步下拉框直接显示的名称
+  refreshDisp() {
+    this.setData({
+      marketDisp: this.data.selMarket || '不限',
+      lxDisp: this.data.selLx || '不限',
+      typeDisp: this.data.selTypeName || '请选择',
+      xlDisp: this.data.selXlName,
+      timeDisp: this.data.selTimeName
+    })
   },
 
   renderCharts() {

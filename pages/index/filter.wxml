@@ -14,7 +14,7 @@
             <picker mode="selector" range="{{marketList}}" range-key="name" value="{{marketIdx}}" bindchange="onPickerMarket">
                 <view class="fsel">
                     <text class="flabel">市场</text>
-                    <text class="fval">{{selMarket||'不限'}}</text>
+                    <text class="fval">{{marketDisp}}</text>
                     <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
                 </view>
             </picker>
@@ -22,7 +22,7 @@
             <picker mode="selector" range="{{lxList}}" range-key="name" value="{{lxIdx}}" bindchange="onPickerLx">
                 <view class="fsel">
                     <text class="flabel">品径</text>
-                    <text class="fval">{{selLx||'不限'}}</text>
+                    <text class="fval">{{lxDisp}}</text>
                     <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
                 </view>
             </picker>
@@ -30,7 +30,7 @@
             <picker mode="selector" range="{{typeList}}" range-key="name" value="{{typeIdx}}" bindchange="onPickerType">
                 <view class="fsel">
                     <text class="flabel">品类</text>
-                    <text class="fval">{{selTypeName||'请选择'}}</text>
+                    <text class="fval">{{typeDisp}}</text>
                     <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
                 </view>
             </picker>
@@ -38,7 +38,7 @@
             <picker mode="selector" range="{{xlList}}" range-key="name" value="{{xlIdx}}" bindchange="onPickerXl">
                 <view class="fsel">
                     <text class="flabel">指标</text>
-                    <text class="fval">{{selXlName}}</text>
+                    <text class="fval">{{xlDisp}}</text>
                     <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
                 </view>
             </picker>
@@ -46,7 +46,7 @@
             <picker mode="selector" range="{{timeList}}" range-key="name" value="{{timeIdx}}" bindchange="onPickerTime">
                 <view class="fsel">
                     <text class="flabel">时间</text>
-                    <text class="fval">{{selTimeName}}</text>
+                    <text class="fval">{{timeDisp}}</text>
                     <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
                 </view>
             </picker>
@@ -58,11 +58,6 @@
                     <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
                 </view>
             </picker>
-        </view>
-        <!-- 已选内容展示 -->
-        <view class="seltags" wx:if="{{selTags.length}}">
-            <text class="stitle">已选</text>
-            <view class="stag" wx:for="{{selTags}}" wx:key="label">{{item.label}} {{item.text}}</view>
         </view>
     </view>
     <view class="con empty" wx:if="{{empty}}">
