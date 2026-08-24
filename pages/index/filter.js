@@ -11,26 +11,24 @@ Page({
     lxList: [{ id: '', name: '不限' }, { id: '零售', name: '零售' }, { id: '出货', name: '出货' }],
     xlList: [{ id: '1', name: '销量' }, { id: '2', name: '销额' }],
     periodList: [{ id: '1', name: '月度' }, { id: '2', name: '季度' }],
+    ytdList: [{ id: '0', name: '当期' }, { id: '1', name: '年累计' }],
     // 品类
     typeList: [],
-    // 时间(月/季度)
-    yrList: [],
-    monthList: [
-      { id: '1', name: '1月' }, { id: '2', name: '2月' }, { id: '3', name: '3月' },
-      { id: '4', name: '4月' }, { id: '5', name: '5月' }, { id: '6', name: '6月' },
-      { id: '7', name: '7月' }, { id: '8', name: '8月' }, { id: '9', name: '9月' },
-      { id: '10', name: '10月' }, { id: '11', name: '11月' }, { id: '12', name: '12月' }
-    ],
-    quarterList: [{ id: '1', name: 'Q1' }, { id: '2', name: 'Q2' }, { id: '3', name: 'Q3' }, { id: '4', name: 'Q4' }],
+    // 时间选项(月度/季度平铺)
+    timeList: [],
     // 选中值
     selMarket: '',
     selLx: '',
     selXl: '1',
+    selXlName: '销量',
     selType: '',
+    selTypeName: '',
     selPeriod: '1',
     selYear: '',
     selMonth: '',
     selQuarter: '',
+    timeIdx: 0,
+    selTimeName: '',
     ytd: 0,
 
     empty: false,
@@ -58,15 +56,33 @@ Page({
         this.setData({ selPeriod: '2' })
       }
     }
-    // 年份列表（近5年）
+    // 时间选项：近5年(月/季)平铺
     const now = new Date().getFullYear()
-    const yrList = []
-    for (let i = now; i >= now - 4; i--) {
-      yrList.push({ id: String(i), name: i + '年' })
+    const timeList = []
+    let curIdx = 0
+    for (let y = now; y >= now - 4; y--) {
+      const yr = String(y)
+      if (this.data.selPeriod === '2') {
+        for (let q = 1; q <= 4; q++) {
+          const item = { id: yr + 'Q' + q, name: y + '年 Q' + q, year: yr, period: '2', quarter: String(q) }
+          timeList.push(item)
+          if (y === now && q === 1) curIdx = timeList.length - 1
+        }
+      } else {
+        for (let m = 12; m >= 1; m--) {
+          const item = { id: yr + '.' + m, name: y + '年' + m + '月', year: yr, period: '1', month: String(m) }
+          timeList.push(item)
+          if (y === now && m === 1) curIdx = timeList.length - 1
+        }
+      }
     }
     this.setData({
-      yrList,
-      selYear: String(now)
+      timeList,
+      timeIdx: curIdx,
+      selTimeName: timeList[curIdx] ? timeList[curIdx].name : '',
+      selYear: String(now),
+      selMonth: String((new Date().getMonth() + 1)),
+      selQuarter: '1'
     })
   },
 
@@ -104,52 +120,60 @@ Page({
       '3': { '9': '电视供应链', '17': '显示器供应链', '21': '笔记本电脑供应链', '11': '商用显示供应链', '12': '电子纸供应链', '10': '手机供应链' }
     }
     const tl = []
-    const now = new Date().getFullYear()
     Object.keys(cate2).forEach(g => {
       Object.keys(cate2[g]).forEach(k => {
-        // 影音娱乐=1 电子教育=14 商务办公=2 ... 保持各品类可筛
         tl.push({ id: k, name: cate2[g][k] })
       })
     })
-    this.setData({ typeList: tl })
+    // 若已带初始品类(从首页菜单来)，回填名称
+    let selTypeName = ''
+    tl.forEach(t => { if (t.id === String(this.data.selType)) selTypeName = t.name })
+    this.setData({ typeList: tl, selTypeName })
     this.loadData()
   },
 
-  // 筛选变化
-  onMarketTap(e) { this.setData({ selMarket: e.currentTarget.dataset.v }) },
-  onLxTap(e) { this.setData({ selLx: e.currentTarget.dataset.v }) },
-  onXlTap(e) { this.setData({ selXl: e.currentTarget.dataset.v }); this.loadData() },
-  onPeriodTap(e) { this.setData({ selPeriod: e.currentTarget.dataset.v, selMonth: '', selQuarter: '' }); this.loadData() },
-  onYearTap(e) {
-    const i = Number(e.detail.value)
-    const yr = this.data.yrList[i]
-    this.setData({ selYear: yr ? yr.id : '' })
+  // 筛选变化（下拉）
+  onPickerMarket(e) { this.setData({ selMarket: this.data.marketList[e.detail.value].id }); this.loadData() },
+  onPickerLx(e) { this.setData({ selLx: this.data.lxList[e.detail.value].id }); this.loadData() },
+  onPickerType(e) {
+    const t = this.data.typeList[e.detail.value]
+    this.setData({ selType: t.id, selTypeName: t.name })
     this.loadData()
   },
-  onMonthTap(e) {
-    const i = Number(e.detail.value)
-    const m = this.data.monthList[i]
-    this.setData({ selMonth: m ? m.id : '' })
+  onPickerXl(e) {
+    const x = this.data.xlList[e.detail.value]
+    this.setData({ selXl: x.id, selXlName: x.name })
     this.loadData()
   },
-  onQuarterTap(e) {
-    const i = Number(e.detail.value)
-    const q = this.data.quarterList[i]
-    this.setData({ selQuarter: q ? q.id : '' })
+  onPickerTime(e) {
+    const t = this.data.timeList[e.detail.value]
+    if (!t) return
+    this.setData({
+      timeIdx: e.detail.value,
+      selTimeName: t.name,
+      selPeriod: t.period,
+      selYear: t.year,
+      selQuarter: t.quarter || '',
+      selMonth: t.month || ''
+    })
     this.loadData()
   },
-  onYtdTap(e) { this.setData({ ytd: e.currentTarget.dataset.v }); this.loadData() },
-  onTypeTap(e) {
+  onPickerYtd(e) {
+    const y = this.data.ytdList[e.detail.value]
+    this.setData({ ytd: y.id })
+    this.loadData()
+  },
+  onTypeTapForMenu(e) {
     const t = e.currentTarget.dataset.v
-    // 若为季度类(5,6,7,8,18)自动切季度
     const q = ['5', '6', '7', '8', '18']
     const period = q.indexOf(t) >= 0 ? '2' : this.data.selPeriod
-    this.setData({ selType: t, selPeriod: period })
+    let name = ''
+    this.data.typeList.forEach(x => { if (x.id === String(t)) name = x.name })
+    this.setData({ selType: String(t), selTypeName: name, selPeriod: period })
     this.loadData()
   },
   onSearchInput(e) { this.setData({ keywords: e.detail.value }) },
   onSearch() {
-    // 搜索关键词：用于品牌/名称过滤展示提示（数据列表当前无独立列表，先搜索品牌份额）
     this.loadData()
   },
 

@@ -7,75 +7,57 @@
         <view class="btn" bindtap="onSearch">搜索</view>
     </view>
 
-    <!-- 筛选条件 -->
+    <!-- 筛选条件 : 下拉选择 -->
     <view class="filters">
-
-        <!-- 市场 -->
-        <view class="frow">
-            <view class="flabel">市场</view>
-            <scroll-view scroll-x class="fopts" enable-flick>
-                <view wx:for="{{marketList}}" wx:key="id"
-                      class="fchip {{selMarket==item.id?'on':''}}"
-                      data-v="{{item.id}}" bindtap="onMarketTap">{{item.name}}</view>
-            </scroll-view>
-        </view>
-
-        <!-- 品径 -->
-        <view class="frow">
-            <view class="flabel">品径</view>
-            <scroll-view scroll-x class="fopts">
-                <view wx:for="{{lxList}}" wx:key="id"
-                      class="fchip {{selLx==item.id?'on':''}}"
-                      data-v="{{item.id}}" bindtap="onLxTap">{{item.name}}</view>
-            </scroll-view>
-        </view>
-
-        <!-- 品类 -->
-        <view class="frow">
-            <view class="flabel">品类</view>
-            <scroll-view scroll-x class="fopts">
-                <view wx:for="{{typeList}}" wx:key="id"
-                      class="fchip {{selType==item.id?'on':''}}"
-                      data-v="{{item.id}}" bindtap="onTypeTap">{{item.name}}</view>
-            </scroll-view>
-        </view>
-
-        <!-- 指标 -->
-        <view class="frow">
-            <view class="flabel">指标</view>
-            <scroll-view scroll-x class="fopts">
-                <view wx:for="{{xlList}}" wx:key="id"
-                      class="fchip {{selXl==item.id?'on':''}}"
-                      data-v="{{item.id}}" bindtap="onXlTap">{{item.name}}</view>
-            </scroll-view>
-        </view>
-
-        <!-- 时间：月/季 -->
-        <view class="frow">
-            <view class="flabel">时间</view>
-            <scroll-view scroll-x class="fopts">
-                <view wx:for="{{periodList}}" wx:key="id"
-                      class="fchip {{selPeriod==item.id?'on':''}}"
-                      data-v="{{item.id}}" bindtap="onPeriodTap">{{item.name}}</view>
-                <!-- 年份 -->
-                <picker mode="selector" range="{{yrList}}" range-key="name"
-                        bindchange="onYearTap">
-                    <view class="fchip on">{{selYear}}年</view>
-                </picker>
-                <!-- 月 or 季 -->
-                <block wx:if="{{selPeriod==1}}">
-                    <picker mode="selector" range="{{monthList}}" range-key="name" bindchange="onMonthTap">
-                        <view class="fchip on">{{selMonth?selMonth+'月':'选择月份'}}</view>
-                    </picker>
-                </block>
-                <block wx:else>
-                    <picker mode="selector" range="{{quarterList}}" range-key="name" bindchange="onQuarterTap">
-                        <view class="fchip on">{{selQuarter?'Q'+selQuarter:'选择季度'}}</view>
-                    </picker>
-                </block>
-                <!-- 年累计 -->
-                <view class="fchip {{ytd==1?'on':''}}" data-v="{{ytd==1?0:1}}" bindtap="onYtdTap">年累计</view>
-            </scroll-view>
+        <view class="fgrid">
+            <!-- 市场 -->
+            <picker mode="selector" range="{{marketList}}" range-key="name" bindchange="onPickerMarket">
+                <view class="fsel">
+                    <text class="flabel">市场</text>
+                    <text class="fval">{{selMarket||'不限'}}</text>
+                    <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
+                </view>
+            </picker>
+            <!-- 品径 -->
+            <picker mode="selector" range="{{lxList}}" range-key="name" bindchange="onPickerLx">
+                <view class="fsel">
+                    <text class="flabel">品径</text>
+                    <text class="fval">{{selLx||'不限'}}</text>
+                    <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
+                </view>
+            </picker>
+            <!-- 品类 -->
+            <picker mode="selector" range="{{typeList}}" range-key="name" bindchange="onPickerType">
+                <view class="fsel">
+                    <text class="flabel">品类</text>
+                    <text class="fval">{{selTypeName||'请选择'}}</text>
+                    <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
+                </view>
+            </picker>
+            <!-- 指标 -->
+            <picker mode="selector" range="{{xlList}}" range-key="name" bindchange="onPickerXl">
+                <view class="fsel">
+                    <text class="flabel">指标</text>
+                    <text class="fval">{{selXlName}}</text>
+                    <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
+                </view>
+            </picker>
+            <!-- 时间 -->
+            <picker mode="selector" range="{{timeList}}" range-key="name" bindchange="onPickerTime">
+                <view class="fsel">
+                    <text class="flabel">时间</text>
+                    <text class="fval">{{selTimeName}}</text>
+                    <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
+                </view>
+            </picker>
+            <!-- 年累计 -->
+            <picker mode="selector" range="{{ytdList}}" range-key="name" bindchange="onPickerYtd">
+                <view class="fsel">
+                    <text class="flabel">累计</text>
+                    <text class="fval">{{ytd==1?'年累计':'当期'}}</text>
+                    <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
+                </view>
+            </picker>
         </view>
     </view>
 
