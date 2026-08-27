@@ -1,100 +1,167 @@
 <!-- pages/index/filter.wxml -->
 <view class="page">
 
-    <!-- 搜索框 -->
-    <view class="search">
-        <input placeholder="按品牌搜索 · v1.4.2" value="{{keywords}}" bindinput="onSearchInput" bindconfirm="onSearch" />
-        <view class="btn" bindtap="onSearch">搜索</view>
-    </view>
-
-    <!-- 筛选条件 : 下拉选择 -->
     <view class="filters">
-        <view class="fgrid">
-            <!-- 市场 -->
-            <picker mode="selector" range="{{marketList}}" range-key="name" value="{{marketIdx}}" bindchange="onPickerMarket">
+        <view class="filter-grid">
+            <picker class="picker-item" mode="selector" range="{{marketList}}" range-key="name" value="{{marketIdx}}" bindchange="onPickerMarket">
                 <view class="fsel">
-                    <text class="fval">市场：{{marketDisp}}</text>
-                    <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
+                    <text class="flabel">市场</text>
+                    <view class="fmeta">
+                        <text class="fval">{{marketDisp}}</text>
+                        <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
+                    </view>
                 </view>
             </picker>
-            <!-- 品径 -->
-            <picker mode="selector" range="{{lxList}}" range-key="name" value="{{lxIdx}}" bindchange="onPickerLx">
+
+            <picker class="picker-item" mode="selector" range="{{lxList}}" range-key="name" value="{{lxIdx}}" bindchange="onPickerLx">
                 <view class="fsel">
-                    <text class="fval">品径：{{lxDisp}}</text>
-                    <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
+                    <text class="flabel">品径</text>
+                    <view class="fmeta">
+                        <text class="fval">{{lxDisp}}</text>
+                        <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
+                    </view>
                 </view>
             </picker>
-            <!-- 品类 -->
-            <picker mode="selector" range="{{typeList}}" range-key="name" value="{{typeIdx}}" bindchange="onPickerType">
+
+            <picker class="picker-item" mode="selector" range="{{typeList}}" range-key="name" value="{{typeIdx}}" bindchange="onPickerType">
                 <view class="fsel">
-                    <text class="fval">品类：{{typeDisp}}</text>
-                    <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
+                    <text class="flabel">品类：</text>
+                    <view class="fmeta">
+                        <text class="fval">{{typeDisp}}</text>
+                        <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
+                    </view>
                 </view>
             </picker>
-            <!-- 指标 -->
-            <picker mode="selector" range="{{xlList}}" range-key="name" value="{{xlIdx}}" bindchange="onPickerXl">
+
+            <picker class="picker-item" mode="selector" range="{{xlList}}" range-key="name" value="{{xlIdx}}" bindchange="onPickerXl">
                 <view class="fsel">
-                    <text class="fval">指标：{{xlDisp}}</text>
-                    <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
+                    <text class="flabel">指标</text>
+                    <view class="fmeta">
+                        <text class="fval">{{xlDisp}}</text>
+                        <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
+                    </view>
                 </view>
             </picker>
-            <!-- 时间 -->
-            <picker mode="selector" range="{{timeList}}" range-key="name" value="{{timeIdx}}" bindchange="onPickerTime">
+
+            <picker class="picker-item" mode="selector" range="{{timeList}}" range-key="name" value="{{timeIdx}}" bindchange="onPickerTime">
                 <view class="fsel">
-                    <text class="fval">时间：{{timeDisp}}</text>
-                    <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
+                    <text class="flabel">时间</text>
+                    <view class="fmeta">
+                        <text class="fval">{{timeDisp}}</text>
+                        <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
+                    </view>
                 </view>
             </picker>
-            <!-- 年累计 -->
-            <picker mode="selector" range="{{ytdList}}" range-key="name" value="{{ytdIdx}}" bindchange="onPickerYtd">
+
+            <picker class="picker-item" mode="selector" range="{{ytdList}}" range-key="name" value="{{ytdIdx}}" bindchange="onPickerYtd">
                 <view class="fsel">
-                    <text class="fval">累计：{{ytd==1?'年累计':'当期'}}</text>
-                    <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
+                    <text class="flabel">累计</text>
+                    <view class="fmeta">
+                        <text class="fval">{{ytd==1?'年累计':'当期'}}</text>
+                        <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>
+                    </view>
                 </view>
             </picker>
         </view>
     </view>
-    <view class="con empty" wx:if="{{empty}}">
-        <view class="text">该口径暂无数据，敬请期待...</view>
-    </view>
 
-    <view class="con" wx:else>
-        <!-- 指标卡 -->
-        <view class="ind">
-            <view class="inditem {{xqData.length==1?'ind2':''}}" wx:for="{{xqData}}" wx:key="t1">
-                <view class="p1">{{item.t1}}</view>
-                <view class="p2">
-                    <text class="num">{{item.t2}}</text><text class="dw">{{item.dw}}</text>
-                </view>
-                <view class="p3 {{item.t3[0]=='+'?'up':item.t3[0]=='-'?'down':''}}">同比 {{item.t3}}</view>
+    <view class="subbox" wx:if="{{subRows.length}}">
+        <scroll-view class="subscroll" scroll-x="{{subMode!='tvs'}}"  scroll-y="{{subMode=='tvs'}}" style="{{subMode=='tvs'?'max-height:900rpx;':''}}"  >
+            <view class="subtable">
+                <block wx:if="{{subMode=='tvs'}}">
+                    <view class="tvslist">
+                        <block wx:for="{{subRows}}" wx:key="id">
+                            <!-- 新的维度分组框头（sub_group 切换时显示） -->
+                            <view class="tvsgroup-hd" wx:if="{{index==0 || item.sub_group!=subRows[index-1].sub_group}}">
+                                <text class="tvsgroup-title">{{item.group}}</text>
+                                <picker mode="selector"
+                                    range="{{tvsYears[item.sub_group] || [item.period]}}"
+                                    value="{{tvsSelYearIdx[item.sub_group] || 0}}"
+                                    bindchange="onTvsYearPicker"
+                                    data-sid="{{item.sub_group}}"
+                                    catchtap="stopProp"
+                                    class="tvspicker">
+                                    <text class="tvsgroup-period">{{item.period}} ▾</text>
+                                </picker>
+                            </view>
+                            <view class="tvsrow" bindtap="onSubTypeTap" data-v="{{item.id}}">
+                                <text class="tvsrow-name">{{item.name}}</text>
+                                <view class="tvsrow-right">
+                                    <text class="tvsrow-qty">{{item.qty}}</text>
+                                    <text class="tvsrow-unit"> 万台</text>
+                                    <view class="tvsrow-yoy {{item.xl_yoy[0]=='+'?'up':item.xl_yoy[0]=='-'?'down':''}}">
+                                        {{item.xl_yoy}}
+                                        <image src="/pages/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.xl_yoy[0]=='+'}}"></image>
+                                        <image src="/pages/images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.xl_yoy[0]=='-'}}"></image>
+                                    </view>
+                                </view>
+                            </view>
+                        </block>
+                    </view>
+                </block>
+                <block wx:elif="{{subMode=='qty'}}">
+                    <view class="subtr subth">
+                        <view class="subtd col-name">品类</view>
+                        <view class="subtd">出货数量（万台）</view>
+                        <view class="subtd">行业均价（元）</view>
+                    </view>
+                    <block wx:for="{{subRows}}" wx:key="id">
+                        <view class="subtr {{item.id==selType?'active':''}}" bindtap="onSubTypeTap" data-v="{{item.id}}">
+                            <view class="subtd col-name">{{item.name}}</view>
+                            <view class="subtd">
+                                <view class="subcell">
+                                    <text class="subval">{{item.qty}}</text>
+                                    <view class="subyoy {{item.xl_yoy[0]=='+'?'up':item.xl_yoy[0]=='-'?'down':''}}">
+                                        <text>{{item.xl_yoy}}</text>
+                                        <image src="/pages/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.xl_yoy[0]=='+'}}"></image>
+                                        <image src="/pages/images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.xl_yoy[0]=='-'}}"></image>
+                                    </view>
+                                </view>
+                            </view>
+                            <view class="subtd">
+                                <view class="subcell">
+                                    <text class="subval">{{item.avg_price}}</text>
+                                    <view class="subyoy {{item.avg_yoy[0]=='+'?'up':item.avg_yoy[0]=='-'?'down':''}}">
+                                        <text>{{item.avg_yoy}}</text>
+                                        <image src="/pages/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.avg_yoy[0]=='+'}}"></image>
+                                        <image src="/pages/images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.avg_yoy[0]=='-'}}"></image>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </block>
+                </block>
+                <block wx:else>
+                    <view class="subtr subth">
+                        <view class="subtd col-name">品类</view>
+                        <view class="subtd">销量同比</view>
+                        <view class="subtd">销额同比</view>
+                        <view class="subtd">平均价格</view>
+                        <view class="subtd">均价同比</view>
+                    </view>
+                    <block wx:for="{{subRows}}" wx:key="id">
+                        <view class="subtr {{item.id==selType?'active':''}}" bindtap="onSubTypeTap" data-v="{{item.id}}">
+                            <view class="subtd col-name">{{item.name}}</view>
+                            <view class="subtd {{item.xl_yoy[0]=='+'?'up':item.xl_yoy[0]=='-'?'down':''}}">
+                                {{item.xl_yoy}}
+                                <image src="/pages/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.xl_yoy[0]=='+'}}"></image>
+                                <image src="/pages/images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.xl_yoy[0]=='-'}}"></image>
+                            </view>
+                            <view class="subtd {{item.xe_yoy[0]=='+'?'up':item.xe_yoy[0]=='-'?'down':''}}">
+                                {{item.xe_yoy}}
+                                <image src="/pages/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.xe_yoy[0]=='+'}}"></image>
+                                <image src="/pages/images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.xe_yoy[0]=='-'}}"></image>
+                            </view>
+                            <view class="subtd">{{item.avg_price}}</view>
+                            <view class="subtd {{item.avg_yoy[0]=='+'?'up':item.avg_yoy[0]=='-'?'down':''}}">
+                                {{item.avg_yoy}}
+                                <image src="/pages/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.avg_yoy[0]=='+'}}"></image>
+                                <image src="/pages/images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.avg_yoy[0]=='-'}}"></image>
+                            </view>
+                        </view>
+                    </block>
+                </block>
             </view>
-        </view>
-
-        <!-- 市场规模 -->
-        <view class="box">
-            <view class="btitle">市场规模趋势（{{arr_sj2_dw}}）</view>
-            <view class="chart">
-                <ec-canvas id="mychart-dom-bar" class="chartdom" canvas-id="bar1" ec="{{ec}}"></ec-canvas>
-            </view>
-        </view>
-
-        <!-- 品牌份额 -->
-        <view class="box" hidden="{{!chart2x.length}}">
-            <view class="btitle">品牌销量份额(%)</view>
-            <view class="chart">
-                <ec-canvas id="mychart-dom-bar2" class="chartdom" canvas-id="bar2" ec="{{ec2}}"></ec-canvas>
-            </view>
-        </view>
-
-        <!-- 产品结构 -->
-        <view class="box" hidden="{{!chart4.length}}">
-            <view class="btitle">产品/价格结构(%)</view>
-            <view class="chart">
-                <ec-canvas id="mychart-dom-bar3" class="chartdom" canvas-id="bar3" ec="{{ec3}}"></ec-canvas>
-            </view>
-        </view>
-
-        <view class="tips" wx:if="{{tips}}">{{tips}}</view>
-        <view class="blank20"></view>
+        </scroll-view>
     </view>
 </view>

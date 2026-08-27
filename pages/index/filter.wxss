@@ -1,125 +1,413 @@
 /* pages/index/filter.wxss */
-page{
-  background:#f5f7fa;
+page {
+  background: #eef3f8;
 }
-.page{
-  padding: 20rpx 24rpx;
+
+.page {
+  padding: 18rpx 18rpx 28rpx;
   box-sizing: border-box;
 }
-/* 搜索框 */
-.search{
-  display:flex;
-  align-items:center;
-  background:#fff;
-  border-radius: 40rpx;
-  padding: 6rpx 8rpx 6rpx 28rpx;
-  box-shadow: 0 4rpx 12rpx rgba(15,95,138,.06);
+
+/* 筛选 */
+.filters {
+  margin-top: 14rpx;
+  background: #fff;
+  border-radius: 14rpx;
+  padding: 16rpx 14rpx 6rpx;
+  box-shadow: 0 8rpx 20rpx rgba(24, 58, 95, 0.05);
 }
-.search input{
-  flex:1;
-  height: 64rpx;
-  font-size: 26rpx;
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18rpx;
 }
-.search .btn{
-  background: linear-gradient(135deg,#1a9fe8,#0f5f8a);
-  color:#fff;
-  font-size: 26rpx;
-  padding: 0 32rpx;
-  height: 64rpx;
-  line-height:64rpx;
-  border-radius: 40rpx;
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1f2a37;
 }
-/* 筛选：两列紧凑下拉 */
-.filters{
-  margin-top: 20rpx;
-  background:#fff;
-  border-radius: 16rpx;
-  padding: 20rpx 24rpx;
-  box-shadow: 0 4rpx 12rpx rgba(15,95,138,.05);
+
+.section-sub {
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: #8a97a7;
 }
-.fgrid{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:space-between;
+
+.filter-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
-.fsel{
-  width: calc((100% - 20rpx) / 2);
-  box-sizing:border-box;
-  height: 72rpx;
-  line-height:72rpx;
-  display:flex;
-  align-items:center;
-  padding: 0 14rpx;
-  margin-bottom: 16rpx;
-  background:#f2f4f7;
-  border-radius: 12rpx;
+
+.picker-item {
+  width: calc((100% - 20rpx) / 3);
+  display: block;
 }
-.fsel .fval{
-  flex:1;
-  font-size: 26rpx;
-  color:#3a4556;
-  overflow:hidden;
+
+.fsel {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 78rpx;
+  padding: 10rpx 10rpx;
+  margin-bottom: 10rpx;
+  background: #fff;
+  border: 1rpx solid #2a6e8c;
+  border-radius: 6rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6rpx;
+  box-shadow: none;
+}
+
+.fsel:active {
+  background: #f4fbff;
+}
+
+.flabel {
+  font-size: 22rpx;
+  color: #121212;
+  font-weight: 600;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.fmeta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6rpx;
+  margin-top: 0;
+  min-width: 0;
+  flex: 1;
+}
+
+.fval {
+  flex: 1;
+  font-size: 20rpx;
+  color: #1f6b9d;
+  font-weight: 600;
+  overflow: hidden;
   text-overflow: ellipsis;
-  white-space:nowrap;
-  text-align:right;
+  white-space: nowrap;
+  text-align: right;
+  line-height: 1;
+  display: block;
 }
-.fsel .farrow{
-  width: 12rpx;
-  height: 12rpx;
-  flex-shrink:0;
-  margin-left: 8rpx;
+
+.farrow {
+  width: 14rpx;
+  height: 14rpx;
+  flex-shrink: 0;
+  opacity: 0.55;
 }
+
 /* 指标卡 */
-.ind{
-  margin-top:20rpx;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:space-between;
+.ind {
+  margin-top: 20rpx;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
-.inditem{
+
+.inditem {
   width: calc((100% - 24rpx) / 3);
-  background:#fff;
-  border-radius:16rpx;
-  padding: 24rpx;
-  box-sizing:border-box;
-  box-shadow:0 4rpx 12rpx rgba(15,95,138,.05);
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx 20rpx;
+  box-sizing: border-box;
+  box-shadow: 0 10rpx 28rpx rgba(24, 58, 95, 0.05);
 }
-.ind2{ width:100%; }
-.inditem .p1{ font-size:26rpx; color:#8a919f; }
-.inditem .p2{ margin:14rpx 0; }
-.inditem .num{ font-size:40rpx; font-weight:bold; color:#0f5f8a; }
-.inditem .dw{ font-size:22rpx; color:#8a919f; margin-left:6rpx; }
-.inditem .p3{ font-size:24rpx; }
-.inditem .p3.up{ color:#e04a5c; }
-.inditem .p3.down{ color:#2f9e79; }
+
+.ind2 {
+  width: 100%;
+}
+
+.inditem .p1 {
+  font-size: 24rpx;
+  color: #7d8a99;
+}
+
+.inditem .p2 {
+  margin: 12rpx 0 10rpx;
+}
+
+.inditem .num {
+  font-size: 40rpx;
+  font-weight: 600;
+  color: #1677c8;
+}
+
+.inditem .dw {
+  font-size: 22rpx;
+  color: #7d8a99;
+  margin-left: 6rpx;
+}
+
+.inditem .p3 {
+  font-size: 22rpx;
+  color: #7d8a99;
+}
+
+.inditem .p3.up {
+  color: #e04a5c;
+}
+
+.inditem .p3.down {
+  color: #2f9e79;
+}
+
 /* 图表 */
-.box{
-  margin-top:20rpx;
-  background:#fff;
-  border-radius:16rpx;
-  padding: 24rpx;
-  box-shadow:0 4rpx 12rpx rgba(15,95,138,.05);
+.box {
+  margin-top: 20rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx 20rpx 18rpx;
+  box-shadow: 0 10rpx 28rpx rgba(24, 58, 95, 0.05);
 }
-.btitle{
-  font-size:28rpx;
-  font-weight:bold;
-  color:#2a2a2a;
-  margin-bottom:16rpx;
-  padding-left:12rpx;
-  border-left:6rpx solid #1a9fe8;
+
+.btitle {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1f2a37;
+  margin-bottom: 16rpx;
+  padding-left: 12rpx;
+  border-left: 6rpx solid #1677c8;
 }
-.chart{ width:100%; height:420rpx; }
-.chartdom{ width:100%; height:100%; }
-.tips{
-  margin-top:20rpx;
-  font-size:24rpx;
-  color:#9aa1ad;
-  text-align:center;
+
+.chart {
+  width: 100%;
+  height: 420rpx;
 }
-.empty{
-  margin-top:60rpx;
-  text-align:center;
-  color:#9aa1ad;
-  font-size:26rpx;
+
+.chartdom {
+  width: 100%;
+  height: 100%;
 }
-.blank20{ height:40rpx; }
+
+.tips {
+  margin-top: 20rpx;
+  font-size: 24rpx;
+  color: #8a97a7;
+  text-align: center;
+}
+
+.empty {
+  margin-top: 60rpx;
+  text-align: center;
+  color: #8a97a7;
+  font-size: 26rpx;
+}
+
+.blank20 {
+  height: 40rpx;
+}
+
+/* 品类明细表 */
+.subbox {
+  margin-top: 18rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 18rpx 0 10rpx;
+  box-shadow: 0 10rpx 28rpx rgba(24, 58, 95, 0.05);
+}
+
+.subhead {
+  padding: 0 20rpx 14rpx;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1f2a37;
+}
+
+.subsub {
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: #8a97a7;
+}
+
+.subscroll {
+  width: 100%;
+}
+
+.subtable {
+  min-width: 720rpx;
+  padding: 0 20rpx 6rpx;
+  box-sizing: border-box;
+}
+
+.subtr {
+  display: flex;
+  align-items: stretch;
+  margin-bottom: 2rpx;
+}
+
+.subth .subtd {
+  background: #0e608d;
+  color: #fff;
+  font-size: 24rpx;
+  font-weight: 600;
+  border-color: #0e608d;
+}
+
+.subtd2 {
+  flex-direction: column;
+  gap: 2rpx;
+}
+
+.subtr.active .subtd {
+  background: #eef7fb;
+}
+
+.subtd {
+  flex: 1;
+  min-height: 96rpx;
+  padding: 12rpx 10rpx;
+  box-sizing: border-box;
+  border: 1rpx solid #141414;
+  background: #fff;
+  font-size: 24rpx;
+  color: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6rpx;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.subarrow {
+  width: 20rpx;
+  height: auto;
+  max-height: 18rpx;
+  flex-shrink: 0;
+}
+
+.subcell {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+}
+
+.subval {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #0e608d;
+}
+
+.subyoy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rpx;
+  font-size: 22rpx;
+  font-weight: 600;
+}
+
+.subyoy.up {
+  color: #e24a5a;
+}
+
+.subyoy.down {
+  color: #2f9e79;
+}
+
+.col-name {
+  flex: 1.15;
+}
+
+.subtd.up {
+  color: #e24a5a;
+}
+
+.subtd.down {
+  color: #2f9e79;
+}
+
+/* 核心器件供应链分组列表 */
+.tvslist {
+  padding: 0 20rpx 6rpx;
+}
+
+.tvsgroup-hd {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18rpx 0 8rpx;
+  border-bottom: 2rpx solid #e2edf5;
+}
+
+.tvsgroup-title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #1a6fa0;
+}
+
+.tvsgroup-period {
+  font-size: 22rpx;
+  color: #8a97a7;
+}
+
+.tvspicker {
+  display: inline-flex;
+  align-items: center;
+}
+
+.tvsrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22rpx 0;
+  border-bottom: 1rpx solid #f0f4f7;
+}
+
+.tvsrow-name {
+  font-size: 26rpx;
+  color: #333;
+  flex: 1;
+}
+
+.tvsrow-right {
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+  flex-shrink: 0;
+}
+
+.tvsrow-qty {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #0e608d;
+}
+
+.tvsrow-unit {
+  font-size: 22rpx;
+  color: #7d8a99;
+}
+
+.tvsrow-yoy {
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+  font-size: 22rpx;
+  font-weight: 600;
+  min-width: 80rpx;
+  justify-content: flex-end;
+  color: #7d8a99;
+}
+
+.tvsrow-yoy.up {
+  color: #e24a5a;
+}
+
+.tvsrow-yoy.down {
+  color: #2f9e79;
+}

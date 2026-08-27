@@ -12,7 +12,7 @@ Page({
     xlList: [{ id: '1', name: '销量' }, { id: '2', name: '销额' }],
     periodList: [{ id: '1', name: '月度' }, { id: '2', name: '季度' }],
     ytdList: [{ id: '0', name: '当期' }, { id: '1', name: '年累计' }],
-    // 品类
+    // 顶层品类(组) 下拉：由后台首页菜单绑定读入，替代硬编码
     typeList: [],
     // 时间选项(月度/季度平铺)
     timeList: [],
@@ -23,6 +23,7 @@ Page({
     selXlName: '销量',
     selType: '',
     selTypeName: '',
+    selGroup: '',
     selPeriod: '1',
     selYear: '',
     selMonth: '',
@@ -31,7 +32,7 @@ Page({
     selTimeName: '',
     ytd: 0,
     needSnap: false,
-    ver: '1.3.8',
+    ver: '1.4.2',
     marketIdx: 0,
     lxIdx: 0,
     typeIdx: 0,
@@ -45,6 +46,11 @@ Page({
 
     empty: false,
     xqData: [],
+    subRows: [],
+    subMode: 'yoy',
+    tvsYears: {},    // { 'sub_group_key': [期数列表] } e.g. '9-m', '9-q'
+    tvsSelYear: {},  // { 'sub_group_key': 选中期数 }
+    tvsSelYearIdx: {}, // { 'sub_group_key': 选中索引 }
     ec: { lazyLoad: true },
     ec2: { lazyLoad: true },
     ec3: { lazyLoad: true },
@@ -120,7 +126,7 @@ Page({
     this.barComp3 = this.selectComponent('#mychart-dom-bar3')
   },
 
-  // 初始化品类 + 加载数据
+    // 初始化品类组 + 加载数据
   initData() {
     const that = this
     app.checkws()
@@ -136,24 +142,29 @@ Page({
       })
       return
     }
-    // 品类下拉
-    const cate2 = {
-      '1': { '1': '智能投影', '2': '智能音箱', '14': '智能平板', '3': '智能门锁', '13': '摄像头', '15': 'AR设备', '19': 'VR设备', '16': '回音壁', '20': '无线蓝牙音箱' },
-      '2': { '5': '交互平板', '6': '数字标牌', '7': '商用激光投影', '18': '小间距LED' },
-      '3': { '9': '电视供应链', '17': '显示器供应链', '21': '笔记本电脑供应链', '11': '商用显示供应链', '12': '电子纸供应链', '10': '手机供应链' }
-    }
-    const tl = []
-    Object.keys(cate2).forEach(g => {
-      Object.keys(cate2[g]).forEach(k => {
-        tl.push({ id: k, name: cate2[g][k] })
-      })
+    // 品类组下拉读后台 getindexmenu（含每个菜单绑定的品类），前端不写死
+    wx.request({
+      url: app.globalData.siteUrl + '/Wxapi/getindexmenu',
+      success(res) {
+        const dl = (res.data && res.data.datalist) || []
+        const tl = dl.map(m => ({ mid: m.id, id: m.type, name: m.name || ('组'+m.id), types: m.types || [] }))
+        // 若已带初始品类(从首页菜单来)，回填映射到的组
+        let selTypeName = ''
+        let typeIdx = 0
+        let selGroup = ''
+        tl.forEach((t, i) => {
+          const ids = (t.types || []).map(x => String(x.id))
+          if (t.id === String(that.data.selType) && !selTypeName && !selGroup) { selTypeName = t.name; typeIdx = i; selGroup = String(t.mid) }
+          if (ids.indexOf(String(that.data.selType)) >= 0 && !selGroup) { selTypeName = t.name; typeIdx = i; selGroup = String(t.mid) }
+        })
+        that.setData({ typeList: tl, selTypeName, typeIdx, selGroup });
+        that.refreshDisp()
+        that.loadData()
+      },
+      fail() {
+        wx.showToast({ title: '品类组加载失败，请重试', icon: 'none' })
+      }
     })
-    // 若已带初始品类(从首页菜单来)，回填名称
-    let selTypeName = ''
-    let typeIdx = 0
-    tl.forEach((t, i) => { if (t.id === String(this.data.selType)) { selTypeName = t.name; typeIdx = i } })
-    this.setData({ typeList: tl, selTypeName, typeIdx }); this.refreshDisp()
-    this.loadData()
   },
 
   // 筛选变化（下拉）
@@ -169,10 +180,12 @@ Page({
   },
   onPickerType(e) {
     const i = e.detail.value
-    const t = this.data.typeList[i]
+    const g = this.data.typeList[i]
+    if (!g) return
+    const t = (g.types && g.types[0]) || { id: g.id, name: g.name }
     const q = ['5', '6', '7', '8', '18']
-    const period = q.indexOf(t.id) >= 0 ? '2' : '1'
-    const patch = { selType: t.id, selTypeName: t.name, typeIdx: i }
+    const period = q.indexOf(String(t.id)) >= 0 ? '2' : '1'
+    const patch = { selType: String(t.id), selGroup: String(g.mid), selTypeName: g.name, typeIdx: i }
     if (period !== this.data.selPeriod) {
       this.buildTimeList(period)
       patch.selPeriod = period
@@ -207,14 +220,73 @@ Page({
     this.setData({ ytd: y.id, ytdIdx: i, needSnap: false }); this.refreshDisp()
     this.loadData()
   },
+  setTypeSelection(typeId, typeName) {
+    const q = ['5', '6', '7', '8', '18']
+    const period = q.indexOf(String(typeId)) >= 0 ? '2' : '1'
+    const patch = {
+      selType: String(typeId),
+      selTypeName: typeName || '',
+      typeIdx: -1,
+      needSnap: false
+    }
+    // 定位所在品类组（typeId 可能命中组主 type 或组内某绑定品类）
+    // 优先匹配当前已选的组，其次取第一个匹配的组
+    let found = false
+    // 先试当前品类组
+    this.data.typeList.forEach((x, idx) => {
+      if (found) return
+      if (String(x.mid) === String(this.data.selGroup)) {
+        const ids = (x.types || []).map(y => String(y.id))
+        if (x.id === String(typeId) || ids.indexOf(String(typeId)) >= 0) {
+          patch.typeIdx = idx
+          patch.selGroup = String(x.mid)
+          if (!typeName) patch.selTypeName = x.name
+          found = true
+        }
+      }
+    })
+    // 当前组未命中时，取第一个匹配的组
+    if (!found) {
+      this.data.typeList.forEach((x, idx) => {
+        if (found) return
+        const ids = (x.types || []).map(y => String(y.id))
+        if (x.id === String(typeId) || ids.indexOf(String(typeId)) >= 0) {
+          patch.typeIdx = idx
+          patch.selGroup = String(x.mid)
+          if (!typeName) patch.selTypeName = x.name
+          found = true
+        }
+      })
+    }
+    if (period !== this.data.selPeriod) {
+      this.buildTimeList(period)
+      patch.selPeriod = period
+      patch.needSnap = true
+    }
+    this.setData(patch)
+    this.refreshDisp()
+    this.loadData()
+  },
   onTypeTapForMenu(e) {
     const t = e.currentTarget.dataset.v
-    const q = ['5', '6', '7', '8', '18']
-    const period = q.indexOf(t) >= 0 ? '2' : this.data.selPeriod
     let name = ''
     this.data.typeList.forEach(x => { if (x.id === String(t)) name = x.name })
-    this.setData({ selType: String(t), selTypeName: name, selPeriod: period })
-    this.loadData()
+    this.setTypeSelection(t, name)
+  },
+  onSubTypeTap(e) {
+    // tvs 模式点击明细行，直接回到旧版电视供应链页面
+    if (this.data.subMode === 'tvs') {
+      wx.navigateTo({
+        url: '/pages/index/next?type=9',
+      })
+      return
+    }
+    // qty 模式（商用显示）仍保持不切换品类，避免联动筛选框
+    if (this.data.subMode === 'qty') return
+    const t = e.currentTarget.dataset.v
+    let name = ''
+    this.data.subRows.forEach(x => { if (x.id === String(t)) name = x.name })
+    this.setTypeSelection(t, name)
   },
   onSearchInput(e) { this.setData({ keywords: e.detail.value }) },
   onSearch() {
@@ -228,23 +300,35 @@ Page({
     if (!userData || !userData.id) return
     wx.request({
       url: app.globalData.siteUrl + '/Wxapi/getfilterdata',
-      data: {
-        type: that.data.selType,
-        market: that.data.selMarket,
-        lx: that.data.selLx,
-        xl: that.data.selXl,
-        jd: that.data.selPeriod,
-        year: that.data.selYear,
-        month: that.data.selMonth,
-        quarter: that.data.selQuarter,
-        ytd: that.data.ytd,
-        uid: userData.id
-      },
+      data: (() => {
+        const base = {
+          type: that.data.selType,
+          group: that.data.selGroup,
+          market: that.data.selMarket,
+          lx: that.data.selLx,
+          xl: that.data.selXl,
+          jd: that.data.selPeriod,
+          year: that.data.selYear,
+          month: that.data.selMonth,
+          quarter: that.data.selQuarter,
+          ytd: that.data.ytd,
+          uid: userData.id
+        }
+        // 追加各维度分组自选期数（key = tvs_period_<sub_group 中 - 换成 _>）
+        const sy = that.data.tvsSelYear || {}
+        Object.keys(sy).forEach(sgKey => {
+          if (sy[sgKey]) {
+            // sgKey 如 '9-m' → 参数名 tvs_period_9_m
+            base['tvs_period_' + sgKey.replace(/-/g, '_')] = sy[sgKey]
+          }
+        })
+        return base
+      })(),
       success(res) {
         const d = res.data || {}
         console.log('getfilterdata', d)
         if (d.status != 1) {
-          that.setData({ empty: true, xqData: [] })
+          that.setData({ empty: true, xqData: [], subRows: [] })
           return
         }
         // 首次/换品类：吸附到最新有数据的时间，避免默认当前月无数据而空白
@@ -273,6 +357,31 @@ Page({
         const hasNum = (arr1.some(it => Number(it.t2) !== 0)) || (Array.isArray(s2) && s2.some(r => Number(r.num) !== 0))
         that.setData({
           xqData: arr1,
+          subRows: d.arr_sub || [],
+          subMode: d.sub_mode || 'yoy',
+          tvsYears: (() => {
+            // 按 sub_group 聚合期数列表（同一 sub_group 里第一行的 avail_periods 代表该组）
+            const m = {}
+            ;(d.arr_sub || []).forEach(row => {
+              if (row.sub_group && row.avail_periods && !m[row.sub_group]) {
+                m[row.sub_group] = row.avail_periods
+              }
+            })
+            return m
+          })(),
+          tvsSelYearIdx: (() => {
+            const idx = {}
+            const seen = {}
+            ;(d.arr_sub || []).forEach(row => {
+              if (!row.sub_group || seen[row.sub_group]) return
+              seen[row.sub_group] = true
+              const periods = row.avail_periods || []
+              const sel = that.data.tvsSelYear[row.sub_group]
+              const pos = sel ? periods.indexOf(sel) : -1
+              idx[row.sub_group] = pos >= 0 ? pos : 0
+            })
+            return idx
+          })(),
           empty: !hasNum,
           chart1x: s2.x ? s2.x : (Array.isArray(s2) ? s2.map(r => r.id) : []),
           chart1y: s2.x ? s2.y : (Array.isArray(s2) ? s2.map(r => r.num) : []),
@@ -301,6 +410,21 @@ Page({
       xlDisp: this.data.selXlName,
       timeDisp: this.data.selTimeName
     })
+  },
+
+  stopProp(e) {},  // picker 阻止行 tap 冒泡用
+
+  // 每组（维度分组）的时间 picker 切换，data-sid = sub_group key，如 "9-m"
+  onTvsYearPicker(e) {
+    const sgKey = String(e.currentTarget.dataset.sid)
+    const idx = Number(e.detail.value)
+    const period = (this.data.tvsYears[sgKey] || [])[idx]
+    if (!period) return
+    const patch = {}
+    patch['tvsSelYear.' + sgKey] = period
+    patch['tvsSelYearIdx.' + sgKey] = idx
+    this.setData(patch)
+    this.loadData()
   },
 
   renderCharts() {

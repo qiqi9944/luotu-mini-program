@@ -63,7 +63,8 @@ Page({
 		yuebao: [],
 		jibao: [],
 		nianbao: [],
-		rdlist: []
+		rdlist: [],
+		activeTab: 'scale'
 	},
 	setOption: function (chart) {
 		let that = this
@@ -395,6 +396,10 @@ Page({
 	// 点击按钮后初始化图表
 	init: function () {
 		let that = this
+		this.ecComponent = this.selectComponent('#mychart-dom-bar');
+		this.ecComponent2 = this.selectComponent('#mychart-dom-bar2');
+		this.ecComponent3 = this.selectComponent('#mychart-dom-bar3');
+		this.ecComponent4 = this.selectComponent('#mychart-dom-bar4');
 		if (this.chart1) {
 			this.chart1.dispose();
 		}
@@ -407,7 +412,7 @@ Page({
 		if (this.chart4) {
 			this.chart4.dispose();
 		}
-		this.ecComponent.init((canvas, width, height, dpr) => {
+		if (this.ecComponent) this.ecComponent.init((canvas, width, height, dpr) => {
 			// 获取组件的 canvas、width、height 后的回调函数
 			// 在这里初始化图表
 			const chart = echarts.init(canvas, null, {
@@ -422,7 +427,7 @@ Page({
 			// 注意这里一定要返回 chart 实例，否则会影响事件处理等
 			return chart;
 		});
-		this.ecComponent2.init((canvas, width, height, dpr) => {
+		if (this.ecComponent2 && this.data.chart2x.length) this.ecComponent2.init((canvas, width, height, dpr) => {
 			// 获取组件的 canvas、width、height 后的回调函数
 			// 在这里初始化图表
 			const chart2 = echarts.init(canvas, null, {
@@ -437,7 +442,7 @@ Page({
 			// 注意这里一定要返回 chart 实例，否则会影响事件处理等
 			return chart2;
 		});
-		this.ecComponent3.init((canvas, width, height, dpr) => {
+		if (this.ecComponent3 && this.data.chart3.length) this.ecComponent3.init((canvas, width, height, dpr) => {
 			// 获取组件的 canvas、width、height 后的回调函数
 			// 在这里初始化图表
 			const chart3 = echarts.init(canvas, null, {
@@ -452,7 +457,7 @@ Page({
 			// 注意这里一定要返回 chart 实例，否则会影响事件处理等
 			return chart3;
 		});
-		this.ecComponent4.init((canvas, width, height, dpr) => {
+		if (this.ecComponent4 && this.data.chart4.length) this.ecComponent4.init((canvas, width, height, dpr) => {
 			// 获取组件的 canvas、width、height 后的回调函数
 			// 在这里初始化图表
 			const chart4 = echarts.init(canvas, null, {
@@ -731,6 +736,14 @@ Page({
 		setTimeout(() => {
 			that.getshuju()
 		}, 100)
+	},
+	switchTab: function (e) {
+		const tab = e.currentTarget.dataset.tab
+		if (!tab || tab === this.data.activeTab) return
+		this.setData({ activeTab: tab })
+		setTimeout(() => {
+			this.init()
+		}, 60)
 	},
 	changetitle: function () {
 		let that = this
