@@ -47,6 +47,7 @@ Page({
     empty: false,
     xqData: [],
     subRows: [],
+    tvsGroups: [],
     subMode: 'yoy',
     tvsYears: {},    // { 'sub_group_key': [期数列表] } e.g. '9-m', '9-q'
     tvsSelYear: {},  // { 'sub_group_key': 选中期数 }
@@ -358,6 +359,7 @@ Page({
         that.setData({
           xqData: arr1,
           subRows: d.arr_sub || [],
+          tvsGroups: that.buildTvsGroups(d.arr_sub || []),
           subMode: d.sub_mode || 'yoy',
           tvsYears: (() => {
             // 按 sub_group 聚合期数列表（同一 sub_group 里第一行的 avail_periods 代表该组）
@@ -413,6 +415,26 @@ Page({
   },
 
   stopProp(e) {},  // picker 阻止行 tap 冒泡用
+
+  // 把供应链明细行按 sub_group 归组成卡片（对齐数据页 显示供应链DSC 的分组卡片）
+  // 季度组标题用「统计周期」，月度组沿用供应链名
+  buildTvsGroups(rows) {
+    const groups = []
+    let cur = null
+    ;(rows || []).forEach(row => {
+      if (!cur || cur.sub_group !== row.sub_group) {
+        cur = {
+          sub_group: row.sub_group,
+          groupTitle: /-q$/.test(row.sub_group) ? '统计周期' : (row.group || ''),
+          period: row.period,
+          rows: []
+        }
+        groups.push(cur)
+      }
+      cur.rows.push(row)
+    })
+    return groups
+  },
 
   // 每组（维度分组）的时间 picker 切换，data-sid = sub_group key，如 "9-m"
   onTvsYearPicker(e) {

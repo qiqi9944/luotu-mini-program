@@ -1,11 +1,39 @@
 <!--pages/yanbao/redian.wxml-->
-<view class="sellist">
-	<view class="item {{pagetype==1?'hover':''}}" data-type='1' bindtap="nextpage">热点</view>
-	<view class="item {{pagetype==2?'hover':''}}" data-type='2' bindtap="nextpage">报告</view>
-	<view class="item {{pagetype==3?'hover':''}}" data-type='3' bindtap="nextpage">活动</view>
-</view>
-<view class="con">
-	<view class="page-section page-section-spacing swiper">
+<view class="redian-page">
+	<view class="top-area">
+		<view class="searchbar">
+			<image src="/pages/images/fdj.png" mode="widthFix" class="search-icon" bindtap="search"></image>
+			<input class="search-input"
+				type="text"
+				placeholder="搜索"
+				placeholder-class="search-placeholder"
+				data-name="keywords"
+				value="{{keywords}}"
+				bindinput="inputchange"
+				bindconfirm="search"
+				confirm-type="search" />
+		</view>
+		<view class="sellist">
+			<view class="item {{currentTab==1?'hover':''}}" data-type="1" bindtap="nextpage">
+				<text>行业分析</text>
+				<view class="underline"></view>
+			</view>
+			<view class="item {{currentTab==2?'hover':''}}" data-type="2" bindtap="nextpage">
+				<text>下载专区</text>
+				<view class="underline"></view>
+			</view>
+			<view class="item {{currentTab==3?'hover':''}}" data-type="3" bindtap="nextpage">
+				<text>小视频</text>
+				<view class="underline"></view>
+			</view>
+			<view class="item {{currentTab==4?'hover':''}}" data-type="4" bindtap="nextpage">
+				<text>活动</text>
+				<view class="underline"></view>
+			</view>
+		</view>
+	</view>
+	<view class="con">
+		<view class="page-section page-section-spacing swiper">
 		<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" indicator-color="{{indicatorColor}}" indicator-active-color="{{indicatorActiveColor}}">
 			<block wx:for="{{banner}}" wx:key="*this">
 				<swiper-item>
@@ -17,13 +45,13 @@
 				</swiper-item>
 			</block>
 		</swiper>
-	</view>
+		</view>
 	<view class="redian" wx:if="{{pagetype==1}}">
 		<view class="newsbox">
 			<view class="main">
 				<view class="down">
 					<block wx:for="{{newslist}}" wx:key="id">
-						<navigator url="./view?id={{item.id}}" class="item">
+						<navigator url="./view?id={{item.id}}" class="item" hover-class="tap-row">
 							<view class="l">
 								<view class="shang">
 									<view class="title">
@@ -51,7 +79,7 @@
 				</view>
 				<view class="down">
 					<block wx:for="{{yuebao}}" wx:key="id">
-						<navigator url="./view?id={{item.id}}" class="item">
+						<navigator url="./view?id={{item.id}}" class="item" hover-class="tap-row">
 							<view class="shang">
 								<image src="/pages/images/liststyle.png" mode="widthFix" class="pic"></image>
 								<view class="title">{{item.name}}</view>
@@ -72,7 +100,7 @@
 				</view>
 				<view class="down">
 					<block wx:for="{{jibao}}" wx:key="id">
-						<navigator url="./view?id={{item.id}}" class="item">
+						<navigator url="./view?id={{item.id}}" class="item" hover-class="tap-row">
 							<view class="shang">
 								<image src="/pages/images/liststyle.png" mode="widthFix" class="pic"></image>
 								<view class="title">{{item.name}}</view>
@@ -93,7 +121,7 @@
 				</view>
 				<view class="down">
 					<block wx:for="{{nianbao}}" wx:key="id">
-						<navigator url="./view?id={{item.id}}" class="item">
+						<navigator url="./view?id={{item.id}}" class="item" hover-class="tap-row">
 							<view class="shang">
 								<image src="/pages/images/liststyle.png" mode="widthFix" class="pic"></image>
 								<view class="title">{{item.name}}</view>
@@ -110,7 +138,7 @@
 			<view class="main">
 				<view class="down">
 					<block wx:for="{{newslist2}}" wx:key="id">
-						<navigator url="./view?id={{item.id}}" class="item">
+						<navigator url="./view?id={{item.id}}" class="item" hover-class="tap-row">
 							<view class="l">
 								<view class="shang">
 									<view class="title">
@@ -127,4 +155,28 @@
 			</view>
 		</view>
 	</view>
+	<view class="redian" wx:if="{{pagetype==4}}">
+		<view class="newsbox">
+			<view class="main">
+				<view class="down">
+					<block wx:for="{{newslist2}}" wx:key="id">
+						<navigator url="./view?id={{item.id}}" class="item" hover-class="tap-row">
+							<view class="l">
+								<view class="shang">
+									<view class="title">
+										<image src="/pages/images/liststyle2.png" mode="widthFix" class="pic"></image>{{item.name}}
+									</view>
+								</view>
+								<view class="xia">{{item.addtime}}</view>
+							</view>
+							<image src="{{item.pic}}" mode="widthFix" wx:if="{{item.pic}}" class="r"></image>
+						</navigator>
+					</block>
+					<view class="more" wx:if="{{!lastpage2}}" bindtap="getnews3">查看更多></view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<view class="safe-bottom"></view>
+</view>
 </view>

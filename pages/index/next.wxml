@@ -124,15 +124,30 @@
 		</view>
 
 		<view class="panel" wx:if="{{activeTab=='price'}}">
-			<view class="chart-card" hidden="{{!chart4.length}}">
+			<view class="chart-card" hidden="{{!priceList.length}}">
 				<view class="card-head">
 					<view class="card-title">价格分布</view>
 				</view>
-				<view class="chart-frame chart-frame-pie">
-					<ec-canvas id="mychart-dom-bar4" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-bar" ec="{{ ec4 }}"></ec-canvas>
+				<view class="price-table">
+					<view class="price-table-head">
+						<view class="price-cell price-cell-name">价格段</view>
+						<view class="price-cell price-cell-share">市占率</view>
+						<view class="price-cell price-cell-change">市占率增减</view>
+					</view>
+					<block wx:for="{{priceList}}" wx:key="index">
+						<view class="price-table-row">
+							<view class="price-cell price-cell-name">{{item.t1}}</view>
+							<view class="price-cell price-cell-share">{{item.t2}}</view>
+							<view class="price-cell price-cell-change">
+								<text class="price-change {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">{{item.t3}}</text>
+								<image src="../images/sheng1.png" mode="widthFix" class="price-arrow" wx:if="{{item.t3zf=='+'}}"></image>
+								<image src="../images/jiang1.png" mode="widthFix" class="price-arrow" wx:if="{{item.t3zf=='-'}}"></image>
+							</view>
+						</view>
+					</block>
 				</view>
 			</view>
-			<view class="empty-text" hidden="{{chart4.length}}">暂无价格分布数据</view>
+			<view class="empty-text" hidden="{{priceList.length}}">暂无价格分布数据</view>
 		</view>
 
 		<view class="panel" wx:if="{{activeTab=='structure'}}">

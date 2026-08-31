@@ -58,6 +58,7 @@ Page({
 		chart2x: [],
 		chart3: [],
 		chart4: [],
+		priceList: [],
 		tips: '',
 		arr_sj2_dw: '',//市场规模单位
 		yuebao: [],
@@ -393,6 +394,58 @@ Page({
 		};
 		chart.setOption(option);
 	},
+	formatPercent: function (value) {
+		const num = Number(value)
+		if (!isFinite(num)) return '--'
+		return `${num.toFixed(1)}%`
+	},
+	buildPriceList: function (list) {
+		const priceRanges = ['0-99', '100-199', '200-299', '300-399', '400-499', '500+']
+		if (!Array.isArray(list) || !list.length) return []
+		const priceMap = {}
+		let matchedPriceRange = false
+		list.forEach((item) => {
+			const name = item && item.name ? String(item.name).replace(/元/g, '').trim() : ''
+			if (!priceMap[name]) priceMap[name] = { value: 0, t3: '' }
+			const value = Number(item && item.value)
+			priceMap[name].value += isFinite(value) ? value : 0
+			if (item && item.t3) priceMap[name].t3 = item.t3
+			if (priceRanges.indexOf(name) > -1) matchedPriceRange = true
+		})
+		const total = list.reduce((sum, item) => {
+			const val = Number(item && item.value)
+			return sum + (isFinite(val) ? val : 0)
+		}, 0)
+		if (!matchedPriceRange) {
+			return list.map((item) => {
+				const name = item && item.name ? String(item.name).replace(/元/g, '').trim() : '--'
+				const value = Number(item && item.value)
+				const share = total > 0 && isFinite(value) ? value / total * 100 : 0
+				const change = item && item.t3 ? item.t3 : '--'
+				const changeFlag = change === '--' ? '' : change.substr(0, 1)
+				return {
+					name,
+					t1: name,
+					t2: this.formatPercent(share),
+					t3: change,
+					t3zf: changeFlag,
+				}
+			})
+		}
+		return priceRanges.map((name) => {
+			const item = priceMap[name] || { value: 0, t3: '' }
+			const share = total > 0 ? item.value / total * 100 : 0
+			const change = item.t3 ? item.t3 : '--'
+			const changeFlag = change === '--' ? '' : change.substr(0, 1)
+			return {
+				name,
+				t1: name,
+				t2: this.formatPercent(share),
+				t3: change,
+				t3zf: changeFlag,
+			}
+		})
+	},
 	// 点击按钮后初始化图表
 	init: function () {
 		let that = this
@@ -680,6 +733,7 @@ Page({
 					chart2x: res.data.arr_sj3 ? res.data.arr_sj3.x : [],
 					chart3: res.data.arr_sj4 ? res.data.arr_sj4 : [],
 					chart4: res.data.arr_sj5 ? res.data.arr_sj5 : [],
+					priceList: that.buildPriceList(res.data.arr_sj5 ? res.data.arr_sj5 : []),
 					arr_sj6: res.data.arr_sj6 ? res.data.arr_sj6 : [],
 					tips: res.data.arr_sj ? res.data.arr_sj : '',
 					kuanian: res.data.arr_sj2_num,
@@ -700,7 +754,11 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-
+		if (options && options.typename) {
+			wx.setNavigationBarTitle({
+				title: options.typename
+			})
+		}
 	},
 
 	/**
@@ -720,6 +778,11 @@ Page({
 		app.checkws()
 		let that = this
 		var type = that.options.type
+		if (that.options.typename) {
+			wx.setNavigationBarTitle({
+				title: that.options.typename
+			})
+		}
 		console.log(type)
 		that.setData({
 			realval0: type,
@@ -748,7 +811,8 @@ Page({
 	changetitle: function () {
 		let that = this
 		var type = that.options.type
-		let typename = that.data.arrval0[that.data.val0].name
+		let selectedType = that.data.arrval0[that.data.val0]
+		let typename = that.options.typename || (selectedType ? selectedType.name : '')
 		console.log(typename)
 		wx.setNavigationBarTitle({
 			title: typename

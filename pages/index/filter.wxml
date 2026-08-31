@@ -65,41 +65,10 @@
         </view>
     </view>
 
-    <view class="subbox" wx:if="{{subRows.length}}">
-        <scroll-view class="subscroll" scroll-x="{{subMode!='tvs'}}"  scroll-y="{{subMode=='tvs'}}" style="{{subMode=='tvs'?'max-height:900rpx;':''}}"  >
+    <view class="subbox" wx:if="{{subRows.length && subMode!='tvs'}}">
+        <scroll-view class="subscroll" scroll-x="{{subMode!='tvs'}}">
             <view class="subtable">
-                <block wx:if="{{subMode=='tvs'}}">
-                    <view class="tvslist">
-                        <block wx:for="{{subRows}}" wx:key="id">
-                            <!-- 新的维度分组框头（sub_group 切换时显示） -->
-                            <view class="tvsgroup-hd" wx:if="{{index==0 || item.sub_group!=subRows[index-1].sub_group}}">
-                                <text class="tvsgroup-title">{{item.group}}</text>
-                                <picker mode="selector"
-                                    range="{{tvsYears[item.sub_group] || [item.period]}}"
-                                    value="{{tvsSelYearIdx[item.sub_group] || 0}}"
-                                    bindchange="onTvsYearPicker"
-                                    data-sid="{{item.sub_group}}"
-                                    catchtap="stopProp"
-                                    class="tvspicker">
-                                    <text class="tvsgroup-period">{{item.period}} ▾</text>
-                                </picker>
-                            </view>
-                            <view class="tvsrow" bindtap="onSubTypeTap" data-v="{{item.id}}">
-                                <text class="tvsrow-name">{{item.name}}</text>
-                                <view class="tvsrow-right">
-                                    <text class="tvsrow-qty">{{item.qty}}</text>
-                                    <text class="tvsrow-unit"> 万台</text>
-                                    <view class="tvsrow-yoy {{item.xl_yoy[0]=='+'?'up':item.xl_yoy[0]=='-'?'down':''}}">
-                                        {{item.xl_yoy}}
-                                        <image src="/pages/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.xl_yoy[0]=='+'}}"></image>
-                                        <image src="/pages/images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.xl_yoy[0]=='-'}}"></image>
-                                    </view>
-                                </view>
-                            </view>
-                        </block>
-                    </view>
-                </block>
-                <block wx:elif="{{subMode=='qty'}}">
+                <block wx:if="{{subMode=='qty'}}">
                     <view class="subtr subth">
                         <view class="subtd col-name">品类</view>
                         <view class="subtd">出货数量（万台）</view>
@@ -164,4 +133,41 @@
             </view>
         </scroll-view>
     </view>
+
+    <block wx:if="{{subRows.length && subMode=='tvs'}}">
+        <block wx:for="{{tvsGroups}}" wx:key="sub_group" wx:for-item="g">
+            <view class="tvsbox">
+                <view class="tvsgroup-hd">
+                    <text class="tvsgroup-title">{{g.groupTitle}}</text>
+                    <picker mode="selector"
+                        range="{{tvsYears[g.sub_group] || [g.period]}}"
+                        value="{{tvsSelYearIdx[g.sub_group] || 0}}"
+                        bindchange="onTvsYearPicker"
+                        data-sid="{{g.sub_group}}"
+                        catchtap="stopProp">
+                        <view class="tvsgroup-periodpicker">
+                            <text class="tvsgroup-period">{{g.period}}</text>
+                            <image src="/pages/images/sanjiao2.png" mode="widthFix" class="subarrow"></image>
+                        </view>
+                    </picker>
+                </view>
+                <view class="tvslist">
+                    <block wx:for="{{g.rows}}" wx:key="id" wx:for-item="r">
+                        <view class="tvsrow" bindtap="onSubTypeTap" data-v="{{r.id}}">
+                            <text class="tvsrow-name">{{r.name}}</text>
+                            <view class="tvsrow-right">
+                                <text class="tvsrow-qty">{{r.qty}}</text>
+                                <text class="tvsrow-unit">万台</text>
+                                <view class="tvsrow-yoy {{r.xl_yoy[0]=='+'?'up':r.xl_yoy[0]=='-'?'down':''}}">
+                                    {{r.xl_yoy}}
+                                    <image src="/pages/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{r.xl_yoy[0]=='+'}}"></image>
+                                    <image src="/pages/images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{r.xl_yoy[0]=='-'}}"></image>
+                                </view>
+                            </view>
+                        </view>
+                    </block>
+                </view>
+            </view>
+        </block>
+    </block>
 </view>

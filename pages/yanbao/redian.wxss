@@ -1,180 +1,349 @@
-/* pages/yanbao/redian.wxss */
-.con{
-	padding: 0 25rpx;
-	padding-top: 30rpx;
-	padding-bottom: 30rpx;
-	background-color: #ebf6fc;
-	margin-top: -70rpx;
+/* pages/yanbao/redian.wxss — 观研页：深色页眉（搜索 + 分栏）→ 纸面浮起 → 报告列表 */
+.redian-page {
+	min-height: 100%;
+	background: var(--ink-900);
+}
+
+/* 顶部区域改为墨蓝带，与导航栏 #055586 连成一片。
+   原实现 .top-area 是白底、.sellist 又是 #f4f4f4，两者之间会出现一道拼色接缝。 */
+.top-area {
+	position: relative;
+	box-sizing: border-box;
+	padding: 24rpx var(--gutter) 0;
+	overflow: hidden;
+	background: linear-gradient(160deg, var(--ink-700) 0%, var(--ink-900) 100%);
+}
+.top-area::before {
+	content: "";
+	position: absolute;
+	left: -20%;
+	top: -60%;
+	width: 140%;
+	height: 260%;
+	pointer-events: none;
+	background-image: repeating-linear-gradient(
+			45deg,
+			rgba(255, 255, 255, 0.045) 0 1rpx,
+			transparent 1rpx 24rpx
+		),
+		repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.03) 0 1rpx, transparent 1rpx 24rpx);
+}
+.top-area::after {
+	content: "";
+	position: absolute;
+	right: -80rpx;
+	top: -160rpx;
+	width: 420rpx;
+	height: 420rpx;
+	border-radius: 50%;
+	pointer-events: none;
+	background: radial-gradient(circle, rgba(46, 134, 184, 0.4) 0%, rgba(46, 134, 184, 0) 70%);
+}
+
+/* ---------- 深色底上的搜索框：半透明玻璃质感 ---------- */
+.searchbar {
+	position: relative;
+	z-index: 1;
+	width: 100%;
+	height: 84rpx;
+	padding: 0 28rpx;
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	background: rgba(255, 255, 255, 0.12);
+	border: 1rpx solid rgba(255, 255, 255, 0.2);
+	border-radius: 999rpx;
+}
+.search-icon {
+	width: 32rpx;
+	margin-right: 18rpx;
+	flex-shrink: 0;
+	opacity: 0.85;
+}
+.search-input {
+	flex: 1;
+	height: 100%;
+	font-size: var(--fs-body);
+	color: var(--text-invert);
+}
+.search-placeholder {
+	color: rgba(255, 255, 255, 0.55);
+	font-size: var(--fs-body);
+}
+
+/* ---------- 四栏切换：琥珀色下划线作为唯一的选中标记 ---------- */
+.sellist {
+	position: relative;
+	z-index: 1;
+	width: 100%;
+	padding: 32rpx 0 24rpx;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	background: transparent;
+	overflow: visible;
+}
+/* 深色带已自带纹理，此处不再叠加 */
+.sellist::before,
+.sellist::after {
+	display: none;
+}
+
+.sellist .item {
+	width: 25%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	line-height: 1;
+	box-sizing: border-box;
+	color: rgba(255, 255, 255, 0.62);
+	transition: color 0.2s ease;
+}
+.sellist .item text {
+	font-size: var(--fs-body);
+	line-height: 1.2;
+	letter-spacing: 1rpx;
+}
+.sellist .item .underline {
+	width: 44rpx;
+	height: 5rpx;
+	margin-top: 16rpx;
+	border-radius: 999rpx;
+	background: transparent;
+	transition: background-color 0.2s ease, width 0.2s ease;
+}
+.sellist .item.hover {
+	color: var(--text-invert);
+	font-weight: 600;
+}
+.sellist .item.hover .underline {
+	width: 56rpx;
+	background: var(--signal);
+}
+
+/* ---------- 内容纸面 ---------- */
+.con {
 	position: relative;
 	z-index: 99;
-	border-radius: 35rpx 35rpx 0 0 ;
 	box-sizing: border-box;
-  }
-  .sellist {
-	  padding-bottom: 110rpx;
-  }
-  .swiper {
+	padding: 30rpx var(--gutter) 32rpx;
+	margin-top: 0;
+	background-color: var(--paper);
+	border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+	border-top: 1rpx solid rgba(255, 255, 255, 0.5);
+	box-shadow: 0 -12rpx 32rpx rgba(3, 37, 60, 0.18);
+}
+
+.swiper {
 	--box-width: 100vw;
 	height: calc(var(--box-width) / 3.6);
-	margin-bottom: 20rpx;
-	}
-  .swiper-item .pic {
-	  border-radius: 20rpx;
-  }
-  .redian .newsbox {
+	margin-bottom: 24rpx;
+}
+.swiper-item .pic {
+	border-radius: var(--r-md);
+}
+
+/* ---------- 资讯 / 视频 / 活动列表 ---------- */
+.redian .newsbox {
 	width: 100%;
-	background-color: #fff;
-	margin-bottom: 25rpx;
+	box-sizing: border-box;
+	padding: 4rpx 24rpx;
+	margin-bottom: 24rpx;
+	background-color: var(--surface);
+	border: 1rpx solid var(--hairline);
+	border-radius: var(--r-lg);
+	box-shadow: var(--shadow-card);
 }
 .redian .newsbox .down {
 	width: 100%;
 }
-
 .redian .newsbox .down .item {
 	width: 100%;
-	padding: 30rpx 0;
-	border-bottom: 1rpx solid #eee;
+	padding: 28rpx 0;
+	border-bottom: 1rpx solid var(--hairline);
 	display: flex;
 	justify-content: space-between;
-	align-items: center;
+	align-items: flex-start;
 }
 .redian .newsbox .down .item:last-child {
 	border-bottom: 0;
 }
 .redian .newsbox .down .item .l {
-	width: calc(100%);
+	flex: 1;
+	min-width: 0;
 }
 .redian .newsbox .down .item .r {
-	width: 120rpx;
+	width: 176rpx;
 	height: auto;
-	margin-left: 30rpx;
+	margin-left: 24rpx;
 	flex-shrink: 0;
+	border-radius: var(--r-sm);
+	background-color: var(--surface-sunken);
 }
 .redian .newsbox .down .item .shang {
 	width: 100%;
 	display: flex;
 	justify-content: flex-start;
 	align-items: flex-start;
-	margin-bottom: 20rpx;
+	margin-bottom: 14rpx;
 }
-
-.redian .newsbox .down .item .shang .pic {
-	width: 25rpx;
-	margin-right: 15rpx;
-	margin-top: 10rpx;
-	max-height: 13px;
+/* 资讯行的小圆点图标写在 .title 内部，而 .title 是 -webkit-box 纵向盒，
+   图标会被当成第一个盒子压在标题上方（原本就存在的错位）。
+   这里隐藏该图片，改用 .shang::before 画一枚方形标记，不再干扰行夹断。 */
+.redian .newsbox .down .item .shang .title .pic {
+	display: none;
 }
-
+.redian .newsbox .down .item .shang::before {
+	content: "";
+	width: 12rpx;
+	height: 12rpx;
+	margin-right: 16rpx;
+	margin-top: 16rpx;
+	flex-shrink: 0;
+	border-radius: 2rpx;
+	background-color: var(--ink-400);
+	transform: rotate(45deg);
+}
 .redian .newsbox .down .item .shang .title {
-	width: 100%;
+	flex: 1;
+	min-width: 0;
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 2;
 	overflow: hidden;
-	font-size: 14px;
-	color: #333;
+	font-size: var(--fs-body);
+	line-height: 1.45;
+	color: var(--text-1);
 }
 
 .redian .newsbox .down .item .xia {
 	width: 100%;
 	box-sizing: border-box;
-	font-size: 12px;
-	color: #999;
+	padding-left: 28rpx;
+	font-family: var(--font-num);
+	font-variant-numeric: tabular-nums;
+	font-size: var(--fs-caption);
+	letter-spacing: 0.5rpx;
+	color: var(--text-3);
 }
-.redian .newsbox .more{
+
+/* 「查看更多」：加一道上分隔线，读作列表的收口而非孤立文字 */
+.redian .newsbox .more {
 	width: 100%;
-	height: 110rpx;
+	height: 96rpx;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: 14px;
-	color: #333;
+	border-top: 1rpx solid var(--hairline);
+	font-size: var(--fs-body-s);
+	letter-spacing: 2rpx;
+	color: var(--ink-600);
 }
 
-
-
+/* ---------- 洛图月报 / 季报 / 年报 ---------- */
 .yanbao .newsbox {
 	width: 100%;
-	padding-top: 40rpx;
-	background-color: #fff;
-	margin-bottom: 25rpx;
-	border-radius: 25rpx;
+	box-sizing: border-box;
+	padding: 30rpx 24rpx 4rpx;
+	margin-bottom: 24rpx;
+	background-color: var(--surface);
+	border: 1rpx solid var(--hairline);
+	border-radius: var(--r-lg);
+	box-shadow: var(--shadow-card);
 }
-
 .yanbao .newsbox .up {
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
-	align-items: stretch;
+	align-items: center;
+	padding-bottom: 22rpx;
+	border-bottom: 1rpx solid var(--hairline);
 }
-
 .yanbao .newsbox .up .title {
-	font-size: 16px;
-	color: #333;
-	font-weight: bold;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-}
-.yanbao .newsbox .up .title .sp{
-	color: #fff;
-	background-color: #cd3824;
-	border-radius: 50%;
-	padding: 0 8rpx;
-	margin: 0 3rpx;
+	font-size: var(--fs-title);
+	font-weight: 600;
+	color: var(--text-1);
+	letter-spacing: 1rpx;
 }
 
+/* 「月/季/年」字符徽标：原来 padding+50% 圆角会拉成椭圆，
+   且用了与「上涨」同族的红色；改成固定尺寸的墨蓝正圆。 */
+.yanbao .newsbox .up .title .sp {
+	width: 40rpx;
+	height: 40rpx;
+	margin: 0 6rpx;
+	padding: 0;
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: linear-gradient(145deg, var(--ink-400) 0%, var(--ink-700) 100%);
+	color: var(--text-invert);
+	font-size: var(--fs-body-s);
+	font-weight: 600;
+}
 .yanbao .newsbox .up .more {
-	width: 35rpx;
+	width: 40rpx;
+	height: 40rpx;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	flex-shrink: 0;
 }
 .yanbao .newsbox .up .more image {
-	width: 100%;
-	max-height: 5px;
+	width: 30rpx;
+	max-height: 12rpx;
+	opacity: 0.5;
 }
 
 .yanbao .newsbox .down {
 	width: 100%;
-	/* min-height: 300rpx; */
 }
-
 .yanbao .newsbox .down .item {
 	width: 100%;
-	padding: 30rpx 0;
-	border-bottom: 1rpx solid #eee;
+	padding: 26rpx 0;
+	border-bottom: 1rpx solid var(--hairline);
 }
 .yanbao .newsbox .down .item:last-child {
 	border-bottom: 0;
 }
-
 .yanbao .newsbox .down .item .shang {
 	width: 100%;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-	margin-bottom: 20rpx;
+	margin-bottom: 12rpx;
 }
 
 .yanbao .newsbox .down .item .shang .pic {
-	width: 25rpx;
-	margin-right: 15rpx;
-	max-height: 12px;
+	width: 22rpx;
+	margin-right: 14rpx;
+	max-height: 22rpx;
+	flex-shrink: 0;
+	opacity: 0.55;
 }
-
 .yanbao .newsbox .down .item .shang .title {
-	width: 100%;
+	flex: 1;
+	min-width: 0;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	font-size: 14px;
-	color: #333;
+	font-size: var(--fs-body);
+	color: var(--text-1);
 }
-
 .yanbao .newsbox .down .item .xia {
 	width: 100%;
 	box-sizing: border-box;
-	font-size: 12px;
-	color: #999;
+	padding-left: 36rpx;
+	font-family: var(--font-num);
+	font-variant-numeric: tabular-nums;
+	font-size: var(--fs-caption);
+	letter-spacing: 0.5rpx;
+	color: var(--text-3);
 }

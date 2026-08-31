@@ -1,311 +1,335 @@
-/**index.wxss**/
-.banner{
-  width: 100%;
-  position: relative;
+/**index.wxss — 首页：顶部轮播 → 纸面浮起 → 数据宫格 / 行业洞察 */
+page {
+	background-color: var(--ink-900);
 }
-.banner .img{
-  width: 100%;
+
+/* ---------- 顶部轮播 ---------- */
+.ad {
+	width: 100%;
+	margin-bottom: 24rpx;
 }
-.banner .form{
-  width: calc(100% - 50rpx);
-  height: 70rpx;
-  position: absolute;
-  left: 25rpx;
-  top: 60rpx;
-  background-color: #fff;
-  border-radius: 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.banner .form .sub{
-  width: 70rpx;
-  height: 70rpx;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.banner .form .sub image{
-  width: 30rpx;
-}
-.banner .form .input{
-  width: calc(100% - 70rpx);
-  height: 70rpx;
-  box-sizing: border-box;
-  padding-right: 30rpx;
-  font-size: 12px;
-}
-.menulist{
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  padding: 20rpx 0;
-  padding-top: 10rpx;
-  background-color: #fff;
-  /* margin-top: -70rpx; */
-  position: relative;
-  z-index: 2;
-  border-radius: 35rpx ;
-  margin-bottom: 20rpx;
-}
-.menulist .item{
-  width: 25%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  flex-direction: column;
-}
-.menulist .item .pic{
-  width: 60rpx;
-  height: 60rpx;
-  /* margin-bottom: 20rpx; */
-}
-.menulist .item.i1 .pic{
-  width: 90rpx;
-  height: 90rpx;
-  border-radius: 50%;
-}
-.menulist .item .pic image{
-  width: 100%;
-  height: 100%;
-}
-.menulist .item .title{
-  font-size: 12px;
-  color: #666;
-}
-.menulist--buttons{
-  display: block;
-  padding: 22rpx 24rpx 26rpx;
-  background-color: #fff;
-  border-radius: 18rpx;
-  margin-bottom: 20rpx;
-  box-sizing: border-box;
-}
-.menulist--buttons .menu-title{
-  display: flex;
-  align-items: center;
-  margin-bottom: 20rpx;
-  font-size: 30rpx;
-  font-weight: 600;
-  color: #1f1f1f;
-}
-.menulist--buttons .menu-title::before{
-  content: "";
-  width: 10rpx;
-  height: 28rpx;
-  margin-right: 12rpx;
-  border-radius: 6rpx;
-  background-color: #055586;
-  flex-shrink: 0;
-}
-.menulist--buttons .menu-grid{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
-.menulist--buttons .item{
-  width: calc((100% - 44rpx) / 3);
-  height: 168rpx;
-  box-sizing: border-box;
-  border: 2rpx solid #eef1f6;
-  border-radius: 20rpx;
-  background-color: #fff;
-  box-shadow: 0 6rpx 16rpx rgba(15,95,138,0.06);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 16rpx 8rpx;
-  margin-right: 22rpx;
-  margin-bottom: 22rpx;
-}
-.menulist--buttons .item:nth-child(3n){
-  margin-right: 0;
-}
-.menulist--buttons .item .item-icon{
-  width: 96rpx;
-  height: 96rpx;
-  border-radius: 50%;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 12rpx;
-  background: linear-gradient(135deg, #1a9fe8 0%, #0f5f8a 100%);
-}
-.menulist--buttons .item .item-icon image{
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-.menulist--buttons .item .item-icon-letter{
-  color: #fff;
-  font-size: 44rpx;
-  font-weight: bold;
-}
-.menulist--buttons .item .item-icon-c0{ background: linear-gradient(135deg,#ff9a56 0%,#ff6a3d 100%); }
-.menulist--buttons .item .item-icon-c1{ background: linear-gradient(135deg,#5bc0a3 0%,#2f9e79 100%); }
-.menulist--buttons .item .item-icon-c2{ background: linear-gradient(135deg,#8e7cf3 0%,#6a5ae0 100%); }
-.menulist--buttons .item .item-icon-c3{ background: linear-gradient(135deg,#f06a8d 0%,#e04a74 100%); }
-.menulist--buttons .item .item-icon-c4{ background: linear-gradient(135deg,#4fb3e0 0%,#2b8fc2 100%); }
-.menulist--buttons .item .item-icon-c5{ background: linear-gradient(135deg,#e8b23e 0%,#d1941f 100%); }
-.menulist--buttons .item .title{
-  width: 100%;
-  text-align: center;
-  font-size: 26rpx;
-  line-height: 1.2;
-  color: #2a2a2a;
-  white-space: normal;
-  word-break: break-all;
-}
-.ad{
-  width: 100%;
-  margin-bottom: 20rpx;
-}
-.ad-top{
-  width: 100%;
-  margin-bottom: 0;
+.ad-top {
+	width: 100%;
+	margin-bottom: 0;
+	background-color: var(--ink-900);
 }
 .ad-top .swiper {
-  height: calc(100vw / 1.923);
+	height: calc(100vw / 1.923);
+	margin-bottom: 0;
+}
+.ad-top .swiper-item {
+	border-radius: 0;
+}
+/* 顶部通栏轮播需要撑满固定高度（覆盖 app.wxss 的 height:auto） */
+swiper-item {
+	height: 100% !important;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
 }
 .ad-top .swiper image {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
+	width: 100%;
+	height: 100%;
+	display: block;
+	object-fit: cover;
 }
-.ad image{
-  width: 100%;
-  border-radius: 10rpx;
+
+/* ---------- 内容纸面：压住轮播下缘浮起，顶边一道高光发丝线 ---------- */
+.con {
+	position: relative;
+	z-index: 99;
+	box-sizing: border-box;
+	padding: 30rpx var(--gutter) 0;
+	margin-top: -56rpx;
+	background-color: var(--paper);
+	border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+	border-top: 1rpx solid rgba(255, 255, 255, 0.5);
+	box-shadow: 0 -12rpx 32rpx rgba(3, 37, 60, 0.18);
 }
-.pubtitle{
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  margin-bottom: 10rpx;
+
+/* ---------- 搜索：置于宫格之上，作为全页第一动作 ---------- */
+.sousuo {
+	width: 100%;
+	height: 88rpx;
+	display: flex;
+	justify-content: flex-start;
+	align-items: stretch;
+	margin-bottom: 24rpx;
+	box-sizing: border-box;
+	background-color: var(--surface);
+	border: 1rpx solid var(--hairline);
+	border-radius: 999rpx;
+	box-shadow: var(--shadow-card);
 }
-.pubtitle .l{
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  font-size: 16px;
-  color: #333;
-  font-weight: bold;
+.sousuo .fdj {
+	width: 88rpx;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-shrink: 0;
 }
-.pubtitle .l image{
-  width: 30rpx;
-  margin-right: 10rpx;
+.sousuo .fdj image {
+	width: 32rpx;
+	height: auto;
+	opacity: 0.72;
 }
-.pubtitle .r{
-  /* font-size: 12px;
-  color: #aaa; */
-  width: 35rpx;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.sousuo .input {
+	flex: 1;
+	height: 100%;
+	padding-right: 32rpx;
+	box-sizing: border-box;
+	font-size: var(--fs-body);
+	color: var(--text-1);
 }
-.pubtitle .r image{
-  width: 100%;
+.sousuo-ph {
+	color: var(--text-3);
+	font-size: var(--fs-body);
 }
-.dc{
-  background-color: #fff;
-  padding:25rpx;
-  border-radius: 35rpx;
-  /* margin-bottom: 20rpx; */
+
+/* ---------- 数据宫格 ---------- */
+.menulist--buttons {
+	display: block;
+	box-sizing: border-box;
+	padding: 28rpx 24rpx 6rpx;
+	margin-bottom: 24rpx;
+	background-color: var(--surface);
+	border-radius: var(--r-lg);
+	box-shadow: var(--shadow-card);
 }
-.dclist{
-  width: 100%;
+
+/* 中文主标题 + 英文小标题，制造编辑式的双行节奏 */
+.menu-head {
+	display: flex;
+	align-items: baseline;
+	margin-bottom: 24rpx;
+	padding-bottom: 18rpx;
+	border-bottom: 1rpx solid var(--hairline);
 }
-.dclist .item{
-  width: 100%;
-  padding: 30rpx 0;
-  border-bottom: 1rpx solid #eee;
+.menu-title {
+	display: flex;
+	align-items: center;
+	font-size: var(--fs-title);
+	font-weight: 600;
+	color: var(--text-1);
+	letter-spacing: 1rpx;
 }
-.dclist .item:last-child{
-  border-bottom: 0;
-  padding-bottom: 0;
+.menu-title::before {
+	content: "";
+	width: 6rpx;
+	height: 30rpx;
+	margin-right: 14rpx;
+	border-radius: 6rpx;
+	flex-shrink: 0;
+	background: linear-gradient(180deg, var(--ink-400) 0%, var(--ink-700) 100%);
 }
-.dclist .item .p1{
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: 20rpx;
+.menu-sub {
+	margin-left: 16rpx;
+	font-family: var(--font-num);
+	font-size: var(--fs-caption);
+	letter-spacing: 3rpx;
+	color: var(--text-3);
 }
-.dclist .item .p1 .title{
-  width: 100%;
-  font-size: 14px;
-  color: #333;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+
+.menu-grid {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
 }
-.dclist .item .p1 .tag{
-  font-size: 8px;
-  flex-shrink: 0;
-  padding: 1px 4px;
-  border-radius: 2px;
-  margin-right: 10rpx;
+.menulist--buttons .item {
+	width: calc((100% - 36rpx) / 3);
+	box-sizing: border-box;
+	padding: 24rpx 8rpx 22rpx;
+	margin-right: 18rpx;
+	margin-bottom: 18rpx;
+	background-color: var(--surface-sunken);
+	border: 1rpx solid var(--hairline);
+	border-radius: var(--r-md);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.3, 1), opacity 0.18s ease;
 }
-.dclist .item .p1 .tag.t1{
-  color: #fff;
-  background-color: #d81e06;
+.menulist--buttons .item:nth-child(3n) {
+	margin-right: 0;
 }
-.dclist .item .p1 .tag.t2{
-  color: #fff;
-  background-color: #1296db;
+.menulist--buttons .item .item-icon {
+	width: 84rpx;
+	height: 84rpx;
+	border-radius: var(--r-md);
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 16rpx;
+	background: linear-gradient(145deg, var(--ink-400) 0%, var(--ink-700) 100%);
 }
-.dclist .item .p2{
-  width: 100%;
-  font-size: 12px;
-  color: #999;
+.menulist--buttons .item .item-icon image {
+	width: 100%;
+	height: 100%;
+	display: block;
 }
-.con{
-  padding: 0 25rpx;
-  padding-top: 20rpx;
-  background-color: #ebf6fc;
-  margin-top: -70rpx;
-  position: relative;
-  z-index: 99;
-  border-radius: 35rpx 35rpx 0 0 ;
-  box-sizing: border-box;
+.menulist--buttons .item .item-icon-letter {
+	font-family: var(--font-num);
+	font-size: 44rpx;
+	font-weight: 700;
+	color: var(--text-invert);
 }
-swiper-item{
-  height: 100%!important;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+
+/* 六个首字母底色改为「同一冷色族的六个色阶」：
+   原来的橙/绿/紫/粉/蓝/金彩虹与墨蓝品牌互相打架，
+   收敛到青—蓝—靛的窄色域后，宫格才读得出是一套系统。*/
+.menulist--buttons .item .item-icon-c0 {
+	background: linear-gradient(145deg, #4ea6cc 0%, #17698f 100%);
 }
-.swiper-item{
-  border-radius: 15rpx;
+.menulist--buttons .item .item-icon-c1 {
+	background: linear-gradient(145deg, #2f7fae 0%, #063f63 100%);
 }
-.sousuo{
-  width: 100%;
-  height: 80rpx;
-  display: flex;
-  justify-content: flex-start;
-  align-items: stretch;
-  margin-bottom: 20rpx;
-  background-color: #fff;
-  border-radius: 10rpx;
+.menulist--buttons .item .item-icon-c2 {
+	background: linear-gradient(145deg, #55b0b4 0%, #17667a 100%);
 }
-.sousuo .fdj{
-  width: 80rpx;
-  height: 80rpx;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.menulist--buttons .item .item-icon-c3 {
+	background: linear-gradient(145deg, #2a6f9c 0%, #052b45 100%);
 }
-.sousuo .fdj image{
-  width: 32rpx;
-  height: auto;
-  margin-right: 10rpx;
+.menulist--buttons .item .item-icon-c4 {
+	background: linear-gradient(145deg, #6f9fc8 0%, #2b5f88 100%);
 }
-.sousuo .input{
-  width: calc(100% - 80rpx);
-  height: 100%;
-  font-size: 14px;
+.menulist--buttons .item .item-icon-c5 {
+	background: linear-gradient(145deg, #1e5f86 0%, #03253c 100%);
+}
+
+.menulist--buttons .item .title {
+	width: 100%;
+	text-align: center;
+	font-size: var(--fs-body-s);
+	line-height: 1.3;
+	color: var(--text-2);
+	white-space: normal;
+	word-break: break-all;
+}
+
+/* ---------- 行业洞察 ---------- */
+.dc {
+	box-sizing: border-box;
+	padding: 28rpx 24rpx;
+	background-color: var(--surface);
+	border-radius: var(--r-lg);
+	box-shadow: var(--shadow-card);
+}
+.pubtitle {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-bottom: 18rpx;
+	margin-bottom: 6rpx;
+	border-bottom: 1rpx solid var(--hairline);
+}
+.pubtitle .l {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	font-size: var(--fs-title);
+	font-weight: 600;
+	color: var(--text-1);
+	letter-spacing: 1rpx;
+}
+.pubtitle .l image {
+	width: 30rpx;
+	margin-right: 12rpx;
+}
+.pubtitle .r {
+	width: 40rpx;
+	height: 40rpx;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-shrink: 0;
+}
+.pubtitle .r image {
+	width: 30rpx;
+	opacity: 0.5;
+}
+
+.dclist {
+	width: 100%;
+}
+.dclist .item {
+	width: 100%;
+	display: flex;
+	align-items: flex-start;
+	padding: 26rpx 12rpx 26rpx 0;
+	margin: 0 -12rpx;
+	border-bottom: 1rpx solid var(--hairline);
+	border-radius: var(--r-sm);
+	box-sizing: border-box;
+}
+.dclist .item:last-child {
+	border-bottom: 0;
+}
+
+/* 序号：报告类产品的编辑式细节，用数字字体压小、退到次要层级 */
+.dclist .item .ord {
+	width: 56rpx;
+	flex-shrink: 0;
+	padding-left: 12rpx;
+	box-sizing: border-box;
+	font-family: var(--font-num);
+	font-variant-numeric: tabular-nums;
+	font-size: var(--fs-body-s);
+	font-weight: 700;
+	line-height: 1.5;
+	color: var(--ink-200);
+}
+.dclist .item .body {
+	flex: 1;
+	min-width: 0;
+}
+.dclist .item .p1 {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	margin-bottom: 12rpx;
+}
+.dclist .item .p1 .title {
+	flex: 1;
+	min-width: 0;
+	font-size: var(--fs-body);
+	line-height: 1.45;
+	color: var(--text-1);
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+}
+
+/* 标签：HOT 用琥珀信号色，NEW 用墨蓝描边。
+   红色在本项目已被「同比上涨」占用，此处不再复用，避免语义串味。*/
+.dclist .item .p1 .tag {
+	flex-shrink: 0;
+	margin-right: 12rpx;
+	padding: 2rpx 10rpx;
+	border-radius: var(--r-sm);
+	font-family: var(--font-num);
+	font-size: 18rpx;
+	font-weight: 700;
+	line-height: 1.7;
+	letter-spacing: 1rpx;
+}
+.dclist .item .p1 .tag.t1 {
+	color: #8a4f05;
+	background-color: var(--signal-soft);
+	border: 1rpx solid rgba(217, 139, 38, 0.4);
+}
+.dclist .item .p1 .tag.t2 {
+	color: var(--ink-600);
+	background-color: var(--ink-050);
+	border: 1rpx solid var(--hairline-strong);
+}
+.dclist .item .p2 {
+	font-family: var(--font-num);
+	font-variant-numeric: tabular-nums;
+	font-size: var(--fs-caption);
+	letter-spacing: 0.5rpx;
+	color: var(--text-3);
 }

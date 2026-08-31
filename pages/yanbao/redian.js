@@ -14,6 +14,8 @@ Page({
 		duration: 500,
 		indicatorColor: 'rgba(255, 255, 255, .3)',
 		indicatorActiveColor: 'rgba(255, 255, 255, 1)',
+		keywords: '',
+		currentTab: 1,
 		pagetype: 1,
 		p: 1,
 		newslist: [],
@@ -114,7 +116,8 @@ Page({
 		console.log(pagetype)
 		if(pagetype){
 			this.setData({
-				pagetype
+				pagetype,
+				currentTab: pagetype
 			})
 		}else{
 			pagetype = this.data.pagetype
@@ -194,11 +197,36 @@ Page({
 		let type = e.currentTarget.dataset.type
 		console.log(type)
 		if (type) {
+			let contentType = type
+			if (type == 4) {
+				contentType = 4
+			}
 			this.setData({
-				pagetype:type
+				currentTab: type,
+				pagetype: contentType == 4 ? 4 : type
 			})
 		} else {
 			return false
+		}
+	},
+	inputchange: function (e) {
+		let name = e.currentTarget.dataset.name
+		let val = e.detail.value
+		this.setData({
+			[name]: val
+		})
+	},
+	search: function () {
+		let keywords = this.data.keywords
+		if (keywords) {
+			wx.navigateTo({
+				url: '/pages/index/search?keywords=' + encodeURIComponent(keywords),
+			})
+		} else {
+			wx.showToast({
+				title: '请输入关键字',
+				icon: 'none'
+			})
 		}
 	},
 })

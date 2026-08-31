@@ -33,7 +33,7 @@
 			<!-- <view class="r">
 				<picker bindchange="bindPickerChange" data-name="yjn" data-real="realyjn" value="{{yjn}}" range-key="name" range="{{arryjn}}">
 					<view class="picker">
-						{{arryjn[yjn]['name']}}
+						{{arryjn[yjn] ? arryjn[yjn]['name'] : ''}}
 						<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
 					</view>
 				</picker>
@@ -49,7 +49,7 @@
 				<view class="r">
 					<picker bindchange="bindPickerChange" data-name="yjn" data-real="realyjn" value="{{yjn}}" range-key="name" range="{{arryjn}}">
 						<view class="picker">
-							{{arryjn[yjn]['name']}}
+							{{arryjn[yjn] ? arryjn[yjn]['name'] : ''}}
 							<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
 						</view>
 					</picker>
@@ -84,7 +84,7 @@
 					</view>
 					<block wx:for="{{listData}}" wx:key="this">
 						<view class="tr">
-							<view class="td wd30 titletd2" data-type="2" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" bindtap="tiaozhuan" >{{item.t1}}</view>
+							<view class="td wd30 titletd2" data-type="2" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}" bindtap="tiaozhuan" >{{item.t1}}</view>
 							<view class="td wd40">
 								<view class="num">{{item.t2}}</view>
 								<view class="juzhong">
@@ -123,7 +123,7 @@
 				<view class="r">
 					<picker bindchange="bindPickerChange" data-name="yjn2" data-real="realyjn2" value="{{yjn2}}" range-key="name" range="{{arryjn2}}">
 						<view class="picker">
-							{{arryjn2[yjn2]['name']}}
+							{{arryjn2[yjn2] ? arryjn2[yjn2]['name'] : ''}}
 							<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
 						</view>
 					</picker>
@@ -158,7 +158,7 @@
 					</view>
 					<block wx:for="{{listData2}}" wx:key="this">
 						<view class="tr">
-							<view class="td wd30 titletd2" data-type="3" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" bindtap="tiaozhuan">{{item.t1}}</view>
+							<view class="td wd30 titletd2" data-type="3" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}" bindtap="tiaozhuan">{{item.t1}}</view>
 							<view class="td wd35">
 								<view class="num">{{item.t2}}</view>
 								<view class="juzhong">
@@ -197,230 +197,179 @@
 				<!-- <view class="r">
 					<picker bindchange="bindPickerChange" data-name="yjn3" data-real="realyjn3" value="{{yjn3}}" range-key="name" range="{{arryjn3}}">
 						<view class="picker">
-							{{arryjn3[yjn3]['name']}}
+							{{arryjn3[yjn3] ? arryjn3[yjn3]['name'] : ''}}
 							<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
 						</view>
 					</picker>
 				</view> -->
 			</view>
 			<view class="down">
-				<view class="table" style="margin-bottom: 0rpx;">
-					<view class="tr">
-						<view class="th wd40 titletd">电视供应链</view>
-						<view class="th wd30"></view>
-						<view class="th wd30 seltd">
-							<picker bindchange="bindPickerChange" data-name="yjn3" data-real="realyjn3" value="{{yjn3}}" range-key="name" range="{{arryjn3}}">
-								<view class="picker">
-									{{arryjn3[yjn3]['name']}}
-									<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
-								</view>
-							</picker>
-						</view>
+				<view class="subbox">
+					<view class="tvsgroup-hd">
+						<text class="tvsgroup-title">电视供应链</text>
+						<picker bindchange="bindPickerChange" data-name="yjn3" data-real="realyjn3" value="{{yjn3}}" range-key="name" range="{{arryjn3}}">
+							<view class="tvsgroup-periodpicker">
+								<text class="tvsgroup-period">{{arryjn3[yjn3] ? arryjn3[yjn3]['name'] : ''}}</text>
+								<image src="/pages/images/sanjiao2.png" mode="widthFix" class="subarrow"></image>
+							</view>
+						</picker>
 					</view>
-					<block wx:for="{{listData3}}" wx:key="this">
-						<view class="tr">
-							<view class="td wd40  titletd2" data-type="4" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" bindtap="tiaozhuan">{{item.t1}}</view>
-							<view class="td wd30">
-								<view class="num">{{item.t2}}</view>
-								<view class="dw">万台</view>
-							</view>
-							<view class="td wd30">
-								<view class="num2 {{item.t3zf=='+'?'hong':item.t3zf=='-'?'lv':null}}">
-									{{item.t3}}
-									<image src="../images/sheng1.png" mode="widthFix" class="img" wx:if="{{item.t3zf=='+'}}"></image>
-									<image src="../images/jiang1.png" mode="widthFix" class="img" wx:if="{{item.t3zf=='-'}}"></image>
+					<view class="tvslist">
+						<block wx:for="{{listData3}}" wx:key="this">
+							<view class="tvsrow" bindtap="tiaozhuan" data-type="4" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
+								<text class="tvsrow-name">{{item.t1}}</text>
+								<view class="tvsrow-right">
+									<text class="tvsrow-qty">{{item.t2}}</text>
+									<text class="tvsrow-unit">万台</text>
+									<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
+										{{item.t3}}
+										<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
+										<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+									</view>
 								</view>
 							</view>
-						</view>
-					</block>
+						</block>
+					</view>
 				</view>
-        <view class="blank10"></view>
-				<view class="table" style="margin-bottom: 25rpx;">
-					<view class="tr">
-						<view class="th wd40 titletd"></view>
-						<view class="th wd30"></view>
-						<view class="th wd30 seltd">
-							<picker bindchange="bindPickerChange" data-name="yjn4" data-real="realyjn4" value="{{yjn4}}" range-key="name" range="{{arryjn4}}">
-								<view class="picker">
-									{{arryjn4[yjn4]['name']}}
-									<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
-								</view>
-							</picker>
-						</view>
+				<view class="subbox">
+					<view class="tvsgroup-hd">
+						<text class="tvsgroup-title">统计周期</text>
+						<picker bindchange="bindPickerChange" data-name="yjn4" data-real="realyjn4" value="{{yjn4}}" range-key="name" range="{{arryjn4}}">
+							<view class="tvsgroup-periodpicker">
+								<text class="tvsgroup-period">{{arryjn4[yjn4] ? arryjn4[yjn4]['name'] : ''}}</text>
+								<image src="/pages/images/sanjiao2.png" mode="widthFix" class="subarrow"></image>
+							</view>
+						</picker>
 					</view>
-					<block wx:for="{{listData4}}" wx:key="this">
-						<view class="tr">
-							<view class="td wd40  titletd2" data-type="4" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" bindtap="tiaozhuan">{{item.t1}}</view>
-							<view class="td wd30">
-								<view class="num">{{item.t2}}</view>
-								<view class="dw">万台</view>
-							</view>
-							<view class="td wd30">
-								<view class="num2 {{item.t3zf=='+'?'hong':item.t3zf=='-'?'lv':null}}">
-									{{item.t3}}
-									<image src="../images/sheng1.png" mode="widthFix" class="img" wx:if="{{item.t3zf=='+'}}"></image>
-									<image src="../images/jiang1.png" mode="widthFix" class="img" wx:if="{{item.t3zf=='-'}}"></image>
+					<view class="tvslist">
+						<block wx:for="{{listData4}}" wx:key="this">
+							<view class="tvsrow" bindtap="tiaozhuan" data-type="4" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
+								<text class="tvsrow-name">{{item.t1}}</text>
+								<view class="tvsrow-right">
+									<text class="tvsrow-qty">{{item.t2}}</text>
+									<text class="tvsrow-unit">万台</text>
+									<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
+										{{item.t3}}
+										<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
+										<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+									</view>
 								</view>
 							</view>
-						</view>
-					</block>
+						</block>
+					</view>
 				</view>
-				
-        <view class="table" style="margin-bottom: 25rpx;">
-					<view class="tr">
-						<view class="th wd40 titletd">显示器供应链</view>
-						<view class="th wd30"></view>
-						<view class="th wd30 seltd">
-							<picker bindchange="bindPickerChange" data-name="yjn7" data-real="realyjn7" value="{{yjn7}}" range-key="name" range="{{arryjn7}}">
-								<view class="picker">
-									{{arryjn7[yjn7]['name']}}
-									<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
-								</view>
-							</picker>
-						</view>
+				<view class="subbox">
+					<view class="tvsgroup-hd">
+						<text class="tvsgroup-title">显示器供应链</text>
+						<picker bindchange="bindPickerChange" data-name="yjn7" data-real="realyjn7" value="{{yjn7}}" range-key="name" range="{{arryjn7}}">
+							<view class="tvsgroup-periodpicker">
+								<text class="tvsgroup-period">{{arryjn7[yjn7] ? arryjn7[yjn7]['name'] : ''}}</text>
+								<image src="/pages/images/sanjiao2.png" mode="widthFix" class="subarrow"></image>
+							</view>
+						</picker>
 					</view>
-					<block wx:for="{{listData7}}" wx:key="this">
-						<view class="tr">
-							<view class="td wd40  titletd2" data-type="4" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" bindtap="tiaozhuan">{{item.t1}}</view>
-							<view class="td wd30">
-								<view class="num">{{item.t2}}</view>
-								<view class="dw">万台</view>
-							</view>
-							<view class="td wd30">
-								<view class="num2 {{item.t3zf=='+'?'hong':item.t3zf=='-'?'lv':null}}">
-									{{item.t3}}
-									<image src="../images/sheng1.png" mode="widthFix" class="img" wx:if="{{item.t3zf=='+'}}"></image>
-									<image src="../images/jiang1.png" mode="widthFix" class="img" wx:if="{{item.t3zf=='-'}}"></image>
+					<view class="tvslist">
+						<block wx:for="{{listData7}}" wx:key="this">
+							<view class="tvsrow" bindtap="tiaozhuan" data-type="4" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
+								<text class="tvsrow-name">{{item.t1}}</text>
+								<view class="tvsrow-right">
+									<text class="tvsrow-qty">{{item.t2}}</text>
+									<text class="tvsrow-unit">万台</text>
+									<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
+										{{item.t3}}
+										<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
+										<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+									</view>
 								</view>
 							</view>
-						</view>
-					</block>
+						</block>
+					</view>
 				</view>
-        <view class="table" style="margin-bottom: 25rpx;">
-					<view class="tr">
-						<view class="th wd40 titletd">笔记本电脑供应链</view>
-						<view class="th wd30"></view>
-						<view class="th wd30 seltd">
-							<picker bindchange="bindPickerChange" data-name="yjn9" data-real="realyjn9" value="{{yjn9}}" range-key="name" range="{{arryjn9}}">
-								<view class="picker">
-									{{arryjn9[yjn9]['name']}}
-									<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
-								</view>
-							</picker>
-						</view>
+				<view class="subbox">
+					<view class="tvsgroup-hd">
+						<text class="tvsgroup-title">笔记本电脑供应链</text>
+						<picker bindchange="bindPickerChange" data-name="yjn9" data-real="realyjn9" value="{{yjn9}}" range-key="name" range="{{arryjn9}}">
+							<view class="tvsgroup-periodpicker">
+								<text class="tvsgroup-period">{{arryjn9[yjn9] ? arryjn9[yjn9]['name'] : ''}}</text>
+								<image src="/pages/images/sanjiao2.png" mode="widthFix" class="subarrow"></image>
+							</view>
+						</picker>
 					</view>
-					<block wx:for="{{listData9}}" wx:key="this">
-						<view class="tr">
-							<view class="td wd40  titletd2" data-type="4" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" bindtap="tiaozhuan">{{item.t1}}</view>
-							<view class="td wd30">
-								<view class="num">{{item.t2}}</view>
-								<view class="dw">万台</view>
-							</view>
-							<view class="td wd30">
-								<view class="num2 {{item.t3zf=='+'?'hong':item.t3zf=='-'?'lv':null}}">
-									{{item.t3}}
-									<image src="../images/sheng1.png" mode="widthFix" class="img" wx:if="{{item.t3zf=='+'}}"></image>
-									<image src="../images/jiang1.png" mode="widthFix" class="img" wx:if="{{item.t3zf=='-'}}"></image>
+					<view class="tvslist">
+						<block wx:for="{{listData9}}" wx:key="this">
+							<view class="tvsrow" bindtap="tiaozhuan" data-type="4" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
+								<text class="tvsrow-name">{{item.t1}}</text>
+								<view class="tvsrow-right">
+									<text class="tvsrow-qty">{{item.t2}}</text>
+									<text class="tvsrow-unit">万台</text>
+									<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
+										{{item.t3}}
+										<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
+										<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+									</view>
 								</view>
 							</view>
-						</view>
-					</block>
+						</block>
+					</view>
 				</view>
-        <view class="table" style="margin-bottom: 25rpx;">
-					<view class="tr">
-						<view class="th wd40 titletd">商用显示供应链</view>
-						<view class="th wd30"></view>
-						<view class="th wd30 seltd">
-							<picker bindchange="bindPickerChange" data-name="yjn8" data-real="realyjn8" value="{{yjn8}}" range-key="name" range="{{arryjn8}}">
-								<view class="picker">
-									{{arryjn8[yjn8]['name']}}
-									<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
-								</view>
-							</picker>
-						</view>
+				<view class="subbox">
+					<view class="tvsgroup-hd">
+						<text class="tvsgroup-title">商用显示供应链</text>
+						<picker bindchange="bindPickerChange" data-name="yjn8" data-real="realyjn8" value="{{yjn8}}" range-key="name" range="{{arryjn8}}">
+							<view class="tvsgroup-periodpicker">
+								<text class="tvsgroup-period">{{arryjn8[yjn8] ? arryjn8[yjn8]['name'] : ''}}</text>
+								<image src="/pages/images/sanjiao2.png" mode="widthFix" class="subarrow"></image>
+							</view>
+						</picker>
 					</view>
-					<block wx:for="{{listData8}}" wx:key="this">
-						<view class="tr">
-							<view class="td wd40  titletd2" data-type="4" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" bindtap="tiaozhuan">{{item.t1}}</view>
-							<view class="td wd30">
-								<view class="num">{{item.t2}}</view>
-								<view class="dw">万台</view>
-							</view>
-							<view class="td wd30">
-								<view class="num2 {{item.t3zf=='+'?'hong':item.t3zf=='-'?'lv':null}}">
-									{{item.t3}}
-									<image src="../images/sheng1.png" mode="widthFix" class="img" wx:if="{{item.t3zf=='+'}}"></image>
-									<image src="../images/jiang1.png" mode="widthFix" class="img" wx:if="{{item.t3zf=='-'}}"></image>
+					<view class="tvslist">
+						<block wx:for="{{listData8}}" wx:key="this">
+							<view class="tvsrow" bindtap="tiaozhuan" data-type="4" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
+								<text class="tvsrow-name">{{item.t1}}</text>
+								<view class="tvsrow-right">
+									<text class="tvsrow-qty">{{item.t2}}</text>
+									<text class="tvsrow-unit">万台</text>
+									<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
+										{{item.t3}}
+										<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
+										<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+									</view>
 								</view>
 							</view>
-						</view>
-					</block>
+						</block>
+					</view>
 				</view>
-        <view class="table" style="margin-bottom: 0rpx;">
-					<view class="tr">
-						<view class="th wd40 titletd">电子纸供应链</view>
-						<view class="th wd30"></view>
-						<view class="th wd30 seltd">
-							<picker bindchange="bindPickerChange" data-name="yjn5" data-real="realyjn5" value="{{yjn5}}" range-key="name" range="{{arryjn5}}">
-								<view class="picker">
-									{{arryjn5[yjn5]['name']}}
-									<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
-								</view>
-							</picker>
-						</view>
+				<view class="subbox">
+					<view class="tvsgroup-hd">
+						<text class="tvsgroup-title">电子纸供应链</text>
+						<picker bindchange="bindPickerChange" data-name="yjn5" data-real="realyjn5" value="{{yjn5}}" range-key="name" range="{{arryjn5}}">
+							<view class="tvsgroup-periodpicker">
+								<text class="tvsgroup-period">{{arryjn5[yjn5] ? arryjn5[yjn5]['name'] : ''}}</text>
+								<image src="/pages/images/sanjiao2.png" mode="widthFix" class="subarrow"></image>
+							</view>
+						</picker>
 					</view>
-					<block wx:for="{{listData5}}" wx:key="this">
-						<view class="tr">
-							<view class="td wd40  titletd2" data-type="4" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" bindtap="tiaozhuan">{{item.t1}}</view>
-							<view class="td wd30">
-								<view class="num">{{item.t2}}</view>
-								<view class="dw">万台</view>
-							</view>
-							<view class="td wd30">
-								<view class="num2 {{item.t3zf=='+'?'hong':item.t3zf=='-'?'lv':null}}">
-									{{item.t3}}
-									<image src="../images/sheng1.png" mode="widthFix" class="img" wx:if="{{item.t3zf=='+'}}"></image>
-									<image src="../images/jiang1.png" mode="widthFix" class="img" wx:if="{{item.t3zf=='-'}}"></image>
+					<view class="tvslist">
+						<block wx:for="{{listData5}}" wx:key="this">
+							<view class="tvsrow" bindtap="tiaozhuan" data-type="4" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
+								<text class="tvsrow-name">{{item.t1}}</text>
+								<view class="tvsrow-right">
+									<text class="tvsrow-qty">{{item.t2}}</text>
+									<text class="tvsrow-unit">万台</text>
+									<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
+										{{item.t3}}
+										<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
+										<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+									</view>
 								</view>
 							</view>
-						</view>
-					</block>
+						</block>
+					</view>
 				</view>
-        <!-- <view class="blank10"></view>
-				<view class="table" style="margin-bottom: 25rpx;">
-					<view class="tr">
-						<view class="th wd40 titletd"></view>
-						<view class="th wd30"></view>
-						<view class="th wd30 seltd">
-							<picker bindchange="bindPickerChange" data-name="yjn6" data-real="realyjn6" value="{{yjn6}}" range-key="name" range="{{arryjn6}}">
-								<view class="picker">
-									{{arryjn6[yjn6]['name']}}
-									<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
-								</view>
-							</picker>
-						</view>
-					</view>
-					<block wx:for="{{listData6}}" wx:key="this">
-						<view class="tr">
-							<view class="td wd40  titletd2" data-type="4" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" bindtap="tiaozhuan">{{item.t1}}</view>
-							<view class="td wd30">
-								<view class="num">{{item.t2}}</view>
-								<view class="dw">万台</view>
-							</view>
-							<view class="td wd30">
-								<view class="num2 {{item.t3zf=='+'?'hong':item.t3zf=='-'?'lv':null}}">
-									{{item.t3}}
-									<image src="../images/sheng1.png" mode="widthFix" class="img" wx:if="{{item.t3zf=='+'}}"></image>
-									<image src="../images/jiang1.png" mode="widthFix" class="img" wx:if="{{item.t3zf=='-'}}"></image>
-								</view>
-							</view>
-						</view>
-					</block>
-				</view> -->
-			</view>
 			<view class="tips">{{tips3}}</view>
+			</view>
 		</view>
-	</block>
+		</block>
 	<block wx:if="{{(!xqData || xqData.length==0) && sel!=1}}">
 			<image src="/pages/images/error.png" mode="widthFix" class="pic"></image>
 			<view class="text">正在建设中，敬请期待...</view>
@@ -431,7 +380,7 @@
 				<view class="l">
 					<picker bindchange="bindPickerChange" data-name="val0" data-real="realval0" value="{{val0}}" range-key="name" range="{{arrval0}}">
 						<view class="picker">
-							{{arrval0[val0]['name']}}
+							{{arrval0[val0] ? arrval0[val0]['name'] : ''}}
 							<image src="/pages/images/sanjiao2.png" mode="widthFix" class="sanjiao" class="sj"></image>
 						</view>
 					</picker>
@@ -439,19 +388,19 @@
 				<view class="r">
 					<picker bindchange="bindPickerChange" wx:if="{{sel!=2 && sel!=3 && realval0!=21}}" data-name="val1" data-real="realval1" value="{{val1}}" range-key="name" range="{{arrval1}}">
 						<view class="picker">
-							{{arrval1[val1]['name']}}
+							{{arrval1[val1] ? arrval1[val1]['name'] : ''}}
 							<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
 						</view>
 					</picker>
 					<picker bindchange="bindPickerChange" wx:if="{{sel!=4 && sel!=3 || (sel==4 && realval0==12 && realval1==5) || (sel==4 && realval0==17 ) || (sel==4 && realval0==21 )}}" data-name="val2" data-real="realval2" value="{{val2}}" range-key="name" range="{{arrval2}}">
 						<view class="picker">
-							{{arrval2[val2]['name']}}
+							{{arrval2[val2] ? arrval2[val2]['name'] : ''}}
 							<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
 						</view>
 					</picker>
 					<picker bindchange="bindPickerChange" data-name="val3" data-real="realval3" value="{{val3}}" range-key="name" range="{{arrval3}}">
 						<view class="picker">
-							{{arrval3[val3]['name']}}
+							{{arrval3[val3] ? arrval3[val3]['name'] : ''}}
 							<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
 						</view>
 					</picker>

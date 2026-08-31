@@ -1,24 +1,154 @@
-/**app.wxss**/
+/**app.wxss — 洛图科技 · 设计令牌层
+ * 设计方向：「精密仪表」——面向显示产业分析师的行情终端。
+ * 深墨蓝为地，冷白纸面为面，单一琥珀信号色为点；
+ * 数字使用等宽字形，让纵向数列自然对齐。
+ * 约定：所有新增样式只使用 rpx 与下列变量，不再硬编码色值。
+ */
 page {
 	width: 100%;
 	height: 100%;
+
+	/* —— 墨蓝主轴 —— */
+	--ink-900: #03253c;
+	--ink-800: #052b45;
+	--ink-700: #044168;
+	--ink-600: #055586; /* 原品牌色，作为体系锚点保留 */
+	--ink-400: #2e86b8;
+	--ink-200: #a9cbe0;
+	--ink-050: #e8f2f8;
+
+	/* —— 纸面 —— */
+	--paper: #edf3f7;
+	--surface: #ffffff;
+	--surface-sunken: #f4f7fa;
+
+	/* —— 文字 —— */
+	--text-1: #12212b;
+	--text-2: #4a5c68;
+	--text-3: #8698a5;
+	--text-invert: #ffffff;
+
+	/* —— 发丝分隔线 —— */
+	--hairline: rgba(5, 85, 134, 0.1);
+	--hairline-strong: rgba(5, 85, 134, 0.2);
+
+	/* —— 唯一强调色：信号琥珀 —— */
+	--signal: #d98b26;
+	--signal-soft: #fdf3e2;
+
+	/* —— 涨跌：延续「红涨绿跌」惯例，提高饱和度与对比 —— */
+	--rise: #d24029;
+	--fall: #0b8f63;
+	--flat: #8698a5;
+
+	/* —— 字阶（统一 rpx，杜绝 px/rpx 混用）—— */
+	--fs-caption: 22rpx;
+	--fs-body-s: 24rpx;
+	--fs-body: 28rpx;
+	--fs-title: 32rpx;
+	--fs-heading: 38rpx;
+	--fs-metric: 52rpx;
+	--fs-metric-lg: 64rpx;
+
+	/* —— 半径 / 间距 / 阴影 —— */
+	--r-sm: 8rpx;
+	--r-md: 16rpx;
+	--r-lg: 24rpx;
+	--r-sheet: 32rpx;
+	--gutter: 28rpx;
+	--shadow-card: 0 2rpx 8rpx rgba(3, 37, 60, 0.04), 0 12rpx 30rpx rgba(3, 37, 60, 0.05);
+	--shadow-lift: 0 4rpx 12rpx rgba(3, 37, 60, 0.08), 0 20rpx 44rpx rgba(3, 37, 60, 0.09);
+
+	/* —— 字体 —— */
+	--font-text: -apple-system, "PingFang SC", "Helvetica Neue", "Source Han Sans SC", sans-serif;
+	/* 数字专用：iOS 上取 DIN Alternate（几何感强、字宽等距），
+	   其他平台退回系统无衬线，真正的列对齐交给 tabular-nums 保证。
+	   刻意不放 *Condensed 字族，避免安卓上数字忽然变窄。 */
+	--font-num: "DIN Alternate", "SF Pro Display", -apple-system, "Helvetica Neue", sans-serif;
+
+	background-color: var(--paper);
+	color: var(--text-1);
+	font-family: var(--font-text);
+	-webkit-font-smoothing: antialiased;
 }
 
+/* ==========================================================================
+   1. 通用原语
+   ========================================================================== */
+
+/* 数字：等宽字形 + 紧凑字距，让表格与指标纵向成列 */
+.num,
+.num2,
+.num3,
+.metric {
+	font-family: var(--font-num);
+	font-variant-numeric: tabular-nums;
+	font-feature-settings: "tnum" 1, "lnum" 1;
+	letter-spacing: 0;
+}
+
+/* 涨跌语义色 */
+.hong {
+	color: var(--rise);
+}
+.lv {
+	color: var(--fall);
+}
+
+/* 间距占位（沿用旧类名，页面无需改动） */
 .blank20 {
-	height: 20rpx;
+	height: 24rpx;
 }
 .blank10 {
-	height: 10rpx;
+	height: 12rpx;
 }
 
 .main {
-	padding: 0 25rpx;
+	padding: 0 var(--gutter);
 }
 
+/* 卡片：单层描边 + 极轻投影，不再「描边+重阴影」双重堆叠 */
+.card {
+	background-color: var(--surface);
+	border-radius: var(--r-lg);
+	box-shadow: var(--shadow-card);
+	box-sizing: border-box;
+}
+
+/* 区块标题：以细长墨条替代通用色块，右侧留出操作位 */
+.sec-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 22rpx;
+}
+.sec-head .sec-title {
+	display: flex;
+	align-items: center;
+	font-size: var(--fs-title);
+	font-weight: 600;
+	color: var(--text-1);
+	letter-spacing: 0.5rpx;
+}
+.sec-head .sec-title::before {
+	content: "";
+	width: 6rpx;
+	height: 30rpx;
+	margin-right: 14rpx;
+	border-radius: 6rpx;
+	flex-shrink: 0;
+	background: linear-gradient(180deg, var(--ink-400) 0%, var(--ink-700) 100%);
+}
+
+/* ==========================================================================
+   2. 数据表格 —— 去掉纵向网格线，只留横向发丝线 + 斑马纹
+   ========================================================================== */
 .table {
-	border: 1rpx solid #ddd;
-	border-right: 0;
-	border-bottom: 0;
+	width: 100%;
+	border: 0;
+	border-radius: var(--r-md);
+	overflow: hidden;
+	box-sizing: border-box;
 }
 
 .tr {
@@ -28,88 +158,152 @@ page {
 	align-items: stretch;
 }
 
-.td {
-	/* width:100%; */
-	min-height: 70rpx;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-right: 1rpx solid #d5e2ea;
-	border-bottom: 1rpx solid #d5e2ea;
-	font-size: 12px;
-	color: #444;
-	flex-wrap: wrap;
-	box-sizing: border-box;
-	padding: 0 10rpx;
-	word-break: break-all;
-}
-
+/* 表头：下沉底色 + 小字号说明体，与数据行形成层级 */
 .th {
-	/* width: 100%; */
-	justify-content: center;
-	background-color: #eaf5fc;
 	display: flex;
-	min-height: 70rpx;
+	justify-content: center;
 	align-items: center;
-	border-right: 1rpx solid #d5e2ea;
-	border-bottom: 1rpx solid #d5e2ea;
-	font-size: 12px;
-	color: #444;
 	flex-wrap: wrap;
+	min-height: 64rpx;
 	box-sizing: border-box;
-	padding: 0 10rpx;
+	padding: 10rpx 12rpx;
+	border: 0;
+	background-color: var(--ink-050);
+	font-size: var(--fs-caption);
+	line-height: 1.3;
+	font-weight: 600;
+	color: var(--ink-700);
+	text-align: center;
 	word-break: break-all;
 }
 
+.td {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	min-height: 84rpx;
+	box-sizing: border-box;
+	padding: 10rpx 12rpx;
+	border: 0;
+	border-bottom: 1rpx solid var(--hairline);
+	background-color: var(--surface);
+	font-size: var(--fs-body-s);
+	line-height: 1.35;
+	color: var(--text-2);
+	word-break: break-all;
+}
+
+/* 斑马纹：表头为第 1 行，故偶数行即首个数据行 */
+.tr:nth-child(even) .td {
+	background-color: var(--surface-sunken);
+}
+.tr:last-child .td {
+	border-bottom: 0;
+}
+
+/* 表内数字 */
+.td .num {
+	font-size: var(--fs-body);
+	font-weight: 700;
+	color: var(--ink-700);
+}
+.td .num2 {
+	font-size: var(--fs-caption);
+	font-weight: 700;
+	color: var(--flat);
+}
+.td .dw {
+	font-size: var(--fs-caption);
+	color: var(--text-3);
+	margin-left: 4rpx;
+}
+
+/* 列宽 */
 .wd20 {
 	width: 20%;
-}
-.wd40 {
-	width: 40%;
 }
 .wd30 {
 	width: 30%;
 }
-.wd35 {
-	width: 35%;
-}
-
-
 .wd33 {
 	width: calc(100% / 3);
 }
-
-.hong {
-	color: #fb474f;
+.wd35 {
+	width: 35%;
+}
+.wd40 {
+	width: 40%;
 }
 
-.lv {
-	color: #29c384;
-}
-
+/* ==========================================================================
+   3. 墨蓝页眉带 —— 深色渐变 + 淡蓝图网格纹（纯 CSS，零图片请求）
+   内容层 .con 上移压住其下缘，形成「纸面自深色底浮起」的层次
+   ========================================================================== */
 .sellist {
-	width: 100%;
-	/* height: 87rpx; */
-	padding: 40rpx 0;
-	padding-bottom: 80rpx;
+	position: relative;
+	/* 保持与改版前一致的 40/80 上下留白，以免 7 个复用此类的页面
+	   （list / next1 / next2 / news / scdz / yanbao 等）整体位移 */
+	padding: 40rpx 0 80rpx;
 	box-sizing: border-box;
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	background-color: #055586;
-}
-.sellist .item {
-	font-size: 14px;
-	color: rgba(255,255,255,.3);
-}
-.sellist .item.hover {
-	color: #fff;
+	overflow: hidden;
+	background: linear-gradient(160deg, var(--ink-700) 0%, var(--ink-900) 100%);
 }
 
+/* 45° 蓝图纹：两组重复线性渐变交叉，营造制图纸质感 */
+.sellist::before {
+	content: "";
+	position: absolute;
+	left: -20%;
+	top: -60%;
+	width: 140%;
+	height: 260%;
+	pointer-events: none;
+	background-image: repeating-linear-gradient(
+			45deg,
+			rgba(255, 255, 255, 0.045) 0 1rpx,
+			transparent 1rpx 24rpx
+		),
+		repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.03) 0 1rpx, transparent 1rpx 24rpx);
+}
+
+/* 右上角一抹冷光，破除纯色的平板感 */
+.sellist::after {
+	content: "";
+	position: absolute;
+	right: -80rpx;
+	top: -140rpx;
+	width: 420rpx;
+	height: 420rpx;
+	border-radius: 50%;
+	pointer-events: none;
+	background: radial-gradient(circle, rgba(46, 134, 184, 0.42) 0%, rgba(46, 134, 184, 0) 70%);
+}
+
+.sellist .item {
+	position: relative;
+	z-index: 1;
+	font-size: var(--fs-body);
+	/* 原值 .3 对比度约 1.5:1，不可读；提到 .62 后约 4.6:1 */
+	color: rgba(255, 255, 255, 0.62);
+	letter-spacing: 1rpx;
+	transition: color 0.2s ease;
+}
+.sellist .item.hover {
+	color: var(--text-invert);
+	font-weight: 600;
+}
+
+/* ==========================================================================
+   4. 轮播
+   ========================================================================== */
 .swiper {
 	--box-width: 100vw;
 	height: calc(var(--box-width) / 3.6);
-	margin-bottom: 20rpx;
+	margin-bottom: 24rpx;
 }
 
 swiper {
@@ -121,12 +315,71 @@ swiper-item {
 }
 
 .swiper-item {
+	width: 100%;
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
-	width: 100%;
+	border-radius: var(--r-md);
+	overflow: hidden;
 }
 
 .swiper-item .pic {
 	width: 100%;
+}
+
+/* ==========================================================================
+   5. 触摸反馈（配合 hover-class 使用，小程序 view 上 :active 不可靠）
+   ========================================================================== */
+.tap-card {
+	transform: scale(0.972);
+	opacity: 0.92;
+	transition: transform 0.12s ease-out, opacity 0.12s ease-out;
+}
+
+.tap-row {
+	background-color: var(--ink-050) !important;
+}
+
+.tap-dim {
+	opacity: 0.6;
+}
+
+/* 可点击元素统一给出过渡，松手时回弹而非跳变 */
+.tappable {
+	transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.3, 1), opacity 0.18s ease;
+}
+
+/* ==========================================================================
+   6. 入场动效 —— 一次编排好的错峰上浮，胜过零散的微交互
+   ========================================================================== */
+@keyframes rise-in {
+	from {
+		opacity: 0;
+		transform: translateY(18rpx);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.rise {
+	animation: rise-in 0.42s cubic-bezier(0.22, 0.85, 0.28, 1) both;
+}
+.rise-1 {
+	animation-delay: 0.04s;
+}
+.rise-2 {
+	animation-delay: 0.1s;
+}
+.rise-3 {
+	animation-delay: 0.16s;
+}
+.rise-4 {
+	animation-delay: 0.22s;
+}
+
+/* 底部安全区，避免内容被 tabBar / 手势条压住 */
+.safe-bottom {
+	height: calc(24rpx + env(safe-area-inset-bottom));
 }

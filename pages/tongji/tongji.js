@@ -1041,11 +1041,12 @@ Page({
   },
   tiaozhuan: function (e) {
     let that = this
-    let sel = e.target.dataset.type
-    let realval0 = e.target.dataset.id
-    let val0 = e.target.dataset.ids
-    let realval1 = e.target.dataset.ds
-    let val1 = e.target.dataset.dss
+    let sel = e.currentTarget.dataset.type
+    let realval0 = e.currentTarget.dataset.id
+    let val0 = e.currentTarget.dataset.ids
+    let realval1 = e.currentTarget.dataset.ds
+    let val1 = e.currentTarget.dataset.dss
+    let typename = e.currentTarget.dataset.typename
     const userData = wx.getStorageSync('userData')
 		if (userData) {
 			let uid = userData.id
@@ -1071,15 +1072,11 @@ Page({
 								})
 								return
               }
-              that.resetdspt()
-              that.setData({
-                sel,
-                realval0,
-                val0,
-                realval1:realval1?realval1:'',
-                val1:val1?val1:0
+              wx.navigateTo({
+                url: '/pages/index/next?type=' + realval0 +
+                  '&type2=' + (realval1 || '') +
+                  '&typename=' + encodeURIComponent(typename || '')
               })
-              setTimeout(() => { that.getshuju(1) })
 						} else {
 							wx.showToast({
 								title: res.data.msg,

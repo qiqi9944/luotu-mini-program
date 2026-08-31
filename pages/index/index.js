@@ -166,9 +166,6 @@ Page({
           }
           wx.navigateTo({
             url: '/pages/index/filter?type=' + type,
-            success: (result) => { },
-            fail: (res) => { },
-            complete: (res) => { },
           })
         }
       })

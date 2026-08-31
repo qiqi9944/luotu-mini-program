@@ -465,6 +465,80 @@ ec-canvas {
   height: 320rpx;
 }
 
+.price-table {
+  border: 1rpx solid #1f6b9d;
+  border-bottom: 0;
+}
+
+.price-table-head,
+.price-table-row {
+  display: flex;
+  align-items: stretch;
+}
+
+.price-table-head {
+  background: #1f6b9d;
+}
+
+.price-table-row {
+  border-top: 1rpx solid #1f6b9d;
+  background: #fff;
+}
+
+.price-cell {
+  box-sizing: border-box;
+  padding: 26rpx 14rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #1f2a37;
+  min-height: 96rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1rpx solid #1f6b9d;
+}
+
+.price-table-head .price-cell {
+  color: #fff;
+  font-weight: 700;
+}
+
+.price-cell:last-child {
+  border-right: 0;
+}
+
+.price-cell-name {
+  flex: 1.05;
+}
+
+.price-cell-share {
+  flex: 1;
+  color: #e04a5c;
+  font-weight: 700;
+}
+
+.price-cell-change {
+  flex: 1.2;
+  color: #e04a5c;
+  font-weight: 700;
+}
+
+.price-change {
+  display: inline-flex;
+  align-items: center;
+  gap: 6rpx;
+}
+
+.price-change.down {
+  color: #2f9e79;
+}
+
+.price-arrow {
+  width: 18rpx;
+  height: 18rpx;
+  flex-shrink: 0;
+}
+
 .chartdom {
   width: 100%;
   height: 100%;

@@ -332,7 +332,18 @@ page {
   color: #2f9e79;
 }
 
-/* 核心器件供应链分组列表 */
+/* 核心器件供应链分组卡片（对齐数据页 显示供应链DSC） */
+.tvsbox {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 18rpx;
+  background: #fff;
+  border: 1rpx solid #e2edf5;
+  border-radius: 16rpx;
+  box-shadow: 0 10rpx 28rpx rgba(24, 58, 95, 0.05);
+  overflow: hidden;
+}
+
 .tvslist {
   padding: 0 20rpx 6rpx;
 }
@@ -341,24 +352,29 @@ page {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18rpx 0 8rpx;
-  border-bottom: 2rpx solid #e2edf5;
+  padding: 18rpx 20rpx 12rpx;
+  border-bottom: 1rpx solid #e2edf5;
 }
 
 .tvsgroup-title {
   font-size: 26rpx;
-  font-weight: 600;
+  font-weight: 700;
   color: #1a6fa0;
+}
+
+.tvsgroup-periodpicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 6rpx 12rpx;
+  border-radius: 999rpx;
+  background: #f7fbff;
+  border: 1rpx solid #d7e1ea;
 }
 
 .tvsgroup-period {
   font-size: 22rpx;
-  color: #8a97a7;
-}
-
-.tvspicker {
-  display: inline-flex;
-  align-items: center;
+  color: #567089;
 }
 
 .tvsrow {
@@ -369,10 +385,18 @@ page {
   border-bottom: 1rpx solid #f0f4f7;
 }
 
+.tvsrow:last-child {
+  border-bottom: 0;
+}
+
 .tvsrow-name {
   font-size: 26rpx;
-  color: #333;
+  color: #334155;
   flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .tvsrow-right {
@@ -410,4 +434,11 @@ page {
 
 .tvsrow-yoy.down {
   color: #2f9e79;
+}
+
+/* 卡片内箭头（周期胶囊 + 同比涨跌）对齐 DSC 尺寸 */
+.tvsgroup-periodpicker .subarrow,
+.tvslist .subarrow {
+  width: 14rpx;
+  max-height: 18rpx;
 }

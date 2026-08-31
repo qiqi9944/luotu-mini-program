@@ -54,9 +54,10 @@
 	},
 	"window": {
 		"backgroundTextStyle": "light",
-		"navigationBarBackgroundColor": "#055586",
+		"navigationBarBackgroundColor": "#044168",
 		"navigationBarTitleText": "洛图科技",
 		"navigationBarTextStyle": "white",
+		"backgroundColor": "#edf3f7",
 		"enablePullDownRefresh": true
 	},
 	"style": "v2",
