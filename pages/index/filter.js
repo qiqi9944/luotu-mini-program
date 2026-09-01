@@ -153,11 +153,27 @@ Page({
         let selTypeName = ''
         let typeIdx = 0
         let selGroup = ''
+        // 优先：菜单主品类即当前品类（如商务办公→智能音箱）
         tl.forEach((t, i) => {
-          const ids = (t.types || []).map(x => String(x.id))
-          if (t.id === String(that.data.selType) && !selTypeName && !selGroup) { selTypeName = t.name; typeIdx = i; selGroup = String(t.mid) }
-          if (ids.indexOf(String(that.data.selType)) >= 0 && !selGroup) { selTypeName = t.name; typeIdx = i; selGroup = String(t.mid) }
+            if (selGroup) return
+            if (t.id === String(that.data.selType)) {
+                selTypeName = t.name
+                typeIdx = i
+                selGroup = String(t.mid)
+            }
         })
+        // 其次：绑定品类含当前品类（如回音壁→影音娱乐）
+        if (!selGroup) {
+            tl.forEach((t, i) => {
+                if (selGroup) return
+                const ids = (t.types || []).map(x => String(x.id))
+                if (ids.indexOf(String(that.data.selType)) >= 0) {
+                    selTypeName = t.name
+                    typeIdx = i
+                    selGroup = String(t.mid)
+                }
+            })
+        }
         that.setData({ typeList: tl, selTypeName, typeIdx, selGroup });
         that.refreshDisp()
         that.loadData()
