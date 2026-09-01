@@ -287,7 +287,10 @@ Page({
     const t = e.currentTarget.dataset.v
     let name = ''
     this.data.subRows.forEach(x => { if (x.id === String(t)) name = x.name })
-    this.setTypeSelection(t, name)
+    // 品类明细行点击跳转到对应品类的数据界面（对齐核心器件/供应链明细行的跳转方式）
+    wx.navigateTo({
+      url: '/pages/index/next?type=' + t + '&typename=' + encodeURIComponent(name || ''),
+    })
   },
   onSearchInput(e) { this.setData({ keywords: e.detail.value }) },
   onSearch() {

@@ -59,8 +59,24 @@ Page({
 		chart3: [],
 		chart4: [],
 		priceList: [],
+		brandList: [],
 		tips: '',
 		arr_sj2_dw: '',//市场规模单位
+		changeIndex: 0,
+		changeOptions: [
+			{ id: 'yoy', name: '同比' },
+			{ id: 'mom', name: '环比' }
+		],
+		periodIndex: 0,
+		periodOptions: [
+			{ id: 'month', name: '月度' },
+			{ id: 'quarter', name: '季度' }
+		],
+		ytdIndex: 1,
+		ytdOptions: [
+			{ id: 0, name: '当期' },
+			{ id: 1, name: '年累计' }
+		],
 		yuebao: [],
 		jibao: [],
 		nianbao: [],
@@ -446,6 +462,40 @@ Page({
 			}
 		})
 	},
+	// 品牌竞争表格：优先用后端 arr_sj8，缺失时回退到 arr_sj3(品牌+市占率)
+	buildBrandList: function (list, fallbackX, fallbackY) {
+		if (Array.isArray(list) && list.length) {
+			return list.map((item) => {
+				const share = item.share !== undefined && item.share !== '' ? String(item.share) + '%' : '--'
+				const shareC = item.share_c !== undefined && item.share_c !== '' ? String(item.share_c) : '--'
+				const price = item.price !== undefined && item.price !== '' ? String(item.price) : '--'
+				const priceC = item.price_c !== undefined && item.price_c !== '' ? String(item.price_c) : '--'
+				return {
+					name: item.name || '--',
+					share,
+					share_c: shareC === '--' ? '--' : shareC + '%',
+					share_czf: shareC === '--' ? '' : shareC.substr(0, 1),
+					price,
+					price_c: priceC === '--' ? '--' : priceC + '%',
+					price_czf: priceC === '--' ? '' : priceC.substr(0, 1),
+				}
+			})
+		}
+		const x = fallbackX || []
+		const y = fallbackY || []
+		if (x.length) {
+			return x.map((name, i) => ({
+				name,
+				share: y[i] !== undefined ? String(y[i]) + '%' : '--',
+				share_c: '--',
+				share_czf: '',
+				price: '--',
+				price_c: '--',
+				price_czf: '',
+			}))
+		}
+		return []
+	},
 	// 点击按钮后初始化图表
 	init: function () {
 		let that = this
@@ -547,6 +597,15 @@ Page({
 			that.getshuju()
 		})
 	},
+	bindLocalPickerChange: function (e) {
+		const name = e.currentTarget.dataset.name
+		const value = Number(e.detail.value)
+		this.setData({
+			[name]: value
+		}, () => {
+			this.getshuju()
+		})
+	},
 	jiequ: function (str) {
 		// console.log(str)
 		return str.substr(0, 1)
@@ -645,6 +704,9 @@ Page({
 		let sel_ds = that.data.realval1
 		let sel_xl = that.data.realval2
 		let sel_yd = that.data.realval3
+		let sel_change = that.data.changeOptions[that.data.changeIndex].id
+		let sel_period = that.data.periodOptions[that.data.periodIndex].id
+		let sel_ytd = that.data.ytdOptions[that.data.ytdIndex].id
 		const bg = () => {
 			return new Promise((resolve, reject) => {
 				wx.request({
@@ -695,7 +757,10 @@ Page({
 				type: type,
 				sel_ds: sel_ds,
 				sel_xl: sel_xl,
-        sel_yd: sel_yd,
+				sel_yd: sel_yd,
+				sel_change: sel_change,
+				sel_period: sel_period,
+				sel_ytd: sel_ytd,
         uid:userData.id?userData.id:0
 			},
 			success(res) {
@@ -734,6 +799,7 @@ Page({
 					chart3: res.data.arr_sj4 ? res.data.arr_sj4 : [],
 					chart4: res.data.arr_sj5 ? res.data.arr_sj5 : [],
 					priceList: that.buildPriceList(res.data.arr_sj5 ? res.data.arr_sj5 : []),
+					brandList: that.buildBrandList(res.data.arr_sj8 || [], res.data.arr_sj3 ? res.data.arr_sj3.x : [], res.data.arr_sj3 ? res.data.arr_sj3.y : []),
 					arr_sj6: res.data.arr_sj6 ? res.data.arr_sj6 : [],
 					tips: res.data.arr_sj ? res.data.arr_sj : '',
 					kuanian: res.data.arr_sj2_num,

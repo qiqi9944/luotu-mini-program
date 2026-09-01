@@ -25,7 +25,7 @@
 
             <picker class="picker-item" mode="selector" range="{{typeList}}" range-key="name" value="{{typeIdx}}" bindchange="onPickerType">
                 <view class="fsel">
-                    <text class="flabel">品类：</text>
+                    <text class="flabel">品类</text>
                     <view class="fmeta">
                         <text class="fval">{{typeDisp}}</text>
                         <image src="/pages/images/sanjiao2.png" mode="widthFix" class="farrow"></image>

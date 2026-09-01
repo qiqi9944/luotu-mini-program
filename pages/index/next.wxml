@@ -2,57 +2,78 @@
 <view class="page">
 	<view class="filter-card">
 		<view class="selector-grid">
-			<picker class="selector-cell selector-cell-main" bindchange="bindPickerChange" data-name="val0" data-real="realval0" value="{{val0}}" range-key="name" range="{{arrval0}}">
+			<picker class="selector-cell selector-cell-wide" bindchange="bindPickerChange" data-name="val0" data-real="realval0" value="{{val0}}" range-key="name" range="{{arrval0}}">
 				<view class="selector-main">
 					<text class="selector-label">品类</text>
-					<text class="selector-value selector-value-main">{{arrval0[val0]['name']}}</text>
-					<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
+					<view class="selector-meta">
+						<text class="selector-value">{{arrval0[val0] ? arrval0[val0]['name'] : '请选择'}}</text>
+						<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
+					</view>
 				</view>
 			</picker>
 
-			<picker class="selector-cell" bindchange="bindPickerChange" data-name="val1" wx:if="{{realval0==9 || realval0==11 || realval0==12 || realval0==17}}" data-real="realval1" value="{{val1}}" range-key="name" range="{{arrval1}}">
-				<view class="selector-main">
-					<text class="selector-label">渠道</text>
-					<text class="selector-value">{{arrval1[val1]['name']}}</text>
-					<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
-				</view>
-			</picker>
+			<view class="selector-row">
+				<picker class="selector-cell" bindchange="bindPickerChange" data-name="val1" data-real="realval1" value="{{val1}}" range-key="name" range="{{arrval1}}">
+					<view class="selector-main">
+						<text class="selector-label">渠道</text>
+						<view class="selector-meta">
+							<text class="selector-value">{{arrval1[val1] ? arrval1[val1]['name'] : '全部'}}</text>
+							<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
+						</view>
+					</view>
+				</picker>
 
-			<picker class="selector-cell" bindchange="bindPickerChange" data-name="val2" wx:if="{{(realval0!=5 && realval0!=6 && realval0!=7 && realval0!=9 && realval0!=10 && realval0!=11 && realval0!=12 && realval0!=18) || (realval0==12 && realval1==5)}}" data-real="realval2" value="{{val2}}" range-key="name" range="{{arrval2}}">
-				<view class="selector-main">
-					<text class="selector-label">销售</text>
-					<text class="selector-value">{{arrval2[val2]['name']}}</text>
-					<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
-				</view>
-			</picker>
+				<picker class="selector-cell" bindchange="bindPickerChange" data-name="val2" data-real="realval2" value="{{val2}}" range-key="name" range="{{arrval2}}">
+					<view class="selector-main">
+						<text class="selector-label">销售</text>
+						<view class="selector-meta">
+							<text class="selector-value">{{arrval2[val2] ? arrval2[val2]['name'] : '全部'}}</text>
+							<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
+						</view>
+					</view>
+				</picker>
 
-			<picker class="selector-cell" bindchange="bindPickerChange" data-name="val3" data-real="realval3" value="{{val3}}" range-key="name" range="{{arrval3}}">
-				<view class="selector-main">
-					<text class="selector-label">时间</text>
-					<text class="selector-value">{{arrval3[val3]['name']}}</text>
-					<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
-				</view>
-			</picker>
-		</view>
-
-		<view class="selector-grid selector-grid-bottom">
-			<view class="selector-cell selector-cell-ghost">
-				<view class="selector-main">
-					<text class="selector-label">变化</text>
-					<text class="selector-value selector-value-ghost">同比</text>
-				</view>
+				<picker class="selector-cell" bindchange="bindLocalPickerChange" data-name="changeIndex" value="{{changeIndex}}" range-key="name" range="{{changeOptions}}">
+					<view class="selector-main">
+						<text class="selector-label">变化</text>
+						<view class="selector-meta">
+							<text class="selector-value">{{changeOptions[changeIndex]['name']}}</text>
+							<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
+						</view>
+					</view>
+				</picker>
 			</view>
-			<view class="selector-cell selector-cell-ghost">
-				<view class="selector-main">
-					<text class="selector-label">期间</text>
-					<text class="selector-value selector-value-ghost">当前</text>
-				</view>
-			</view>
-			<view class="selector-cell selector-cell-ghost">
-				<view class="selector-main">
-					<text class="selector-label">累计</text>
-					<text class="selector-value selector-value-ghost">年累计</text>
-				</view>
+
+			<view class="selector-row">
+				<picker class="selector-cell" bindchange="bindLocalPickerChange" data-name="periodIndex" value="{{periodIndex}}" range-key="name" range="{{periodOptions}}">
+					<view class="selector-main">
+						<text class="selector-label">时间</text>
+						<view class="selector-meta">
+							<text class="selector-value">{{periodOptions[periodIndex]['name']}}</text>
+							<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
+						</view>
+					</view>
+				</picker>
+
+				<picker class="selector-cell" bindchange="bindPickerChange" data-name="val3" data-real="realval3" value="{{val3}}" range-key="name" range="{{arrval3}}">
+					<view class="selector-main">
+						<text class="selector-label">周期</text>
+						<view class="selector-meta">
+							<text class="selector-value">{{arrval3[val3] ? arrval3[val3]['name'] : '请选择'}}</text>
+							<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
+						</view>
+					</view>
+				</picker>
+
+				<picker class="selector-cell" bindchange="bindLocalPickerChange" data-name="ytdIndex" value="{{ytdIndex}}" range-key="name" range="{{ytdOptions}}">
+					<view class="selector-main">
+						<text class="selector-label">累计</text>
+						<view class="selector-meta">
+							<text class="selector-value">{{ytdOptions[ytdIndex]['name']}}</text>
+							<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
+						</view>
+					</view>
+				</picker>
 			</view>
 		</view>
 	</view>
@@ -112,15 +133,38 @@
 		</view>
 
 		<view class="panel" wx:if="{{activeTab=='brand'}}">
-			<view class="chart-card" hidden="{{!chart3.length}}">
+			<view class="chart-card" hidden="{{!brandList.length}}">
 				<view class="card-head">
-					<view class="card-title">品牌销量份额(%)</view>
+					<view class="card-title">品牌竞争</view>
 				</view>
-				<view class="chart-frame chart-frame-pie">
-					<ec-canvas id="mychart-dom-bar3" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-bar" ec="{{ ec3 }}"></ec-canvas>
+				<view class="price-table">
+					<view class="price-table-head">
+						<view class="price-cell brand-cell-name">品牌</view>
+						<view class="price-cell brand-cell-share">市占率</view>
+						<view class="price-cell brand-cell-change">市占率增减</view>
+						<view class="price-cell brand-cell-price">平均价格</view>
+						<view class="price-cell brand-cell-pricec">均价变化</view>
+					</view>
+					<block wx:for="{{brandList}}" wx:key="index">
+						<view class="price-table-row">
+							<view class="price-cell brand-cell-name">{{item.name}}</view>
+							<view class="price-cell brand-cell-share">{{item.share}}</view>
+							<view class="price-cell brand-cell-change">
+								<text class="price-change {{item.share_czf=='+'?'up':item.share_czf=='-'?'down':''}}">{{item.share_c}}</text>
+								<image src="../images/sheng1.png" mode="widthFix" class="price-arrow" wx:if="{{item.share_czf=='+'}}"></image>
+								<image src="../images/jiang1.png" mode="widthFix" class="price-arrow" wx:if="{{item.share_czf=='-'}}"></image>
+							</view>
+							<view class="price-cell brand-cell-price">{{item.price}}</view>
+							<view class="price-cell brand-cell-pricec">
+								<text class="price-change {{item.price_czf=='+'?'up':item.price_czf=='-'?'down':''}}">{{item.price_c}}</text>
+								<image src="../images/sheng1.png" mode="widthFix" class="price-arrow" wx:if="{{item.price_czf=='+'}}"></image>
+								<image src="../images/jiang1.png" mode="widthFix" class="price-arrow" wx:if="{{item.price_czf=='-'}}"></image>
+							</view>
+						</view>
+					</block>
 				</view>
 			</view>
-			<view class="empty-text" hidden="{{chart3.length}}">暂无品牌竞争数据</view>
+			<view class="empty-text" hidden="{{brandList.length}}">暂无品牌竞争数据</view>
 		</view>
 
 		<view class="panel" wx:if="{{activeTab=='price'}}">

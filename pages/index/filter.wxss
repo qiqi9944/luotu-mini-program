@@ -1,6 +1,6 @@
 /* pages/index/filter.wxss */
 page {
-  background: #eef3f8;
+  background: var(--paper);
 }
 
 .page {
@@ -11,10 +11,10 @@ page {
 /* 筛选 */
 .filters {
   margin-top: 14rpx;
-  background: #fff;
-  border-radius: 14rpx;
-  padding: 16rpx 14rpx 6rpx;
-  box-shadow: 0 8rpx 20rpx rgba(24, 58, 95, 0.05);
+  background: var(--surface);
+  border-radius: var(--r-lg);
+  padding: 20rpx 18rpx 8rpx;
+  box-shadow: var(--shadow-card);
 }
 
 .section-head {
@@ -43,67 +43,62 @@ page {
 }
 
 .picker-item {
-  width: calc((100% - 20rpx) / 3);
+  width: calc((100% - 24rpx) / 3);
   display: block;
 }
 
 .fsel {
   width: 100%;
   box-sizing: border-box;
-  min-height: 78rpx;
-  padding: 10rpx 10rpx;
-  margin-bottom: 10rpx;
-  background: #fff;
-  border: 1rpx solid #2a6e8c;
-  border-radius: 6rpx;
+  min-height: 96rpx;
+  padding: 16rpx 16rpx 14rpx;
+  margin-bottom: 12rpx;
+  background: var(--surface-sunken);
+  border: 1rpx solid var(--hairline-strong);
+  border-radius: var(--r-md);
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 6rpx;
-  box-shadow: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10rpx;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
 .fsel:active {
-  background: #f4fbff;
+  background: var(--ink-050);
+  border-color: var(--ink-400);
 }
 
 .flabel {
-  font-size: 22rpx;
-  color: #121212;
-  font-weight: 600;
+  font-size: 20rpx;
+  color: var(--text-3);
+  font-weight: 500;
   line-height: 1;
-  flex-shrink: 0;
 }
 
 .fmeta {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 6rpx;
-  margin-top: 0;
-  min-width: 0;
-  flex: 1;
+  justify-content: space-between;
+  gap: 8rpx;
 }
 
 .fval {
   flex: 1;
-  font-size: 20rpx;
-  color: #1f6b9d;
-  font-weight: 600;
+  font-size: 26rpx;
+  color: var(--ink-700);
+  font-weight: 700;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  text-align: right;
+  text-align: left;
   line-height: 1;
-  display: block;
 }
 
 .farrow {
   width: 14rpx;
   height: 14rpx;
   flex-shrink: 0;
-  opacity: 0.55;
+  opacity: 0.45;
 }
 
 /* 指标卡 */
