@@ -168,7 +168,7 @@
 		</view>
 
 		<view class="panel" wx:if="{{activeTab=='price'}}">
-			<view class="chart-card" hidden="{{!priceList.length}}">
+			<view class="chart-card" hidden="{{!price_dist || !priceList.length}}">
 				<view class="card-head">
 					<view class="card-title">价格分布</view>
 				</view>
@@ -191,7 +191,7 @@
 					</block>
 				</view>
 			</view>
-			<view class="empty-text" hidden="{{priceList.length}}">暂无价格分布数据</view>
+			<view class="empty-text" hidden="{{price_dist && priceList.length}}">暂无价格分布数据</view>
 		</view>
 
 		<view class="panel" wx:if="{{activeTab=='structure'}}">

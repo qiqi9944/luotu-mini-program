@@ -60,6 +60,7 @@ Page({
 		chart4: [],
 		priceList: [],
 		brandList: [],
+		price_dist: 1,
 		tips: '',
 		arr_sj2_dw: '',//市场规模单位
 		changeIndex: 0,
@@ -800,6 +801,7 @@ Page({
 					chart4: res.data.arr_sj5 ? res.data.arr_sj5 : [],
 					priceList: that.buildPriceList(res.data.arr_sj5 ? res.data.arr_sj5 : []),
 					brandList: that.buildBrandList(res.data.arr_sj8 || [], res.data.arr_sj3 ? res.data.arr_sj3.x : [], res.data.arr_sj3 ? res.data.arr_sj3.y : []),
+					price_dist: res.data.price_dist !== undefined ? res.data.price_dist : 1,
 					arr_sj6: res.data.arr_sj6 ? res.data.arr_sj6 : [],
 					tips: res.data.arr_sj ? res.data.arr_sj : '',
 					kuanian: res.data.arr_sj2_num,
