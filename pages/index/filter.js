@@ -444,7 +444,7 @@ Page({
       if (!cur || cur.sub_group !== row.sub_group) {
         cur = {
           sub_group: row.sub_group,
-          groupTitle: /-q$/.test(row.sub_group) ? '统计周期' : (row.group || ''),
+          groupTitle: row.group || '',
           period: row.period,
           rows: []
         }
