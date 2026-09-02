@@ -52,6 +52,7 @@ Page({
 			lazyLoad: true
 		},
 		chart1: [],
+		chartYoy: [],
 		chart1x: [],
 		kuanian: null,
 		chart2: [],
@@ -152,9 +153,21 @@ Page({
 					axisLabel: {
 						color: '#666'
 					}
+				},
+				{
+					type: 'value',
+					min: -100,
+					max: 100,
+					splitLine: {
+						show: false
+					},
+					axisLabel: {
+						color: '#999',
+						formatter: '{value}%'
+					}
 				}
 			],
-			series: {
+			series: [{
 				// name: '热度',
 				type: 'bar',
 				label: {
@@ -200,7 +213,29 @@ Page({
 
 					}
 				}
-			}
+			}, {
+				name: '同比/环比',
+				type: 'line',
+				yAxisIndex: 1,
+				data: this.data.chartYoy,
+				smooth: true,
+				symbol: 'circle',
+				symbolSize: 5,
+				lineStyle: {
+					width: 2,
+					color: '#d98b26'
+				},
+				itemStyle: {
+					color: '#d98b26'
+				},
+				label: {
+					show: true,
+					position: 'top',
+					formatter: '{c}%',
+					fontSize: 9,
+					color: '#d98b26'
+				}
+			}]
 		};
 		chart.setOption(option);
 	},
@@ -794,6 +829,7 @@ Page({
 					arrval3: res.data.arr_yd ? res.data.arr_yd : [],
 					xqData: res.data.arr_sj1 ? res.data.arr_sj1 : [],
 					chart1: res.data.arr_sj2 ? res.data.arr_sj2.y : [],
+					chartYoy: res.data.arr_sj2 && res.data.arr_sj2.yoy ? res.data.arr_sj2.yoy : [],
 					chart1x: res.data.arr_sj2 ? res.data.arr_sj2.x : [],
 					chart2: res.data.arr_sj3 ? res.data.arr_sj3.y : [],
 					chart2x: res.data.arr_sj3 ? res.data.arr_sj3.x : [],
