@@ -57,6 +57,7 @@ Page({
 		kuanian: null,
 		chart2: [],
 		chart2x: [],
+		chartYoy2: [],
 		chart3: [],
 		chart4: [],
 		priceList: [],
@@ -245,12 +246,12 @@ Page({
 			tooltip: {
 				trigger: 'axis',
 				triggerOn: 'click',
-				axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-					type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+				axisPointer: {
+					type: 'shadow'
 				},
 				formatter: function (val) {
 					var txt = val[0].name;
-					return val[0].marker + val[0].name + " : " + val[0].value + "%";
+					return val[0].marker + val[0].name + " : " + val[0].value + "元";
 				}
 			},
 			legend: {
@@ -258,18 +259,16 @@ Page({
 			},
 			grid: {
 				left: 10,
-				right: 25,
+				right: 30,
 				bottom: 15,
 				top: 30,
 				containLabel: true,
 			},
 			xAxis: [
 				{
-					type: 'value',
-					splitLine: {
-						show: false
-					},
+					type: 'category',
 					axisTick: { show: false },
+					data: this.data.chart2x,
 					axisLine: {
 						show: false,
 						lineStyle: {
@@ -278,20 +277,28 @@ Page({
 					},
 					axisLabel: {
 						color: '#666',
-						formatter: '{value} %'
+						interval: 0,
+						formatter: function (val, index) {
+							if (val.length > 4) {
+								if (index == 0 || index == that.data.chart2x.length - 1) {
+									return val
+								} else {
+									return ''
+								}
+							} else {
+								return val
+							}
+						}
 					}
 				}
 			],
 			yAxis: [
 				{
-					type: 'category',
-					data: this.data.chart2x,
+					type: 'value',
 					splitLine: {
 						show: false
 					},
-					axisTick: { show: false },
 					axisLine: {
-						show: false,
 						lineStyle: {
 							color: '#999'
 						}
@@ -299,17 +306,28 @@ Page({
 					axisLabel: {
 						color: '#666'
 					}
+				},
+				{
+					type: 'value',
+					min: -100,
+					max: 100,
+					splitLine: {
+						show: false
+					},
+					axisLabel: {
+						color: '#999',
+						formatter: '{value}%'
+					}
 				}
 			],
-			series: {
-				name: '热度',
+			series: [{
+				name: '均价',
 				type: 'bar',
 				barMaxWidth: 15,
 				label: {
 					normal: {
 						show: false,
-						position: 'right',
-						formatter: '{c}%'
+						position: 'top'
 					}
 				},
 				data: this.data.chart2,
@@ -317,18 +335,36 @@ Page({
 					borderRadius: 20,
 					color: {
 						type: 'linear',
-						// x: 0,
-						// y: 0,
-						// x2: 0,
-						// y2: 1,
 						colorStops: [{
-							offset: 0, color: '#f16568' // 0% 处的颜色
+							offset: 0, color: '#3d9bbd'
 						}, {
-							offset: 1, color: '#cd3c29' // 100% 处的颜色
+							offset: 1, color: '#005d99'
 						}],
 					},
 				}
-			}
+			}, {
+				name: '均价同比/环比',
+				type: 'line',
+				yAxisIndex: 1,
+				data: this.data.chartYoy2,
+				smooth: true,
+				symbol: 'circle',
+				symbolSize: 5,
+				lineStyle: {
+					width: 2,
+					color: '#e04a5c'
+				},
+				itemStyle: {
+					color: '#e04a5c'
+				},
+				label: {
+					show: true,
+					position: 'top',
+					formatter: '{c}%',
+					fontSize: 9,
+					color: '#e04a5c'
+				}
+			}]
 		};
 		chart.setOption(option);
 	},
@@ -831,8 +867,9 @@ Page({
 					chart1: res.data.arr_sj2 ? res.data.arr_sj2.y : [],
 					chartYoy: res.data.arr_sj2 && res.data.arr_sj2.yoy ? res.data.arr_sj2.yoy : [],
 					chart1x: res.data.arr_sj2 ? res.data.arr_sj2.x : [],
-					chart2: res.data.arr_sj3 ? res.data.arr_sj3.y : [],
-					chart2x: res.data.arr_sj3 ? res.data.arr_sj3.x : [],
+					chart2: res.data.arr_sj2 && res.data.arr_sj2.avg ? res.data.arr_sj2.avg : [],
+					chart2x: res.data.arr_sj2 ? res.data.arr_sj2.x : [],
+					chartYoy2: res.data.arr_sj2 && res.data.arr_sj2.avg_yoy ? res.data.arr_sj2.avg_yoy : [],
 					chart3: res.data.arr_sj4 ? res.data.arr_sj4 : [],
 					chart4: res.data.arr_sj5 ? res.data.arr_sj5 : [],
 					priceList: that.buildPriceList(res.data.arr_sj5 ? res.data.arr_sj5 : []),
