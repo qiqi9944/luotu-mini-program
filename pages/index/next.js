@@ -223,17 +223,17 @@ Page({
 				symbolSize: 5,
 				lineStyle: {
 					width: 2,
-					color: '#d98b26'
+					color: '#e04a5c'
 				},
 				itemStyle: {
-					color: '#d98b26'
+					color: '#e04a5c'
 				},
 				label: {
 					show: true,
 					position: 'top',
 					formatter: '{c}%',
 					fontSize: 9,
-					color: '#d98b26'
+					color: '#e04a5c'
 				}
 			}]
 		};
