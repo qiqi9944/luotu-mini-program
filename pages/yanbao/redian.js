@@ -26,6 +26,8 @@ Page({
 		p2: 1,
 		newslist2: [],
 		lastpage2: 0,
+		videolist: [],
+		videoUrl: '',
 	},
 	getbanner: function () {
 		let that = this;
@@ -93,6 +95,40 @@ Page({
 			}
 		})
 	},
+	getvideo: function () {
+		let that = this;
+		wx.request({
+			url: app.globalData.siteUrl + '/Wxapi/getvideo',
+			success: function (res) {
+				that.setData({
+					videolist: res.data.datalist
+				})
+			}
+		})
+	},
+	playVideo: function (e) {
+		let url = e.currentTarget.dataset.url
+		let id = e.currentTarget.dataset.id
+		if (!url) {
+			return false
+		}
+		this.setData({
+			videoUrl: url
+		})
+		if (id) {
+			wx.request({
+				url: app.globalData.siteUrl + '/Wxapi/getvideoclick',
+				data: { id: id }
+			})
+		}
+	},
+	closeVideo: function () {
+		this.setData({
+			videoUrl: ''
+		})
+	},
+	noop: function () {
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
@@ -135,6 +171,7 @@ Page({
 		this.getnews()
 		this.getnews2()
 		this.getnews3()
+		this.getvideo()
 	},
 
 	/**
@@ -168,6 +205,9 @@ Page({
 			this.getnews2()
 		}
 		if(pagetype==3){
+			this.getvideo()
+		}
+		if(pagetype==4){
 			this.setData({
 				p2: 1,
 				newslist2: [],

@@ -134,24 +134,16 @@
 		</view>
 	</view>
 	<view class="redian" wx:if="{{pagetype==3}}">
-		<view class="newsbox">
-			<view class="main">
-				<view class="down">
-					<block wx:for="{{newslist2}}" wx:key="id">
-						<navigator url="./view?id={{item.id}}" class="item" hover-class="tap-row">
-							<view class="l">
-								<view class="shang">
-									<view class="title">
-										<image src="/pages/images/liststyle2.png" mode="widthFix" class="pic"></image>{{item.name}}
-									</view>
-								</view>
-								<view class="xia">{{item.addtime}}</view>
-							</view>
-							<image src="{{item.pic}}" mode="widthFix" wx:if="{{item.pic}}" class="r"></image>
-						</navigator>
-					</block>
-					<view class="more" wx:if="{{!lastpage2}}" bindtap="getnews3">查看更多></view>
+		<view class="video-grid">
+			<view class="video-card" wx:for="{{videolist}}" wx:key="id" data-url="{{item.url}}" data-id="{{item.id}}" bindtap="playVideo" hover-class="tap-row">
+				<view class="video-thumb">
+					<image src="{{item.pic}}" mode="aspectFill" class="video-pic"></image>
+					<view class="video-play-icon"></view>
 				</view>
+				<view class="video-desc">{{item.description}}</view>
+			</view>
+			<view class="video-empty" wx:if="{{!videolist.length}}">
+				<text>暂无视频</text>
 			</view>
 		</view>
 	</view>
@@ -175,6 +167,12 @@
 					<view class="more" wx:if="{{!lastpage2}}" bindtap="getnews3">查看更多></view>
 				</view>
 			</view>
+		</view>
+	</view>
+	<view class="video-mask" wx:if="{{videoUrl}}" catchtouchmove="noop" bindtap="closeVideo">
+		<view class="video-mask-inner" catchtap="true">
+			<view class="video-close" catchtap="closeVideo">✕</view>
+			<video src="{{videoUrl}}" class="video-player" autoplay controls object-fit="contain"></video>
 		</view>
 	</view>
 	<view class="safe-bottom"></view>
