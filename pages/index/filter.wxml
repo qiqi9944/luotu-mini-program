@@ -65,7 +65,7 @@
         </view>
     </view>
 
-    <view class="subbox" wx:if="{{subRows.length && subMode!='tvs'}}">
+    <view class="subbox" wx:if="{{subRows.length && subMode!='tvs' && !empty}}">
         <scroll-view class="subscroll" scroll-x="{{subMode!='tvs'}}">
             <view class="subtable">
                 <block wx:if="{{subMode=='qty'}}">
@@ -134,7 +134,7 @@
         </scroll-view>
     </view>
 
-    <block wx:if="{{subRows.length && subMode=='tvs'}}">
+    <block wx:if="{{subRows.length && subMode=='tvs' && !empty}}">
         <block wx:for="{{tvsGroups}}" wx:key="sub_group" wx:for-item="g">
             <view class="tvsbox">
                 <view class="tvsgroup-hd">
@@ -170,4 +170,6 @@
             </view>
         </block>
     </block>
+
+    <view class="empty" wx:if="{{empty}}">暂无数据</view>
 </view>
