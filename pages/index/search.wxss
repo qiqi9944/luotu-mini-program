@@ -22,8 +22,19 @@ page{
   }
   .newsbox {
 	width: 100%;
+	box-sizing: border-box;
 	background-color: #fff;
+	border-radius: 20rpx;
+	padding: 22rpx 24rpx 8rpx;
 	margin-bottom: 25rpx;
+	box-shadow: 0 6rpx 20rpx rgba(3,37,60,0.05);
+}
+.newsbox .newshd{
+	padding: 0 2rpx 12rpx;
+	font-size: 13px;
+	color: #8698a5;
+	letter-spacing: 1rpx;
+	border-bottom: 1rpx solid #eef3f7;
 }
 .newsbox .down {
 	width: 100%;
@@ -94,4 +105,40 @@ page{
 	color: #aaa;
 	text-align: center;
 	background-color: #ebf6fc;
+}
+
+/* 相关品类卡片（横向一行胶囊标签，可滑动） */
+.catbox{
+	width: 100%;
+	box-sizing: border-box;
+	background-color: #fff;
+	border-radius: 20rpx;
+	padding: 22rpx 24rpx;
+	margin-bottom: 24rpx;
+	box-shadow: 0 6rpx 20rpx rgba(3,37,60,0.05);
+}
+.catbox .cathd{
+	padding: 0 2rpx 16rpx;
+	font-size: 13px;
+	color: #8698a5;
+	letter-spacing: 1rpx;
+}
+.catbox .cattags{
+	width: 100%;
+	white-space: nowrap;
+}
+.catbox .cattag{
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 16rpx;
+	padding: 14rpx 28rpx;
+	border-radius: 999rpx;
+	background-color: #e6f0f7;
+	color: #004b7d;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.2;
+}
+.catbox .cattag:last-child{
+	margin-right: 0;
 }

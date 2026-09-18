@@ -17,6 +17,37 @@ Page({
 		p: 1,
 		list: [],
 		lastpage: 0,
+		cats: [],
+	},
+	// 搜索联动：按关键字取品类，展示在结果页顶部
+	getcats: function () {
+		let that = this;
+		let keywords = that.options.keywords;
+		if (!keywords) return;
+		wx.request({
+			url: app.globalData.siteUrl + '/Wxapi/searchcategory',
+			data: { keywords: keywords },
+			success: function (res) {
+				if (res.data && res.data.status == 1) {
+					that.setData({ cats: res.data.datalist || [] })
+				}
+			}
+		})
+	},
+	// 点击品类 → 跳该品类数据页（未登录先提示授权）
+	gotoCat: function (e) {
+		let type = e.currentTarget.dataset.type;
+		const userData = wx.getStorageSync('userData');
+		if (!userData) {
+			wx.showModal({
+				title: '提示',
+				content: '查看详细数据请微信授权登录',
+				showCancel: false,
+				success(r) { if (r.confirm) { wx.switchTab({ url: '/pages/user/user' }) } }
+			})
+			return
+		}
+		wx.navigateTo({ url: '/pages/index/filter?type=' + type })
 	},
 	getnews: function () {
 		let that = this;
@@ -71,6 +102,7 @@ Page({
 	 */
 	onShow: function () {
 		this.getbanner()
+		this.getcats()
 		this.getnews()
 	},
 

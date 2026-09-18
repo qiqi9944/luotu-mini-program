@@ -299,8 +299,9 @@ Page({
     that.setData({
       [name]: val
     })
-    if (name == 'keywords') {
-      that.updateCatSuggest(val)
+    // 输入过程中不再实时展示相关品类；品类只在点击确认(回车)进入搜索结果页后展示
+    if (name == 'keywords' && that.data.catSuggest.length) {
+      that.setData({ catSuggest: [] })
     }
   },
   // 搜索联动：按关键字请求后端品类搜索（含设备级品类），供用户直接跳转到该品类数据

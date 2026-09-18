@@ -32,12 +32,11 @@ module.exports.pad = function (n) { return n > 9 ? '' + n : '0' + n }
     <!-- 搜索联动：匹配到的品类，点击直达该品类数据 -->
     <view class="search-suggest rise rise-1" wx:if="{{keywords && catSuggest.length}}">
         <view class="suggest-hd">相关品类</view>
-        <block wx:for="{{catSuggest}}" wx:key="name">
-            <view class="suggest-item" hover-class="tap-row" bindtap="gotoCat" data-type="{{item.id}}">
-                <text class="suggest-name">{{item.name}}</text>
-                <text class="suggest-go">查看数据 ›</text>
-            </view>
-        </block>
+        <scroll-view class="suggest-tags" scroll-x enhanced show-scrollbar="{{false}}">
+            <block wx:for="{{catSuggest}}" wx:key="name">
+                <view class="suggest-tag" hover-class="tap-dim" bindtap="gotoCat" data-type="{{item.id}}">{{item.name}}</view>
+            </block>
+        </scroll-view>
     </view>
     <!-- 导航菜单：分组卡片，每组一张白卡 -->
     <view class="menu-section rise rise-2">

@@ -16,8 +16,18 @@
 			</block>
 		</swiper>
 	</view>
+	<!-- 搜索联动：相关品类，横向一行可滑动，避免多行留白 -->
+	<view class="catbox" wx:if="{{cats.length}}">
+		<view class="cathd">相关品类</view>
+		<scroll-view class="cattags" scroll-x enhanced show-scrollbar="{{false}}">
+			<block wx:for="{{cats}}" wx:key="name">
+				<view class="cattag" hover-class="tap-dim" bindtap="gotoCat" data-type="{{item.id}}">{{item.name}}</view>
+			</block>
+		</scroll-view>
+	</view>
 	<view class="newsbox" >
 		<view class="main" wx:if="{{list.length!=0}}">
+			<view class="newshd">相关报告</view>
 			<view class="down">
 				<block wx:for="{{list}}" wx:key="id">
 					<navigator url="../yanbao/view?id={{item.id}}" class="item">
