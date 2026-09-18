@@ -35,6 +35,12 @@
 			</view>
 			<image src="/pages/images/jiantou.png" mode="widthFix" class="r"></image>
 		</navigator>
+		<view class="item" bindtap="nextpage" data-url="../user/member" hover-class="tap-row">
+			<view class="l">
+				<view class="ico"><image mode="widthFix" class="img" src="/pages/images/u8.png"></image></view>会员中心
+			</view>
+			<image src="/pages/images/jiantou.png" mode="widthFix" class="r"></image>
+		</view>
 		<!-- 以下入口暂未开放，保留备用
 		<view class="item" bindtap="nextpage" data-url="../error/error" hover-class="tap-row">
 			<view class="l">

@@ -121,7 +121,7 @@
                                 <image src="/pages/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.xe_yoy[0]=='+'}}"></image>
                                 <image src="/pages/images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.xe_yoy[0]=='-'}}"></image>
                             </view>
-                            <view class="subtd">{{item.avg_price}}</view>
+                            <view class="subtd">{{item.avg_price}}<text class="unit">元</text></view>
                             <view class="subtd {{item.avg_yoy[0]=='+'?'up':item.avg_yoy[0]=='-'?'down':''}}">
                                 {{item.avg_yoy}}
                                 <image src="/pages/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.avg_yoy[0]=='+'}}"></image>

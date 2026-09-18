@@ -1,473 +1,453 @@
 <!--pages/tongji/tongji.wxml-->
-<view class="sellist2" style="margin-bottom: 20rpx;">
-	<view class="item {{sel==1?'hover':''}}" data-type="1" bindtap="selchage">
-		<view class="pic p1">
-			<image src="{{sel==1?'../images/tj1.png':'../images/tj1h.png'}}" mode="widthFix"></image>
+<scroll-view class="sellist2" scroll-x enhanced show-scrollbar="{{false}}" scroll-with-animation>
+	<view class="navrow">
+		<view class="item {{sel==1?'hover':''}}" data-type="1" bindtap="selchage" hover-class="tap-dim" hover-stay-time="80">
+			<view class="pic">
+				<view class="svg-icon svg-overview"></view>
+			</view>
+			<view class="title">总览</view>
 		</view>
-		<view class="title">总览</view>
-	</view>
-	<view class="item {{sel==2?'hover':''}}" data-type="2" data-id="1" bindtap="selchage">
-		<view class="pic p2">
-			<image src="{{sel==2?'../images/tj2.png':'../images/tj2h.png'}}" mode="widthFix"></image>
+		<view class="item {{sel==item.sel?'hover':''}}" wx:for="{{groupList}}" wx:key="sel" data-type="{{item.sel}}" data-id="{{item.type}}" bindtap="selchage" hover-class="tap-dim" hover-stay-time="80">
+			<view class="pic">
+				<view class="svg-icon svg-{{item.iconClass}}"></view>
+			</view>
+			<view class="title">{{item.name}}</view>
 		</view>
-		<view class="title">智能硬件IOT</view>
 	</view>
-	<view class="item {{sel==3?'hover':''}}" data-type="3" data-id="5" bindtap="selchage">
-		<view class="pic p3">
-			<image src="{{sel==3?'../images/tj3.png':'../images/tj3h.png'}}" mode="widthFix"></image>
-		</view>
-		<view class="title">商用显示PID</view>
-	</view>
-	<view class="item {{sel==4?'hover':''}}" data-type="4" data-id="9" bindtap="selchage">
-		<view class="pic p4">
-			<image src="{{sel==4?'../images/tj4.png':'../images/tj4h.png'}}" mode="widthFix"></image>
-		</view>
-		<view class="title">显示供应链DSC</view>
-	</view>
-</view>
+</scroll-view>
 
 <view class="con {{((!xqData || xqData.length==0) && sel!=1)?'con2':''}}" >
 	<block wx:if="{{sel==1}}">
 		<view class="bigtitle">
 			<view class="l">数据总览</view>
-			<!-- <view class="r">
-				<picker bindchange="bindPickerChange" data-name="yjn" data-real="realyjn" value="{{yjn}}" range-key="name" range="{{arryjn}}">
-					<view class="picker">
-						{{arryjn[yjn] ? arryjn[yjn]['name'] : ''}}
-						<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
-					</view>
-				</picker>
-			</view> -->
 		</view>
-		<view class="box">
-			<view class="up up4">
-				<view class="l">
-					<view class="fk"></view>
-					<view class="fk2"></view>
-					<view class="title">智能硬件IOT</view>
+		<block wx:for="{{arr_groups}}" wx:for-item="group" wx:for-index="gIdx" wx:key="id">
+			<!-- 普通品类组（IOT/PID）：汇总卡 + 品类表格卡（拆成两张卡） -->
+			<block wx:if="{{group.branch!='tvs'}}">
+			<view class="group-wrap">
+			<view class="box group-head">
+				<view class="up up4">
+					<view class="l">
+						<view class="fk"></view>
+						<view class="fk2"></view>
+						<view class="title">{{group.name}}</view>
+					</view>
+					<view class="r">
+						<picker bindchange="bindPickerChange" data-name="{{group.branch=='iot'?'yjn':'yjn2'}}" data-real="{{group.branch=='iot'?'realyjn':'realyjn2'}}" value="{{group.branch=='iot'?yjn:yjn2}}" range-key="name" range="{{group.arr_ss}}">
+							<view class="picker">
+								{{group.branch=='iot'?arryjn[yjn].name:arryjn2[yjn2].name}}
+								<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sj"></image>
+							</view>
+						</picker>
+					</view>
 				</view>
-				<view class="r">
-					<picker bindchange="bindPickerChange" data-name="yjn" data-real="realyjn" value="{{yjn}}" range-key="name" range="{{arryjn}}">
-						<view class="picker">
-							{{arryjn[yjn] ? arryjn[yjn]['name'] : ''}}
-							<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
+				<view class="down">
+					<view class="tjlist">
+						<view class="item">
+							<view class="p2">
+								<view class="a1">
+									<view class="num">{{group.sj1.xl}}</view>万台
+								</view>
+								<view class="a2 {{group.sj1.xlfh=='+'?'a2_1':group.sj1.xlfh=='-'?'a2_2':''}}">{{group.sj1.xlbfb}}</view>
+							</view>
+							<view class="p1">销售数量</view>
 						</view>
-					</picker>
+						<view class="item">
+							<view class="p2">
+								<view class="a1 red">
+									<view class="num">{{group.sj1.xe}}</view>亿元
+								</view>
+								<view class="a2 {{group.sj1.xefh=='+'?'a2_1':group.sj1.xefh=='-'?'a2_2':''}}">{{group.sj1.xebfb}}</view>
+							</view>
+							<view class="p1">销售金额</view>
+						</view>
+					</view>
 				</view>
 			</view>
-			<view class="down">
-				<view class="tjlist">
-					<view class="item">
-						<view class="p2">
-							<view class="a1">
-								<view class="num">{{arr_sj1.xl}}</view>万台
-							</view>
-							<view class="a2 {{arr_sj1.xlfh=='+'?'a2_1':arr_sj1.xlfh=='-'?'a2_2':''}}">{{arr_sj1.xlbfb}}</view>
-						</view>
-						<view class="p1">销售数量</view>
-					</view>
-					<view class="item">
-						<view class="p2">
-							<view class="a1 red">
-								<view class="num">{{arr_sj1.xe}}</view>亿元
-							</view>
-							<view class="a2 {{arr_sj1.xefh=='+'?'a2_1':arr_sj1.xefh=='-'?'a2_2':''}}">{{arr_sj1.xebfb}}</view>
-						</view>
-						<view class="p1">销售金额</view>
-					</view>
-				</view>
-				<view class="table">
-					<view class="tr">
-						<view class="th wd30"></view>
-						<view class="th wd40">销售数量（万台）</view>
-						<view class="th wd30">平均价格（元）</view>
-					</view>
-					<block wx:for="{{listData}}" wx:key="this">
+			<view class="box group-body">
+				<view class="down">
+					<view class="table">
 						<view class="tr">
-							<view class="td wd30 titletd2" data-type="2" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}" bindtap="tiaozhuan" >{{item.t1}}</view>
-							<view class="td wd40">
-								<view class="num">{{item.t2}}</view>
-								<view class="juzhong">
-
-									<view class="num2 {{item.t3zf=='+'?'hong':item.t3zf=='-'?'lv':null}}">
-										{{item.t3}}
-										<image src="../images/sheng1.png" mode="widthFix" class="img" wx:if="{{item.t3zf=='+'}}"></image>
-										<image src="../images/jiang1.png" mode="widthFix" class="img" wx:if="{{item.t3zf=='-'}}"></image>
-									</view>
-								</view>
-							</view>
-							<view class="td wd30">
-								<view class="num">{{item.t4}}</view>
-								<view class="juzhong">
-
-									<view class="num2 {{item.t5zf=='+'?'hong':item.t5zf=='-'?'lv':null}}">
-										{{item.t5}}
-										<image src="../images/sheng1.png" mode="widthFix" class="img" wx:if="{{item.t5zf=='+'}}"></image>
-										<image src="../images/jiang1.png" mode="widthFix" class="img" wx:if="{{item.t5zf=='-'}}"></image>
-									</view>
-								</view>
-							</view>
+							<view class="th wd30 titleth">品类</view>
+							<view class="th wd40">销售数量（万台）</view>
+							<view class="th wd30">平均价格（元）</view>
 						</view>
-					</block>
+						<block wx:for="{{group.sj2}}" wx:for-item="row" wx:key="index">
+							<view class="tr">
+								<view class="td wd30 titletd2" hover-class="tap-row" data-type="{{group.sel}}" data-id="{{row.id}}" data-typename="{{row.t1}}" bindtap="selchage">{{row.t1}}</view>
+								<view class="td wd40">
+									<view class="num">{{row.t2}}</view>
+									<view class="juzhong">
+										<view class="num2 {{row.t3zf=='+'?'hong':row.t3zf=='-'?'lv':null}}">
+											{{row.t3}}
+											<image src="../images/sheng1.png" mode="widthFix" class="img" wx:if="{{row.t3zf=='+'}}"></image>
+											<image src="../images/jiang1.png" mode="widthFix" class="img" wx:if="{{row.t3zf=='-'}}"></image>
+										</view>
+									</view>
+								</view>
+								<view class="td wd30">
+									<view class="num">{{row.t4}}</view>
+									<view class="juzhong">
+										<view class="num2 {{row.t5zf=='+'?'hong':row.t5zf=='-'?'lv':null}}">
+											{{row.t5}}
+											<image src="../images/sheng1.png" mode="widthFix" class="img" wx:if="{{row.t5zf=='+'}}"></image>
+											<image src="../images/jiang1.png" mode="widthFix" class="img" wx:if="{{row.t5zf=='-'}}"></image>
+										</view>
+									</view>
+								</view>
+							</view>
+						</block>
+					</view>
 				</view>
+				<view class="tips">{{group.tips}}</view>
 			</view>
-			<view class="tips">{{tips1}}</view>
-		</view>
-		<view class="box">
-			<view class="up up4">
-				<view class="l">
-					<view class="fk"></view>
-					<view class="fk2"></view>
-					<view class="title">商用显示PID</view>
-				</view>
-				<view class="r">
-					<picker bindchange="bindPickerChange" data-name="yjn2" data-real="realyjn2" value="{{yjn2}}" range-key="name" range="{{arryjn2}}">
-						<view class="picker">
-							{{arryjn2[yjn2] ? arryjn2[yjn2]['name'] : ''}}
-							<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
-						</view>
-					</picker>
-				</view>
 			</view>
-			<view class="down">
-				<view class="tjlist">
-					<view class="item">
-						<view class="p2">
-							<view class="a1">
-								<view class="num">{{arr_sj3.xl}}</view>万台
-							</view>
-							<view class="a2 {{arr_sj3.xlfh=='+'?'a2_1':arr_sj3.xlfh=='-'?'a2_2':''}}">{{arr_sj3.xlbfb}}</view>
-						</view>
-						<view class="p1">出货数量</view>
-					</view>
-					<view class="item">
-						<view class="p2">
-							<view class="a1 red">
-								<view class="num">{{arr_sj3.xe}}</view>亿元
-							</view>
-							<view class="a2 {{arr_sj3.xefh=='+'?'a2_1':arr_sj3.xefh=='-'?'a2_2':''}}">{{arr_sj3.xebfb}}</view>
-						</view>
-						<view class="p1">销售金额</view>
+			</block>
+			<!-- 核心器件：供应链子块 -->
+			<view class="box" wx:if="{{group.branch=='tvs'}}">
+				<view class="up up4">
+					<view class="l">
+						<view class="fk"></view>
+						<view class="fk2"></view>
+						<view class="title">{{group.name}}</view>
 					</view>
 				</view>
-				<view class="table">
-					<view class="tr">
-						<view class="th wd30"></view>
-						<view class="th wd35">出货数量（万台）</view>
-						<view class="th wd35">行业均价（元）</view>
-					</view>
-					<block wx:for="{{listData2}}" wx:key="this">
-						<view class="tr">
-							<view class="td wd30 titletd2" data-type="3" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}" bindtap="tiaozhuan">{{item.t1}}</view>
-							<view class="td wd35">
-								<view class="num">{{item.t2}}</view>
-								<view class="juzhong">
-
-									<view class="num2 {{item.t3zf=='+'?'hong':item.t3zf=='-'?'lv':null}}">
-										{{item.t3}}
-										<image src="../images/sheng1.png" mode="widthFix" class="img" wx:if="{{item.t3zf=='+'}}"></image>
-										<image src="../images/jiang1.png" mode="widthFix" class="img" wx:if="{{item.t3zf=='-'}}"></image>
+				<view class="down">
+					<view class="subbox">
+						<view class="tvsgroup-hd"><text class="tvsgroup-title">电视供应链</text></view>
+						<view class="tvslist">
+							<block wx:for="{{listData3}}" wx:key="index">
+								<view class="tvsrow" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
+									<text class="tvsrow-name">{{item.t1}}</text>
+									<view class="tvsrow-right">
+										<text class="tvsrow-qty">{{item.t2}}</text>
+										<text class="tvsrow-unit">万台</text>
+										<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
+											{{item.t3}}
+											<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
+											<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+										</view>
 									</view>
 								</view>
-							</view>
-							<view class="td wd35">
-								<view class="num">{{item.t4}}</view>
-								<view class="juzhong">
-
-									<view class="num2 {{item.t5zf=='+'?'hong':item.t5zf=='-'?'lv':null}}">
-										{{item.t5}}
-										<image src="../images/sheng1.png" mode="widthFix" class="img" wx:if="{{item.t5zf=='+'}}"></image>
-										<image src="../images/jiang1.png" mode="widthFix" class="img" wx:if="{{item.t5zf=='-'}}"></image>
-									</view>
-								</view>
-							</view>
+							</block>
 						</view>
-					</block>
+					</view>
+					<view class="subbox">
+						<view class="tvsgroup-hd"><text class="tvsgroup-title">TV品牌出货</text></view>
+						<view class="tvslist">
+							<block wx:for="{{listData4}}" wx:key="index">
+								<view class="tvsrow" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
+									<text class="tvsrow-name">{{item.t1}}</text>
+									<view class="tvsrow-right">
+										<text class="tvsrow-qty">{{item.t2}}</text>
+										<text class="tvsrow-unit">万台</text>
+										<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
+											{{item.t3}}
+											<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
+											<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+										</view>
+									</view>
+								</view>
+							</block>
+						</view>
+					</view>
+					<view class="subbox">
+						<view class="tvsgroup-hd"><text class="tvsgroup-title">显示器供应链</text></view>
+						<view class="tvslist">
+							<block wx:for="{{listData7}}" wx:key="index">
+								<view class="tvsrow" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
+									<text class="tvsrow-name">{{item.t1}}</text>
+									<view class="tvsrow-right">
+										<text class="tvsrow-qty">{{item.t2}}</text>
+										<text class="tvsrow-unit">万台</text>
+										<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
+											{{item.t3}}
+											<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
+											<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+										</view>
+									</view>
+								</view>
+							</block>
+						</view>
+					</view>
+					<view class="subbox">
+						<view class="tvsgroup-hd"><text class="tvsgroup-title">笔记本电脑供应链</text></view>
+						<view class="tvslist">
+							<block wx:for="{{listData9}}" wx:key="index">
+								<view class="tvsrow" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
+									<text class="tvsrow-name">{{item.t1}}</text>
+									<view class="tvsrow-right">
+										<text class="tvsrow-qty">{{item.t2}}</text>
+										<text class="tvsrow-unit">万台</text>
+										<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
+											{{item.t3}}
+											<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
+											<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+										</view>
+									</view>
+								</view>
+							</block>
+						</view>
+					</view>
+					<view class="subbox">
+						<view class="tvsgroup-hd"><text class="tvsgroup-title">商用显示供应链</text></view>
+						<view class="tvslist">
+							<block wx:for="{{listData8}}" wx:key="index">
+								<view class="tvsrow" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
+									<text class="tvsrow-name">{{item.t1}}</text>
+									<view class="tvsrow-right">
+										<text class="tvsrow-qty">{{item.t2}}</text>
+										<text class="tvsrow-unit">万台</text>
+										<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
+											{{item.t3}}
+											<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
+											<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+										</view>
+									</view>
+								</view>
+							</block>
+						</view>
+					</view>
+					<view class="subbox">
+						<view class="tvsgroup-hd"><text class="tvsgroup-title">电子纸供应链</text></view>
+						<view class="tvslist">
+							<block wx:for="{{listData5}}" wx:key="index">
+								<view class="tvsrow" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
+									<text class="tvsrow-name">{{item.t1}}</text>
+									<view class="tvsrow-right">
+										<text class="tvsrow-qty">{{item.t2}}</text>
+										<text class="tvsrow-unit">万台</text>
+										<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
+											{{item.t3}}
+											<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
+											<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+										</view>
+									</view>
+								</view>
+							</block>
+						</view>
+					</view>
 				</view>
+				<view class="tips">{{group.tips}}</view>
 			</view>
-			<view class="tips">{{tips2}}</view>
-		</view>
-		<view class="box">
-			<view class="up up4">
-				<view class="l">
-					<view class="fk"></view>
-					<view class="fk2"></view>
-					<view class="title">显示供应链DSC</view>
-				</view>
-				<!-- <view class="r">
-					<picker bindchange="bindPickerChange" data-name="yjn3" data-real="realyjn3" value="{{yjn3}}" range-key="name" range="{{arryjn3}}">
-						<view class="picker">
-							{{arryjn3[yjn3] ? arryjn3[yjn3]['name'] : ''}}
-							<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
-						</view>
-					</picker>
-				</view> -->
-			</view>
-			<view class="down">
-				<view class="subbox">
-					<view class="tvsgroup-hd">
-						<text class="tvsgroup-title">电视供应链</text>
-						<picker bindchange="bindPickerChange" data-name="yjn3" data-real="realyjn3" value="{{yjn3}}" range-key="name" range="{{arryjn3}}">
-							<view class="tvsgroup-periodpicker">
-								<text class="tvsgroup-period">{{arryjn3[yjn3] ? arryjn3[yjn3]['name'] : ''}}</text>
-								<image src="/pages/images/sanjiao2.png" mode="widthFix" class="subarrow"></image>
-							</view>
-						</picker>
-					</view>
-					<view class="tvslist">
-						<block wx:for="{{listData3}}" wx:key="this">
-							<view class="tvsrow" bindtap="tiaozhuan" data-type="4" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
-								<text class="tvsrow-name">{{item.t1}}</text>
-								<view class="tvsrow-right">
-									<text class="tvsrow-qty">{{item.t2}}</text>
-									<text class="tvsrow-unit">万台</text>
-									<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
-										{{item.t3}}
-										<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
-										<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
-									</view>
-								</view>
-							</view>
-						</block>
-					</view>
-				</view>
-				<view class="subbox">
-					<view class="tvsgroup-hd">
-						<text class="tvsgroup-title">统计周期</text>
-						<picker bindchange="bindPickerChange" data-name="yjn4" data-real="realyjn4" value="{{yjn4}}" range-key="name" range="{{arryjn4}}">
-							<view class="tvsgroup-periodpicker">
-								<text class="tvsgroup-period">{{arryjn4[yjn4] ? arryjn4[yjn4]['name'] : ''}}</text>
-								<image src="/pages/images/sanjiao2.png" mode="widthFix" class="subarrow"></image>
-							</view>
-						</picker>
-					</view>
-					<view class="tvslist">
-						<block wx:for="{{listData4}}" wx:key="this">
-							<view class="tvsrow" bindtap="tiaozhuan" data-type="4" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
-								<text class="tvsrow-name">{{item.t1}}</text>
-								<view class="tvsrow-right">
-									<text class="tvsrow-qty">{{item.t2}}</text>
-									<text class="tvsrow-unit">万台</text>
-									<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
-										{{item.t3}}
-										<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
-										<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
-									</view>
-								</view>
-							</view>
-						</block>
-					</view>
-				</view>
-				<view class="subbox">
-					<view class="tvsgroup-hd">
-						<text class="tvsgroup-title">显示器供应链</text>
-						<picker bindchange="bindPickerChange" data-name="yjn7" data-real="realyjn7" value="{{yjn7}}" range-key="name" range="{{arryjn7}}">
-							<view class="tvsgroup-periodpicker">
-								<text class="tvsgroup-period">{{arryjn7[yjn7] ? arryjn7[yjn7]['name'] : ''}}</text>
-								<image src="/pages/images/sanjiao2.png" mode="widthFix" class="subarrow"></image>
-							</view>
-						</picker>
-					</view>
-					<view class="tvslist">
-						<block wx:for="{{listData7}}" wx:key="this">
-							<view class="tvsrow" bindtap="tiaozhuan" data-type="4" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
-								<text class="tvsrow-name">{{item.t1}}</text>
-								<view class="tvsrow-right">
-									<text class="tvsrow-qty">{{item.t2}}</text>
-									<text class="tvsrow-unit">万台</text>
-									<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
-										{{item.t3}}
-										<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
-										<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
-									</view>
-								</view>
-							</view>
-						</block>
-					</view>
-				</view>
-				<view class="subbox">
-					<view class="tvsgroup-hd">
-						<text class="tvsgroup-title">笔记本电脑供应链</text>
-						<picker bindchange="bindPickerChange" data-name="yjn9" data-real="realyjn9" value="{{yjn9}}" range-key="name" range="{{arryjn9}}">
-							<view class="tvsgroup-periodpicker">
-								<text class="tvsgroup-period">{{arryjn9[yjn9] ? arryjn9[yjn9]['name'] : ''}}</text>
-								<image src="/pages/images/sanjiao2.png" mode="widthFix" class="subarrow"></image>
-							</view>
-						</picker>
-					</view>
-					<view class="tvslist">
-						<block wx:for="{{listData9}}" wx:key="this">
-							<view class="tvsrow" bindtap="tiaozhuan" data-type="4" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
-								<text class="tvsrow-name">{{item.t1}}</text>
-								<view class="tvsrow-right">
-									<text class="tvsrow-qty">{{item.t2}}</text>
-									<text class="tvsrow-unit">万台</text>
-									<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
-										{{item.t3}}
-										<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
-										<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
-									</view>
-								</view>
-							</view>
-						</block>
-					</view>
-				</view>
-				<view class="subbox">
-					<view class="tvsgroup-hd">
-						<text class="tvsgroup-title">商用显示供应链</text>
-						<picker bindchange="bindPickerChange" data-name="yjn8" data-real="realyjn8" value="{{yjn8}}" range-key="name" range="{{arryjn8}}">
-							<view class="tvsgroup-periodpicker">
-								<text class="tvsgroup-period">{{arryjn8[yjn8] ? arryjn8[yjn8]['name'] : ''}}</text>
-								<image src="/pages/images/sanjiao2.png" mode="widthFix" class="subarrow"></image>
-							</view>
-						</picker>
-					</view>
-					<view class="tvslist">
-						<block wx:for="{{listData8}}" wx:key="this">
-							<view class="tvsrow" bindtap="tiaozhuan" data-type="4" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
-								<text class="tvsrow-name">{{item.t1}}</text>
-								<view class="tvsrow-right">
-									<text class="tvsrow-qty">{{item.t2}}</text>
-									<text class="tvsrow-unit">万台</text>
-									<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
-										{{item.t3}}
-										<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
-										<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
-									</view>
-								</view>
-							</view>
-						</block>
-					</view>
-				</view>
-				<view class="subbox">
-					<view class="tvsgroup-hd">
-						<text class="tvsgroup-title">电子纸供应链</text>
-						<picker bindchange="bindPickerChange" data-name="yjn5" data-real="realyjn5" value="{{yjn5}}" range-key="name" range="{{arryjn5}}">
-							<view class="tvsgroup-periodpicker">
-								<text class="tvsgroup-period">{{arryjn5[yjn5] ? arryjn5[yjn5]['name'] : ''}}</text>
-								<image src="/pages/images/sanjiao2.png" mode="widthFix" class="subarrow"></image>
-							</view>
-						</picker>
-					</view>
-					<view class="tvslist">
-						<block wx:for="{{listData5}}" wx:key="this">
-							<view class="tvsrow" bindtap="tiaozhuan" data-type="4" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
-								<text class="tvsrow-name">{{item.t1}}</text>
-								<view class="tvsrow-right">
-									<text class="tvsrow-qty">{{item.t2}}</text>
-									<text class="tvsrow-unit">万台</text>
-									<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
-										{{item.t3}}
-										<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
-										<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
-									</view>
-								</view>
-							</view>
-						</block>
-					</view>
-				</view>
-			<view class="tips">{{tips3}}</view>
-			</view>
-		</view>
 		</block>
+	</block>
 	<block wx:if="{{(!xqData || xqData.length==0) && sel!=1}}">
 			<image src="/pages/images/error.png" mode="widthFix" class="pic"></image>
 			<view class="text">正在建设中，敬请期待...</view>
 		</block>
 	<view hidden="{{sel==1 || (!xqData || xqData.length==0)}}" style="width: 100%;">
-		<!-- <block hidden="{{(!xqData || xqData.length==0)}}"> -->
-			<view class="bigtitle">
-				<view class="l">
-					<picker bindchange="bindPickerChange" data-name="val0" data-real="realval0" value="{{val0}}" range-key="name" range="{{arrval0}}">
-						<view class="picker">
-							{{arrval0[val0] ? arrval0[val0]['name'] : ''}}
-							<image src="/pages/images/sanjiao2.png" mode="widthFix" class="sanjiao" class="sj"></image>
+		<view class="filter-card">
+			<view class="selector-grid">
+				<picker class="selector-cell selector-cell-wide" bindchange="bindPickerChange" data-name="val0" data-real="realval0" value="{{val0}}" range-key="name" range="{{arrval0}}">
+					<view class="selector-main">
+						<text class="selector-label">品类</text>
+						<view class="selector-meta">
+							<text class="selector-value">{{arrval0[val0] ? arrval0[val0]['name'] : '请选择'}}</text>
+							<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
 						</view>
-					</picker>
-				</view>
-				<view class="r">
-					<picker bindchange="bindPickerChange" wx:if="{{sel!=2 && sel!=3 && realval0!=21}}" data-name="val1" data-real="realval1" value="{{val1}}" range-key="name" range="{{arrval1}}">
-						<view class="picker">
-							{{arrval1[val1] ? arrval1[val1]['name'] : ''}}
-							<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
-						</view>
-					</picker>
-					<picker bindchange="bindPickerChange" wx:if="{{sel!=4 && sel!=3 || (sel==4 && realval0==12 && realval1==5) || (sel==4 && realval0==17 ) || (sel==4 && realval0==21 )}}" data-name="val2" data-real="realval2" value="{{val2}}" range-key="name" range="{{arrval2}}">
-						<view class="picker">
-							{{arrval2[val2] ? arrval2[val2]['name'] : ''}}
-							<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
-						</view>
-					</picker>
-					<picker bindchange="bindPickerChange" data-name="val3" data-real="realval3" value="{{val3}}" range-key="name" range="{{arrval3}}">
-						<view class="picker">
-							{{arrval3[val3] ? arrval3[val3]['name'] : ''}}
-							<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sanjiao" class="sj"></image>
-						</view>
-					</picker>
-				</view>
-			</view>
-			<view class="tjlist2">
-				<block wx:for="{{xqData}}" wx:key="this">
-					<view class="item {{xqData.length==1?'item2':''}}">
-						<view class="p1">{{item.t1}}</view>
-						<view class="you">
-							<view class="p2">
-								<view class="num">{{item.t2}}</view>
-								<view class="dw">{{item.dw}}</view>
-							</view>
-							<view class="p3">
-								<view class="a1">同比</view>
-								<view class="a2 {{item.t3zf=='+'?'hong':item.t3zf=='-'?'lv':null}}">{{item.t3}}</view>
-								<image src="../images/sheng1.png" mode="widthFix" class="a3" wx:if="{{item.t3zf=='+'}}"></image>
-								<image src="../images/jiang1.png" mode="widthFix" class="a3" wx:if="{{item.t3zf=='-'}}"></image>
+					</view>
+				</picker>
+
+				<view class="selector-row">
+					<picker class="selector-cell" wx:if="{{arrval1.length > 1}}" bindchange="bindPickerChange" data-name="val1" data-real="realval1" value="{{val1}}" range-key="name" range="{{arrval1}}">
+						<view class="selector-main">
+							<text class="selector-label">渠道</text>
+							<view class="selector-meta">
+								<text class="selector-value">{{arrval1[val1] ? arrval1[val1]['name'] : '全部'}}</text>
+								<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
 							</view>
 						</view>
-					</view>
-				</block>
+					</picker>
+
+					<picker class="selector-cell" wx:if="{{arrval2.length > 0}}" bindchange="bindPickerChange" data-name="val2" data-real="realval2" value="{{val2}}" range-key="name" range="{{arrval2}}">
+						<view class="selector-main">
+							<text class="selector-label">销售</text>
+							<view class="selector-meta">
+								<text class="selector-value">{{arrval2[val2] ? arrval2[val2]['name'] : '全部'}}</text>
+								<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
+							</view>
+						</view>
+					</picker>
+
+					<picker class="selector-cell" bindchange="bindLocalPickerChange" data-name="changeIndex" value="{{changeIndex}}" range-key="name" range="{{changeOptions}}">
+						<view class="selector-main">
+							<text class="selector-label">变化</text>
+							<view class="selector-meta">
+								<text class="selector-value">{{changeOptions[changeIndex]['name']}}</text>
+								<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
+							</view>
+						</view>
+					</picker>
+				</view>
+
+				<view class="selector-row">
+					<picker class="selector-cell" bindchange="bindLocalPickerChange" data-name="periodIndex" value="{{periodIndex}}" range-key="name" range="{{periodOptions}}">
+						<view class="selector-main">
+							<text class="selector-label">时间</text>
+							<view class="selector-meta">
+								<text class="selector-value">{{periodOptions[periodIndex]['name']}}</text>
+								<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
+							</view>
+						</view>
+					</picker>
+
+					<picker class="selector-cell" bindchange="bindPickerChange" data-name="val3" data-real="realval3" value="{{val3}}" range-key="name" range="{{arrval3}}">
+						<view class="selector-main">
+							<text class="selector-label">周期</text>
+							<view class="selector-meta">
+								<text class="selector-value">{{arrval3[val3] ? arrval3[val3]['name'] : '请选择'}}</text>
+								<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
+							</view>
+						</view>
+					</picker>
+
+					<picker class="selector-cell" bindchange="bindLocalPickerChange" data-name="ytdIndex" value="{{ytdIndex}}" range-key="name" range="{{ytdOptions}}">
+						<view class="selector-main">
+							<text class="selector-label">累计</text>
+							<view class="selector-meta">
+								<text class="selector-value">{{ytdOptions[ytdIndex]['name']}}</text>
+								<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
+							</view>
+						</view>
+					</picker>
+				</view>
 			</view>
-			<view class="box">
-				<view class="up up3">
-					<view class="l">
-						<view class="fk"></view>
-						<view class="fk2"></view>
-						<view class="title">市场规模（{{arr_sj2_dw}}）</view>
-					</view>
+		</view>
+
+		<view class="tabbar">
+			<view class="tabitem {{activeTab=='scale'?'active':''}}" hover-class="tap-dim" bindtap="switchTab" data-tab="scale">行业规模</view>
+			<view class="tabitem {{activeTab=='brand'?'active':''}}" hover-class="tap-dim" bindtap="switchTab" data-tab="brand">品牌竞争</view>
+			<view class="tabitem {{activeTab=='price'?'active':''}}" hover-class="tap-dim" bindtap="switchTab" data-tab="price">价格分布</view>
+			<view class="tabitem {{activeTab=='structure'?'active':''}}" hover-class="tap-dim" bindtap="switchTab" data-tab="structure">产品结构</view>
+			<view class="tabitem {{activeTab=='ai'?'active':''}}" hover-class="tap-dim" bindtap="switchTab" data-tab="ai">AI说</view>
+		</view>
+
+		<view class="panel" wx:if="{{activeTab=='scale'}}">
+			<view class="chart-card">
+				<view class="card-head">
+					<view class="card-title">{{arrval2[val2] ? arrval2[val2].name : '销量'}}（{{arr_sj2_dw}}）</view>
+					<view class="card-sub">{{changeOptions[changeIndex]['name']}}</view>
 				</view>
-				<view class="chart">
-					<ec-canvas id="mychart-dom-bar" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
-				</view>
-			</view>
-			<view class="box" hidden="{{(!chart2x.length)?true:false}}">
-				<view class="up up3">
-					<view class="l">
-						<view class="fk"></view>
-						<view class="fk2"></view>
-						<view class="title">品牌销量份额(%)</view>
-					</view>
-				</view>
-				<view class="chart">
-					<ec-canvas id="mychart-dom-bar2" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-bar" ec="{{ ec2 }}"></ec-canvas>
+				<view class="chart-frame">
+					<ec-canvas id="mychart-dom-bar" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-scale" ec="{{ ec }}"></ec-canvas>
 				</view>
 			</view>
-			<view class="box" hidden="{{(!arr_sj6.t1 && !arr_sj6.t2)?true:false}}">
-				<view class="up up3">
-					<view class="l">
-						<view class="fk"></view>
-						<view class="fk2"></view>
-						<view class="title" wx:if="{{realval1 == 10}}">地区出口量结构(%)</view>
-						<view class="title" wx:else>产品结构(%)</view>
-					</view>
+
+			<view class="chart-card" hidden="{{!chart2x.length}}">
+				<view class="card-head">
+					<view class="card-title">平均价格（元）</view>
+					<view class="card-sub">{{changeOptions[changeIndex]['name']}}</view>
 				</view>
-				<view class="chart chart2" style="height: 210px;{{!arr_sj6.t1?'display:none':''}}">
-					<ec-canvas id="mychart-dom-bar3" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-bar" ec="{{ ec3 }}"></ec-canvas>
-				</view>
-        <view style="margin:0 10px;height: 1px;background-color: #eee;{{!arr_sj6.t1 || !arr_sj6.t2?'display:none':''}}"></view>
-				<view class="chart chart2" style="height: 210px;{{!arr_sj6.t2?'display:none':''}}">
-					<ec-canvas id="mychart-dom-bar4" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-bar" ec="{{ ec4 }}"></ec-canvas>
+				<view class="chart-frame">
+					<ec-canvas id="mychart-dom-bar2" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-price" ec="{{ ec2 }}"></ec-canvas>
 				</view>
 			</view>
-			<view class="tips" hidden="{{sel==1}}">{{tips}}</view>
-		<!-- </block> -->
+		</view>
+
+		<view class="panel" wx:if="{{activeTab=='brand'}}">
+			<view class="chart-card" hidden="{{!brandList.length}}">
+				<view class="card-head">
+					<view class="card-title">品牌竞争</view>
+				</view>
+				<view class="price-table">
+					<view class="price-table-head">
+						<view class="price-cell brand-cell-name">品牌</view>
+						<view class="price-cell brand-cell-share">市占率</view>
+						<view class="price-cell brand-cell-change">市占率增减</view>
+						<view class="price-cell brand-cell-price">平均价格</view>
+						<view class="price-cell brand-cell-pricec">均价变化</view>
+					</view>
+					<block wx:for="{{brandList}}" wx:key="index">
+						<view class="price-table-row">
+							<view class="price-cell brand-cell-name">{{item.name}}</view>
+							<view class="price-cell brand-cell-share">{{item.share}}</view>
+							<view class="price-cell brand-cell-change">
+								<text class="price-change {{item.share_czf=='+'?'up':item.share_czf=='-'?'down':''}}">{{item.share_c}}</text>
+								<image src="../images/sheng1.png" mode="widthFix" class="price-arrow" wx:if="{{item.share_czf=='+'}}"></image>
+								<image src="../images/jiang1.png" mode="widthFix" class="price-arrow" wx:if="{{item.share_czf=='-'}}"></image>
+							</view>
+							<view class="price-cell brand-cell-price">{{item.price}}</view>
+							<view class="price-cell brand-cell-pricec">
+								<text class="price-change {{item.price_czf=='+'?'up':item.price_czf=='-'?'down':''}}">{{item.price_c}}</text>
+								<image src="../images/sheng1.png" mode="widthFix" class="price-arrow" wx:if="{{item.price_czf=='+'}}"></image>
+								<image src="../images/jiang1.png" mode="widthFix" class="price-arrow" wx:if="{{item.price_czf=='-'}}"></image>
+							</view>
+						</view>
+					</block>
+				</view>
+			</view>
+			<view class="empty-text" hidden="{{brandList.length}}">暂无品牌竞争数据</view>
+		</view>
+
+		<view class="panel" wx:if="{{activeTab=='price'}}">
+			<view class="chart-card" hidden="{{!price_dist || !priceList.length}}">
+				<view class="card-head">
+					<view class="card-title">价格分布</view>
+				</view>
+				<view class="price-table">
+					<view class="price-table-head">
+						<view class="price-cell price-cell-name">价格段</view>
+						<view class="price-cell price-cell-share">市占率</view>
+						<view class="price-cell price-cell-change">市占率增减</view>
+					</view>
+					<block wx:for="{{priceList}}" wx:key="index">
+						<view class="price-table-row">
+							<view class="price-cell price-cell-name">{{item.t1}}</view>
+							<view class="price-cell price-cell-share">{{item.t2}}</view>
+							<view class="price-cell price-cell-change">
+								<text class="price-change {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">{{item.t3}}</text>
+								<image src="../images/sheng1.png" mode="widthFix" class="price-arrow" wx:if="{{item.t3zf=='+'}}"></image>
+								<image src="../images/jiang1.png" mode="widthFix" class="price-arrow" wx:if="{{item.t3zf=='-'}}"></image>
+							</view>
+						</view>
+					</block>
+				</view>
+			</view>
+			<view class="empty-text" hidden="{{price_dist && priceList.length}}">暂无价格分布数据</view>
+		</view>
+
+		<view class="panel" wx:if="{{activeTab=='structure'}}">
+			<view class="chart-card" hidden="{{(!arr_sj6.t1 && !arr_sj6.t2)?true:false}}">
+				<view class="card-head">
+					<view class="card-title" wx:if="{{realval1 == 10}}">地区出口量结构(%)</view>
+					<view class="card-title" wx:else>产品结构(%)</view>
+				</view>
+				<view class="chart-frame chart-frame-pie" hidden="{{!arr_sj6.t1}}">
+					<ec-canvas id="mychart-dom-bar3" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-structure-1" ec="{{ ec3 }}"></ec-canvas>
+				</view>
+				<view class="divider" hidden="{{!arr_sj6.t1 || !arr_sj6.t2}}"></view>
+				<view class="chart-frame chart-frame-pie" hidden="{{!arr_sj6.t2}}">
+					<ec-canvas id="mychart-dom-bar4" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-structure-2" ec="{{ ec4 }}"></ec-canvas>
+				</view>
+			</view>
+		</view>
+
+		<view class="panel" wx:if="{{activeTab=='ai'}}">
+			<view class="chart-card">
+				<view class="card-head">
+					<view class="card-title">AI说</view>
+				</view>
+				<view class="ai-summary-card">
+					<view class="ai-summary-list">
+						<block wx:for="{{aiSummary}}" wx:key="key">
+							<view class="ai-summary-item">
+								<view class="ai-summary-icon ai-summary-icon-{{item.key}}">{{item.icon}}</view>
+								<view class="ai-summary-content">
+									<text class="ai-summary-title">{{item.title}}</text>
+									<text class="ai-summary-text">{{item.before}}</text>
+									<text class="ai-summary-value {{item.tone}}">{{item.value}}</text>
+									<text class="ai-summary-highlight {{item.tone}}" wx:if="{{item.highlight}}">{{item.highlight}}</text>
+									<text class="ai-summary-text">{{item.after}}</text>
+								</view>
+							</view>
+						</block>
+					</view>
+				</view>
+			</view>
+		</view>
+
+		<view class="source-note">{{tips}}</view>
 	</view>
 	<view class="blank20"></view>
 </view>

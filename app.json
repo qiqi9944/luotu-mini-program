@@ -13,6 +13,7 @@
 		"pages/yanbao/list",
 		"pages/yanbao/view",
 		"pages/user/myinfo",
+		"pages/user/member",
 		"pages/user/history",
 		"pages/user/scdz",
 		"pages/error/error",

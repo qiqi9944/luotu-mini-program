@@ -86,10 +86,16 @@ export default class WxCanvas {
   }
 
   set width(w) {
-    if (this.canvasNode) this.canvasNode.width = w
+    // 开发者工具部分版本对无效宽度赋值会触发
+    // “this._getData is not a function”，只接受有效的正数宽度。
+    if (this.canvasNode && typeof w === 'number' && isFinite(w) && w > 0) {
+      this.canvasNode.width = w
+    }
   }
   set height(h) {
-    if (this.canvasNode) this.canvasNode.height = h
+    if (this.canvasNode && typeof h === 'number' && isFinite(h) && h > 0) {
+      this.canvasNode.height = h
+    }
   }
 
   get width() {

@@ -1,0 +1,50 @@
+<!--pages/user/member.wxml-->
+<view class="member">
+	<!-- 会员状态卡 -->
+	<view class="status-card">
+		<block wx:if="{{islogin}}">
+			<view class="status-badge {{isMember?'member':'normal'}}">{{isMember?'洛图会员':'普通用户'}}</view>
+			<view class="status-name">{{user.name ? user.name : user.username}}</view>
+			<view class="status-desc">{{isMember?'您已开通洛图科技会员，畅享全部产业数据权益':'开通会员后，可解锁品牌竞争、产品结构、价格分布等完整数据'}}</view>
+		</block>
+		<block wx:else>
+			<view class="status-badge normal">未登录</view>
+			<view class="status-desc">登录后可查看会员状态与权益</view>
+			<view class="btn btn-login" bindtap="goLogin">微信快捷登录</view>
+		</block>
+	</view>
+
+	<!-- 会员权益 -->
+	<view class="group-title">会员权益</view>
+	<view class="plan-card">
+		<view class="plan-row plan-row-head">
+			<view class="plan-cell plan-cell-name"></view>
+			<block wx:for="{{plan.tiers}}" wx:for-item="tier" wx:key="name">
+				<view class="plan-cell plan-cell-tier">
+					<view class="plan-tier-name">{{tier.name}}</view>
+					<view class="plan-tier-price"><text class="plan-price">{{tier.price}}</text> 元/年</view>
+				</view>
+			</block>
+		</view>
+		<view class="plan-row" wx:for="{{plan.benefits}}" wx:for-item="ben" wx:key="name">
+			<view class="plan-cell plan-cell-name">{{ben.name}}</view>
+			<block wx:for="{{ben.marks}}" wx:for-item="ok" wx:for-index="mi" wx:key="mi">
+				<view class="plan-cell plan-cell-mark">
+					<text class="mark {{ok?'mark-yes':'mark-no'}}">{{ok?'✓':'—'}}</text>
+				</view>
+			</block>
+		</view>
+	</view>
+	<view class="plan-note">关注RUNTO洛图科技观研，获得更多行业解读。</view>
+
+	<!-- 开通引导 -->
+	<block wx:if="{{islogin && !isMember}}">
+		<view class="group-title">开通会员</view>
+		<view class="cta-card">
+			<view class="cta-desc">开通洛图科技会员，解锁全部产业数据权益</view>
+			<view class="btn btn-primary" bindtap="contact">联系商务开通</view>
+		</view>
+	</block>
+
+	<view class="safe-bottom"></view>
+</view>

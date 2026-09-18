@@ -41,6 +41,41 @@ page {
 	--fall: #0b8f63;
 	--flat: #8698a5;
 
+	/* —— 标准色板：与产品结构饼图 color 数组同源 ——
+	   蓝 #005d99 / 红 #cd3c29 为主锚点，其余为分类标识扩展色。
+	   仅用于「分类」语义（宫格、标签、序号），不参与涨跌语义。 */
+	--c-blue: #005d99;
+	--c-red: #cd3c29;
+	--c-indigo: #5470c6;
+	--c-green: #3ba272;
+	--c-amber: #fac858;
+	--c-orange: #fc8452;
+	--c-cyan: #73c0de;
+	--c-violet: #9a60b4;
+	--c-magenta: #ea7ccc;
+
+	/* 分类浅底：各主色约 8% 提亮，预先调好以规避 color-mix 兼容性 */
+	--c-blue-soft: #e6f0f7;
+	--c-red-soft: #fbeceb;
+	--c-indigo-soft: #eceffa;
+	--c-green-soft: #e9f5f0;
+	--c-amber-soft: #fdf6e3;
+	--c-orange-soft: #fdf0e9;
+	--c-cyan-soft: #ecf6fa;
+	--c-violet-soft: #f2ecf7;
+	--c-magenta-soft: #fbecf7;
+
+	/* 分类文字色：主色压暗至可读对比度（≥4.5:1） */
+	--c-blue-ink: #004b7d;
+	--c-red-ink: #a52f20;
+	--c-indigo-ink: #3f57a0;
+	--c-green-ink: #2c7d57;
+	--c-amber-ink: #96600f;
+	--c-orange-ink: #b34a1f;
+	--c-cyan-ink: #1f7fa3;
+	--c-violet-ink: #7a4892;
+	--c-magenta-ink: #b34a94;
+
 	/* —— 字阶（统一 rpx，杜绝 px/rpx 混用）—— */
 	--fs-caption: 22rpx;
 	--fs-body-s: 24rpx;

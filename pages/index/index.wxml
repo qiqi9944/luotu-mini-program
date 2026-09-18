@@ -29,23 +29,36 @@ module.exports.pad = function (n) { return n > 9 ? '' + n : '0' + n }
         </view>
         <input type="text" data-name="keywords" class="input" placeholder="搜索品类、品牌或报告" placeholder-class="sousuo-ph" bindinput="inputchange" bindconfirm="search" confirm-type="search" value="{{keywords}}" />
     </view>
-    <!-- 导航菜单 -->
-    <view class="menulist menulist--buttons rise rise-2">
+    <!-- 搜索联动：匹配到的品类，点击直达该品类数据 -->
+    <view class="search-suggest rise rise-1" wx:if="{{keywords && catSuggest.length}}">
+        <view class="suggest-hd">相关品类</view>
+        <block wx:for="{{catSuggest}}" wx:key="name">
+            <view class="suggest-item" hover-class="tap-row" bindtap="gotoCat" data-type="{{item.id}}">
+                <text class="suggest-name">{{item.name}}</text>
+                <text class="suggest-go">查看数据 ›</text>
+            </view>
+        </block>
+    </view>
+    <!-- 导航菜单：分组卡片，每组一张白卡 -->
+    <view class="menu-section rise rise-2">
         <view class="menu-head">
             <view class="menu-title">市场数据</view>
             <view class="menu-sub">MARKET DATA</view>
         </view>
-        <view class="menu-grid">
-            <block wx:for="{{menulist}}" wx:key="id">
-                <view class="item" hover-class="tap-card" hover-stay-time="80" bindtap="nextpage" data-type="{{item.type}}">
-                    <view class="item-icon">
-                        <image wx:if="{{item.pic}}" src="{{item.pic}}" mode="aspectFill"></image>
-                        <view wx:else class="item-icon-letter item-icon-c{{(index % 6)}}">{{item.name[0]}}</view>
-                    </view>
-                    <view class="title">{{item.name}}</view>
+        <block wx:for="{{menuGroups}}" wx:for-item="grp" wx:for-index="gi" wx:key="gi">
+            <view class="menulist--buttons menu-card">
+                <view class="menu-grid">
+                    <block wx:for="{{grp}}" wx:key="id">
+                        <view class="item" hover-class="tap-card" hover-stay-time="80" bindtap="nextpage" data-type="{{item.type}}">
+                            <view class="icon icon-{{item.iconClass}}">
+                                <view class="svg-icon svg-{{item.iconClass}}"></view>
+                            </view>
+                            <view class="title">{{item.name}}</view>
+                        </view>
+                    </block>
                 </view>
-            </block>
-        </view>
+            </view>
+        </block>
     </view>
     <!-- 行业洞察 -->
     <view class="dc rise rise-3">

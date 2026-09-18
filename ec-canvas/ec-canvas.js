@@ -80,12 +80,15 @@ Component({
     init: function (callback) {
       const version = wx.getSystemInfoSync().SDKVersion
 
-      const canUseNewCanvas = compareVersion(version, '2.9.0') >= 0;
       const forceUseOldCanvas = this.data.forceUseOldCanvas;
-      const isUseNewCanvas = canUseNewCanvas && !forceUseOldCanvas;
+      // 开发者工具部分版本返回的 SDKVersion 为 2.02.x，
+      // 但实际基础库已支持 Canvas 2D（例如项目当前使用 3.0.2）。
+      // 只要没有显式要求旧 Canvas，就使用新版节点 Canvas，
+      // 避免旧 Canvas 适配层触发 “this._getData is not a function”。
+      const isUseNewCanvas = !forceUseOldCanvas;
       this.setData({ isUseNewCanvas });
 
-      if (forceUseOldCanvas && canUseNewCanvas) {
+      if (forceUseOldCanvas) {
         console.warn('开发者强制使用旧canvas,建议关闭');
       }
 
@@ -143,6 +146,10 @@ Component({
         .select('.ec-canvas')
         .fields({ node: true, size: true })
         .exec(res => {
+          if (!res || !res[0] || !res[0].node || !res[0].width || !res[0].height) {
+            console.warn('ec-canvas 暂未获取到有效画布节点，跳过本次初始化')
+            return
+          }
           const canvasNode = res[0].node
           this.canvasNode = canvasNode
 

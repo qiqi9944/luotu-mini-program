@@ -136,15 +136,6 @@
 	box-shadow: 0 -12rpx 32rpx rgba(3, 37, 60, 0.18);
 }
 
-.swiper {
-	--box-width: 100vw;
-	height: calc(var(--box-width) / 3.6);
-	margin-bottom: 24rpx;
-}
-.swiper-item .pic {
-	border-radius: var(--r-md);
-}
-
 /* ---------- 资讯 / 视频 / 活动列表 ---------- */
 .redian .newsbox {
 	width: 100%;

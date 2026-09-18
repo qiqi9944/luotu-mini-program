@@ -33,19 +33,6 @@
 		</view>
 	</view>
 	<view class="con">
-		<view class="page-section page-section-spacing swiper">
-		<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" indicator-color="{{indicatorColor}}" indicator-active-color="{{indicatorActiveColor}}">
-			<block wx:for="{{banner}}" wx:key="*this">
-				<swiper-item>
-					<view class="swiper-item">
-						<navigator url="{{item.url}}" class="swiper-item {{index}}">
-							<image src="{{item.pic}}" mode="widthFix" class="pic"></image>
-						</navigator>
-					</view>
-				</swiper-item>
-			</block>
-		</swiper>
-		</view>
 	<view class="redian" wx:if="{{pagetype==1}}">
 		<view class="newsbox">
 			<view class="main">

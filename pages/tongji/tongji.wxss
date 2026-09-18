@@ -1,6 +1,6 @@
 /* pages/tongji/tongji.wxss — 数据页：行情终端式的指标与表格 */
 page {
-	background-color: #eef3f8;
+	background-color: var(--paper);
 }
 
 /* 版权水印。原实现用 10000vw × 10000vh 的图层配合 20 位数的 z-index，
@@ -22,17 +22,22 @@ page::before {
 	transform: translate(-50%, -50%) rotate(-45deg);
 }
 
-/* ---------- 顶部品类切换带 ---------- */
+/* ---------- 顶部品类切换带（横向滑动：总览 + 动态品类组） ---------- */
 .sellist2 {
 	position: relative;
 	width: 100%;
-	padding: 44rpx 0 100rpx;
 	box-sizing: border-box;
-	display: flex;
-	justify-content: space-around;
-	align-items: flex-start;
-	overflow: hidden;
+	display: block;
+	white-space: nowrap;
 	background: linear-gradient(160deg, var(--ink-700) 0%, var(--ink-900) 100%);
+}
+.sellist2 .navrow {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	align-items: flex-start;
+	padding: 44rpx 12rpx 100rpx;
+	box-sizing: border-box;
 }
 .sellist2::before {
 	content: "";
@@ -65,7 +70,8 @@ page::before {
 .sellist2 .item {
 	position: relative;
 	z-index: 1;
-	width: 25%;
+	flex: none;
+	width: 176rpx;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
@@ -97,15 +103,140 @@ page::before {
 	margin-bottom: 16rpx;
 	transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
+/* 首字母底色：直接取设计令牌的标准分类色板（与产品结构饼图同源），
+   主色 → 压暗 -ink 做渐变，循环取色（index % 9），相邻品类色相尽量拉开。
+   注意这几条必须写在 .item.hover .pic 之前——两者选择器权重相同，
+   靠书写顺序定胜负，否则选中态的白底会被渐变盖掉。 */
+.sellist2 .item .pic.icon-all {
+	background: linear-gradient(145deg, #7fb2cf 0%, #3d7b9e 100%);
+	border-color: transparent;
+}
+.sellist2 .item .pic.icon-c0 {
+	background: linear-gradient(145deg, var(--c-blue) 0%, var(--c-blue-ink) 100%);
+	border-color: transparent;
+}
+.sellist2 .item .pic.icon-c1 {
+	background: linear-gradient(145deg, var(--c-red) 0%, var(--c-red-ink) 100%);
+	border-color: transparent;
+}
+.sellist2 .item .pic.icon-c2 {
+	background: linear-gradient(145deg, var(--c-green) 0%, var(--c-green-ink) 100%);
+	border-color: transparent;
+}
+.sellist2 .item .pic.icon-c3 {
+	background: linear-gradient(145deg, var(--c-orange) 0%, var(--c-orange-ink) 100%);
+	border-color: transparent;
+}
+.sellist2 .item .pic.icon-c4 {
+	background: linear-gradient(145deg, var(--c-violet) 0%, var(--c-violet-ink) 100%);
+	border-color: transparent;
+}
+.sellist2 .item .pic.icon-c5 {
+	background: linear-gradient(145deg, var(--c-cyan) 0%, var(--c-cyan-ink) 100%);
+	border-color: transparent;
+}
+.sellist2 .item .pic.icon-c6 {
+	background: linear-gradient(145deg, var(--c-amber) 0%, var(--c-amber-ink) 100%);
+	border-color: transparent;
+}
+.sellist2 .item .pic.icon-c7 {
+	background: linear-gradient(145deg, var(--c-indigo) 0%, var(--c-indigo-ink) 100%);
+	border-color: transparent;
+}
+.sellist2 .item .pic.icon-c8 {
+	background: linear-gradient(145deg, var(--c-magenta) 0%, var(--c-magenta-ink) 100%);
+	border-color: transparent;
+}
+
 /* 选中态：白底 + 一圈外发光，在深色带上形成明确的焦点 */
 .sellist2 .item.hover .pic {
-	background-color: var(--surface);
+	background: var(--surface);
 	border-color: var(--surface);
 	box-shadow: 0 0 0 8rpx rgba(255, 255, 255, 0.14);
+}
+/* 选中后底色转白，字必须跟着转墨蓝，否则白底白字 */
+.sellist2 .item.hover .pic .icon-letter {
+	color: var(--ink-700);
 }
 .sellist2 .item .pic image {
 	width: 40rpx;
 	max-height: 44rpx;
+}
+.sellist2 .item .pic .icon-letter {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--text-invert);
+	font-size: var(--fs-heading);
+	font-weight: 700;
+	line-height: 1;
+	transition: color 0.2s ease;
+}
+
+/* ---------- 顶部导航图标：复用首页那套线性图标（mask 上色） ----------
+   深色带上默认白色，选中态底色转白后图标随之转墨蓝。 */
+.sellist2 .svg-icon {
+	width: 48rpx;
+	height: 48rpx;
+	background-color: rgba(255, 255, 255, 0.92);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	-webkit-mask-size: contain;
+	mask-repeat: no-repeat;
+	mask-position: center;
+	mask-size: contain;
+	transition: background-color 0.2s ease;
+}
+.sellist2 .item.hover .pic .svg-icon {
+	background-color: var(--ink-700);
+}
+.svg-overview {
+	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4.5' width='18' height='12' rx='2'/%3E%3Cpath d='M9 20h6M12 16.5v3.5'/%3E%3Cpath d='M8 13v-2.5M12 13v-5M16 13v-3.5'/%3E%3C/svg%3E");
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4.5' width='18' height='12' rx='2'/%3E%3Cpath d='M9 20h6M12 16.5v3.5'/%3E%3Cpath d='M8 13v-2.5M12 13v-5M16 13v-3.5'/%3E%3C/svg%3E");
+}
+.svg-ent {
+	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='2.6'/%3E%3Cpath d='M10.5 9.4l4 2.6-4 2.6z'/%3E%3C/svg%3E");
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='2.6'/%3E%3Cpath d='M10.5 9.4l4 2.6-4 2.6z'/%3E%3C/svg%3E");
+}
+
+.svg-edu {
+	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4.5 21.5 9 12 13.5 2.5 9z'/%3E%3Cpath d='M6.5 11.2V15.6c0 1.3 2.5 2.4 5.5 2.4s5.5-1.1 5.5-2.4v-4.4'/%3E%3Cpath d='M21.5 9v4'/%3E%3C/svg%3E");
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4.5 21.5 9 12 13.5 2.5 9z'/%3E%3Cpath d='M6.5 11.2V15.6c0 1.3 2.5 2.4 5.5 2.4s5.5-1.1 5.5-2.4v-4.4'/%3E%3Cpath d='M21.5 9v4'/%3E%3C/svg%3E");
+}
+.svg-work {
+	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='7.5' width='18' height='11.5' rx='2.2'/%3E%3Cpath d='M9 7.5V6A1.6 1.6 0 0 1 10.6 4.4h2.8A1.6 1.6 0 0 1 15 6v1.5'/%3E%3Cpath d='M3 12.5h18'/%3E%3C/svg%3E");
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='7.5' width='18' height='11.5' rx='2.2'/%3E%3Cpath d='M9 7.5V6A1.6 1.6 0 0 1 10.6 4.4h2.8A1.6 1.6 0 0 1 15 6v1.5'/%3E%3Cpath d='M3 12.5h18'/%3E%3C/svg%3E");
+}
+.svg-wear {
+	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='7.5' y='7.5' width='9' height='9' rx='2.4'/%3E%3Cpath d='M9.3 7.5l.6-3h4.2l.6 3M9.3 16.5l.6 3h4.2l.6-3'/%3E%3Cpath d='M12 10.6v1.7l1.3 1'/%3E%3C/svg%3E");
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='7.5' y='7.5' width='9' height='9' rx='2.4'/%3E%3Cpath d='M9.3 7.5l.6-3h4.2l.6 3M9.3 16.5l.6 3h4.2l.6-3'/%3E%3Cpath d='M12 10.6v1.7l1.3 1'/%3E%3C/svg%3E");
+}
+.svg-secure {
+	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3.4 19 6.2v4.8c0 4-3 6.5-7 7.9-4-1.4-7-3.9-7-7.9V6.2z'/%3E%3Cpath d='M9 12l2 2 4-4.3'/%3E%3C/svg%3E");
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3.4 19 6.2v4.8c0 4-3 6.5-7 7.9-4-1.4-7-3.9-7-7.9V6.2z'/%3E%3Cpath d='M9 12l2 2 4-4.3'/%3E%3C/svg%3E");
+}
+
+.svg-sport {
+	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 18.5l5.5-9 3.5 5 2-3 5 7z'/%3E%3Ccircle cx='7' cy='6.6' r='1.7'/%3E%3C/svg%3E");
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 18.5l5.5-9 3.5 5 2-3 5 7z'/%3E%3Ccircle cx='7' cy='6.6' r='1.7'/%3E%3C/svg%3E");
+}
+.svg-screen {
+	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4.5' width='18' height='12' rx='2'/%3E%3Cpath d='M9 20h6M12 16.5v3.5'/%3E%3Cpath d='M6.5 11l2.5 2 3-4 2.5 3 3-3'/%3E%3C/svg%3E");
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4.5' width='18' height='12' rx='2'/%3E%3Cpath d='M9 20h6M12 16.5v3.5'/%3E%3Cpath d='M6.5 11l2.5 2 3-4 2.5 3 3-3'/%3E%3C/svg%3E");
+}
+.svg-life {
+	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 11 12 4l8 7'/%3E%3Cpath d='M6 9.8V19h12V9.8'/%3E%3Cpath d='M10 19v-4.4h4V19'/%3E%3C/svg%3E");
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 11 12 4l8 7'/%3E%3Cpath d='M6 9.8V19h12V9.8'/%3E%3Cpath d='M10 19v-4.4h4V19'/%3E%3C/svg%3E");
+}
+.svg-core {
+	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='6.5' y='6.5' width='11' height='11' rx='2'/%3E%3Crect x='9.8' y='9.8' width='4.4' height='4.4' rx='1'/%3E%3Cpath d='M9 3.3v3.2M15 3.3v3.2M9 17.5v3.2M15 17.5v3.2M3.3 9h3.2M3.3 15h3.2M17.5 9h3.2M17.5 15h3.2'/%3E%3C/svg%3E");
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='6.5' y='6.5' width='11' height='11' rx='2'/%3E%3Crect x='9.8' y='9.8' width='4.4' height='4.4' rx='1'/%3E%3Cpath d='M9 3.3v3.2M15 3.3v3.2M9 17.5v3.2M15 17.5v3.2M3.3 9h3.2M3.3 15h3.2M17.5 9h3.2M17.5 15h3.2'/%3E%3C/svg%3E");
+}
+.svg-more {
+	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='4' width='6.5' height='6.5' rx='1.4'/%3E%3Crect x='13.5' y='4' width='6.5' height='6.5' rx='1.4'/%3E%3Crect x='4' y='13.5' width='6.5' height='6.5' rx='1.4'/%3E%3Crect x='13.5' y='13.5' width='6.5' height='6.5' rx='1.4'/%3E%3C/svg%3E");
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='4' width='6.5' height='6.5' rx='1.4'/%3E%3Crect x='13.5' y='4' width='6.5' height='6.5' rx='1.4'/%3E%3Crect x='4' y='13.5' width='6.5' height='6.5' rx='1.4'/%3E%3Crect x='13.5' y='13.5' width='6.5' height='6.5' rx='1.4'/%3E%3C/svg%3E");
 }
 
 /* ---------- 内容纸面 ---------- */
@@ -115,8 +246,8 @@ page::before {
 	box-sizing: border-box;
 	padding: 24rpx 18rpx 0;
 	margin-top: -42rpx;
-	background-color: #eef3f8;
-	border-radius: 22rpx 22rpx 0 0;
+	background-color: var(--paper);
+	border-radius: var(--r-lg) var(--r-lg) 0 0;
 	box-shadow: none;
 }
 .con2 {
@@ -151,15 +282,6 @@ page::before {
 	color: var(--text-1);
 	letter-spacing: 1rpx;
 }
-.bigtitle .r {
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
-}
-.bigtitle .r picker {
-	margin-left: 16rpx;
-}
-
 /* 筛选器改为「可见控件」：原来只是一段灰字加小三角，看不出可点。
    统一给出胶囊底、发丝描边与右侧箭头。 */
 .bigtitle .l .picker {
@@ -182,9 +304,7 @@ page::before {
 	flex-shrink: 0;
 	max-height: 12rpx;
 }
-.bigtitle .r .picker,
-.box .up .r .picker,
-.seltd .picker {
+.box .up .r .picker {
 	display: inline-flex;
 	align-items: center;
 	padding: 8rpx 16rpx;
@@ -195,9 +315,7 @@ page::before {
 	font-size: var(--fs-body-s);
 	color: var(--text-2);
 }
-.bigtitle .r .picker .sj,
-.box .up .r .picker .sj,
-.seltd .picker .sj {
+.box .up .r .picker .sj {
 	width: 14rpx;
 	margin-left: 10rpx;
 	flex-shrink: 0;
@@ -217,6 +335,28 @@ page::before {
 	overflow: hidden;
 	box-shadow: 0 10rpx 28rpx rgba(24, 58, 95, 0.05);
 }
+
+/* 分组容器：把「汇总卡 + 明细表」两段并进同一张外框，明确它们属于同一品类组。
+   外框承载卡片外观（描边/圆角/阴影），内部两个 .box 退化为无外观的分区，中间一道分隔线。 */
+.group-wrap {
+	background-color: var(--surface);
+	border: 1rpx solid rgba(24, 58, 95, 0.08);
+	border-radius: 16rpx;
+	box-shadow: 0 10rpx 28rpx rgba(24, 58, 95, 0.05);
+	margin-bottom: 24rpx;
+	overflow: hidden;
+}
+.box.group-head,
+.box.group-body {
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	margin-bottom: 0;
+	background-color: transparent;
+}
+.box.group-head {
+	border-bottom: 1rpx solid var(--hairline);
+}
 .box .up {
 	width: 100%;
 	display: flex;
@@ -225,21 +365,14 @@ page::before {
 	padding: 20rpx 20rpx 16rpx;
 	box-sizing: border-box;
 	margin-bottom: 0;
-	background: #fff;
-	border-bottom: 1rpx solid rgba(24, 58, 95, 0.06);
-}
-.box .up2 {
-	align-items: flex-end;
-}
-.box .up3 {
-	box-sizing: border-box;
-	margin-bottom: 0;
+	background-color: var(--surface);
+	border-bottom: 1rpx solid var(--hairline);
 }
 .box .up4 {
 	box-sizing: border-box;
 	padding: 20rpx 20rpx 16rpx;
 	margin-bottom: 0;
-	border-bottom: 1rpx solid rgba(24, 58, 95, 0.06);
+	border-bottom: 1rpx solid var(--hairline);
 }
 .box .up .l {
 	display: flex;
@@ -247,10 +380,10 @@ page::before {
 	align-items: center;
 }
 .box .up .l .title {
-	font-size: 28rpx;
+	font-size: var(--fs-body);
 	line-height: 1.2;
 	font-weight: 700;
-	color: #17344d;
+	color: var(--ink-800);
 	letter-spacing: 0;
 }
 .box .up .r {
@@ -282,65 +415,6 @@ page::before {
 	flex-shrink: 0;
 }
 
-/* 卡内左上角的次级筛选列 */
-.box .up .l2 {
-	margin-left: 0;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: flex-start;
-}
-.box .up .l2 .select {
-	margin-bottom: 16rpx;
-}
-.box .up .l2 .select:last-child {
-	margin-bottom: 0;
-}
-.box .up .l2 .select .picker {
-	box-sizing: border-box;
-	min-width: 188rpx;
-	height: 50rpx;
-	padding: 0 14rpx;
-	background-color: #fff;
-	border: 1rpx solid #d7e1ea;
-	border-radius: 12rpx;
-	font-size: 22rpx;
-	color: #4d6478;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	box-shadow: none;
-}
-.box .up .l2 .select .picker .sanjiao {
-	width: 14rpx;
-	opacity: 0.6;
-}
-
-/* 分段切换（墨蓝描边，替换原先的 #2489f0 亮蓝） */
-.box .up .r .item {
-	width: 84rpx;
-	height: 40rpx;
-	box-sizing: border-box;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: var(--fs-caption);
-	color: #1f6b9d;
-	border: 1rpx solid rgba(31, 107, 157, 0.5);
-	background-color: var(--surface);
-}
-.box .up .r .item.hover {
-	background-color: #1f6b9d;
-	color: var(--text-invert);
-}
-.box .up .r .item:first-child {
-	border-radius: var(--r-sm) 0 0 var(--r-sm);
-}
-.box .up .r .item:last-child {
-	border-radius: 0 var(--r-sm) var(--r-sm) 0;
-	margin-right: var(--gutter);
-}
-
 /* 数据来源脚注 */
 .tips {
 	width: 100%;
@@ -353,61 +427,60 @@ page::before {
 	text-align: right;
 }
 
-.data-stack {
-	width: 100%;
-}
-
-/* 供应链分组卡：对齐 filter 页的轻卡片 + 组标题 + 可点行 */
+/* ---------- 供应链分组卡 ----------
+   卡内是全页最密的一段，六个子块并列。按行情终端的读法组织：
+   组名退到小字标签、数量升为主角、单位与同比降级，
+   同比固定占一列宽度，箭头因此在纵向连成一条通道。 */
 .subbox {
 	width: 100%;
 	box-sizing: border-box;
 	margin-bottom: 18rpx;
 	background: var(--surface);
 	border: 1rpx solid var(--hairline);
-	border-radius: 16rpx;
+	border-radius: var(--r-md);
 	box-shadow: var(--shadow-card);
 	overflow: hidden;
+}
+.subbox:last-child {
+	margin-bottom: 0;
 }
 
 .tvsgroup-hd {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 18rpx 20rpx 12rpx;
-	border-bottom: 1rpx solid #e2edf5;
+	padding: 20rpx var(--gutter) 14rpx;
+	background-color: var(--surface-sunken);
+	border-bottom: 1rpx solid var(--hairline);
 }
 
 .tvsgroup-title {
-	font-size: 26rpx;
-	font-weight: 700;
-	color: #1a6fa0;
-}
-
-.tvsgroup-periodpicker {
-	display: inline-flex;
+	display: flex;
 	align-items: center;
-	gap: 8rpx;
-	padding: 6rpx 12rpx;
-	border-radius: 999rpx;
-	background: #f7fbff;
-	border: 1rpx solid #d7e1ea;
+	font-size: var(--fs-body-s);
+	font-weight: 700;
+	color: var(--ink-700);
+	letter-spacing: 0.5rpx;
 }
-
-.tvsgroup-period {
-	font-size: 22rpx;
-	color: #567089;
+.tvsgroup-title::before {
+	content: "";
+	width: 5rpx;
+	height: 22rpx;
+	margin-right: 12rpx;
+	border-radius: 5rpx;
+	flex-shrink: 0;
+	background: linear-gradient(180deg, var(--ink-400) 0%, var(--ink-700) 100%);
 }
 
 .tvslist {
-	padding: 0 20rpx 6rpx;
+	padding: 0 var(--gutter);
 }
 
 .tvsrow {
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
 	padding: 22rpx 0;
-	border-bottom: 1rpx solid #f0f4f7;
+	border-bottom: 1rpx solid var(--hairline);
 }
 
 .tvsrow:last-child {
@@ -415,10 +488,10 @@ page::before {
 }
 
 .tvsrow-name {
-	font-size: 26rpx;
-	color: #334155;
 	flex: 1;
 	min-width: 0;
+	font-size: var(--fs-body-s);
+	color: var(--text-2);
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -426,45 +499,64 @@ page::before {
 
 .tvsrow-right {
 	display: flex;
-	align-items: center;
-	gap: 4rpx;
+	align-items: baseline;
 	flex-shrink: 0;
 }
 
 .tvsrow-qty {
-	font-size: 30rpx;
+	font-family: var(--font-num);
+	font-variant-numeric: tabular-nums;
+	font-size: var(--fs-title);
 	font-weight: 700;
-	color: #0e608d;
+	line-height: 1.1;
+	color: var(--ink-700);
 }
 
 .tvsrow-unit {
-	font-size: 22rpx;
-	color: #7d8a99;
+	margin-left: 4rpx;
+	font-size: var(--fs-caption);
+	color: var(--text-3);
 }
 
+/* 同比固定 96rpx 并右对齐，六个子块的箭头因此上下成列 */
 .tvsrow-yoy {
 	display: flex;
 	align-items: center;
-	gap: 4rpx;
-	font-size: 22rpx;
-	font-weight: 600;
-	min-width: 80rpx;
 	justify-content: flex-end;
-	color: #7d8a99;
+	min-width: 96rpx;
+	margin-left: 16rpx;
+	font-family: var(--font-num);
+	font-variant-numeric: tabular-nums;
+	font-size: var(--fs-caption);
+	font-weight: 700;
+	color: var(--flat);
 }
 
 .tvsrow-yoy.up {
-	color: #e24a5a;
+	color: var(--rise);
 }
 
 .tvsrow-yoy.down {
-	color: #2f9e79;
+	color: var(--fall);
+}
+
+/* 整行可点（bindtap="selchage"），行尾补一枚小箭头把这件事说出来 */
+.tvsrow::after {
+	content: "";
+	width: 10rpx;
+	height: 10rpx;
+	margin-left: 16rpx;
+	flex-shrink: 0;
+	border-top: 2rpx solid var(--ink-200);
+	border-right: 2rpx solid var(--ink-200);
+	transform: rotate(45deg);
 }
 
 .subarrow {
 	width: 14rpx;
 	height: auto;
 	max-height: 18rpx;
+	margin-left: 6rpx;
 	flex-shrink: 0;
 }
 
@@ -481,7 +573,7 @@ page::before {
 	display: flex;
 	justify-content: flex-start;
 	align-items: stretch;
-	margin-bottom: 32rpx;
+	margin-bottom: 0;
 }
 .box .down .tjlist .item {
 	flex: 1;
@@ -558,30 +650,44 @@ page::before {
 	border: 0;
 	margin-bottom: 24rpx;
 }
+/* 数据格纵向堆叠：上=本期值（大、墨蓝），下=同比（小、带涨跌色的胶囊），
+   两者层级拉开，避免「两个数字挤一行」分不清谁是本期值、谁是同比 */
+.box .down .table .td:not(.titletd2) {
+	flex-direction: column;
+	flex-wrap: nowrap;
+	gap: 6rpx;
+}
 .box .down .table .num {
-	margin-right: 8rpx;
-	font-size: var(--fs-body);
+	margin-right: 0;
+	font-size: var(--fs-title);
 	font-weight: 700;
+	line-height: 1.1;
 	color: var(--ink-700);
 }
 .box .down .table .num2 {
 	display: flex;
-	justify-content: flex-start;
+	justify-content: center;
 	align-items: center;
+	padding: 2rpx 10rpx;
+	border-radius: 999rpx;
 	font-size: var(--fs-caption);
-	font-weight: 700;
+	font-weight: 600;
+	line-height: 1.4;
+	color: var(--text-3);
+	background-color: var(--ink-050);
+}
+.box .down .table .num2.hong {
+	color: var(--rise);
+	background-color: var(--c-red-soft);
+}
+.box .down .table .num2.lv {
+	color: var(--fall);
+	background-color: var(--c-green-soft);
 }
 .box .down .table .num2 .img {
 	width: 14rpx;
-	margin-left: 8rpx;
+	margin-left: 6rpx;
 	max-height: 18rpx;
-}
-.box .down .table .num3 {
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	font-size: 18rpx;
-	font-weight: 700;
 }
 .box .down .table .juzhong {
 	display: flex;
@@ -590,26 +696,15 @@ page::before {
 	flex-direction: column;
 }
 
-/* 表头里承载分组名的单元格：升级为组标题的量级 */
-.titletd {
-	justify-content: flex-start;
-	padding-left: 12rpx;
-	font-size: 24rpx;
-	font-weight: 700;
-	color: #17344d;
-	letter-spacing: 0;
-	background: transparent;
-	border-left: 4rpx solid #1677c8;
-}
-
-/* 首列可点进详情，用墨蓝字色 + 右侧小箭头把「可点」说清楚 */
+/* 首列可点进详情，用墨蓝字色 + 右侧小箭头把「可点」说清楚。
+   注意不要给它 background: transparent —— 那会让第一列跳过 app.wxss 的
+   斑马纹，整张表看起来像少了一竖条。 */
 .titletd2 {
 	justify-content: flex-start;
 	padding-left: 12rpx;
-	font-size: 24rpx;
-	color: #35556f;
+	font-size: var(--fs-body-s);
 	font-weight: 500;
-	background: transparent;
+	color: var(--ink-700);
 }
 .titletd2::after {
 	content: "";
@@ -622,83 +717,18 @@ page::before {
 	transform: rotate(45deg);
 }
 
-.seltd {
-	justify-content: flex-end;
-	padding-right: 0;
-	background: transparent;
-}
-
-/* ---------- 续表：同一组指标，另一个统计周期 ----------
-   「电视供应链」下面挂着一张季度续表，它的表头没有组名，只悬着一枚周期
-   选择器。沿用组标题样式时，屏幕上就出现一条没有标题的组标记加一个看不出
-   从属关系的 picker，读起来像渲染出错。这里把它降级成一条「周期条」：
-   撤掉组标记、压低行高、标签退到脚注量级，并与上方主表焊成一体，
-   让「同一张表换个周期看」这层语义自己说清楚。 */
-.box .down .table--lead {
-	border-bottom-left-radius: 0;
-	border-bottom-right-radius: 0;
-}
-.box .down .table--cont {
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
-}
-
-.box .down .table .tr--period .th {
-	min-height: 50rpx;
-	padding-top: 0;
-	padding-bottom: 0;
-	/* 主表末行的 border-bottom 被 .tr:last-child 清掉了，接缝由这里补一条 */
-	border-top: 1rpx solid #e2edf5;
-}
-
-/* 覆盖 .titletd 的组标题量级：撤掉左侧墨条，字重与颜色降到说明文字 */
-.titletd--period {
-	border-left: 0;
-	padding-left: 0;
-	font-size: 22rpx;
-	font-weight: 400;
-	color: var(--text-3);
-	letter-spacing: 0;
-}
-
+/* 表头留白版：不铺底色，只靠字重与一条略重的下缘线分层，
+   这样斑马纹从第一行数据就开始，节奏不被表头打断 */
 .box .down .table .tr:first-child .th {
-	background: #fff;
-	border-bottom-color: #e2edf5;
+	background-color: var(--surface);
+	border-bottom: 1rpx solid var(--hairline-strong);
+	color: var(--text-3);
+	font-weight: 500;
 }
-
-.box .down .table .tr:first-child .seltd .picker {
-	background-color: #fff;
-	border-color: #d7e1ea;
-	box-shadow: none;
-	color: #4d6478;
-}
-
-.box .down .table .tr:first-child .titletd2 {
-	color: #17344d;
-	font-weight: 600;
-}
-
-.box .down .table .tr {
-	background: #fff;
-}
-
-.box .down .table .td,
-.box .down .table .th {
-	border-color: #e7eef5;
-}
-
-.box .down .table .td {
-	font-size: 24rpx;
-	color: #334155;
-}
-
-.box .down .table .td .dw {
-	font-size: 20rpx;
-	color: #7d8a99;
-}
-
-.box .down .table .tr:nth-child(odd) .td {
-	background: #fcfdff;
+/* 品类表头与首列名称左对齐对齐 */
+.titleth {
+	justify-content: flex-start;
+	padding-left: 12rpx;
 }
 
 /* ---------- 图表 ---------- */
@@ -706,122 +736,453 @@ ec-canvas {
 	width: 100%;
 	height: 100%;
 }
-.chart {
-	width: 100%;
-	height: 300px;
-	box-sizing: border-box;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: var(--surface);
-	border-radius: var(--r-md);
-}
-.chart2 {
-	padding: 0 var(--gutter);
+
+/* ================= 分组详情：筛选 / 分页 / 图表 / 表格 ================= */
+.filter-card,
+.chart-card {
+  background: var(--surface);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
 }
 
-/* ---------- 三联指标卡（品类详情顶部） ---------- */
-.tjlist2 {
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	align-items: stretch;
-	margin-bottom: 24rpx;
-}
-.tjlist2 .item {
-	width: calc((100% - 32rpx) / 3);
-	box-sizing: border-box;
-	padding: 28rpx 16rpx;
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	flex-direction: column;
-	background-color: var(--surface);
-	border: 1rpx solid var(--hairline);
-	border-radius: var(--r-md);
-	box-shadow: var(--shadow-card);
-}
-.tjlist2 .item .p1 {
-	width: 100%;
-	text-align: center;
-	margin-bottom: 16rpx;
-	font-size: var(--fs-caption);
-	line-height: 1.3;
-	color: var(--text-3);
-	letter-spacing: 1rpx;
-}
-.tjlist2 .item .p2 {
-	display: flex;
-	justify-content: center;
-	align-items: baseline;
-	margin-bottom: 14rpx;
-	white-space: nowrap;
-}
-.tjlist2 .item .p2 .num {
-	font-size: 44rpx;
-	font-weight: 700;
-	line-height: 1.1;
-	color: var(--ink-700);
-}
-.tjlist2 .item .p2 .dw {
-	margin-left: 4rpx;
-	font-size: var(--fs-caption);
-	font-weight: 400;
-	color: var(--text-3);
+.filter-card {
+  padding: 18rpx 16rpx;
 }
 
-.tjlist2 .item .p3 {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-.tjlist2 .item .p3 .a1 {
-	font-size: var(--fs-caption);
-	color: var(--text-3);
-}
-.tjlist2 .item .p3 .a2 {
-	margin: 0 8rpx;
-	font-family: var(--font-num);
-	font-variant-numeric: tabular-nums;
-	font-size: var(--fs-body-s);
-	font-weight: 700;
-}
-.tjlist2 .item .p3 .a3 {
-	width: 14rpx;
-	max-height: 18rpx;
+.selector-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
 }
 
-/* 单指标时铺满一行，改为横向排布 */
-.tjlist2 .item.item2 {
-	width: 100%;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-	padding: 28rpx var(--gutter);
-}
-.tjlist2 .item.item2 .you {
-	display: flex;
-	justify-content: flex-end;
-	align-items: baseline;
-}
-.tjlist2 .item.item2 .p1 {
-	width: auto;
-	text-align: left;
-	margin-bottom: 0;
-	font-size: var(--fs-body);
-	color: var(--text-1);
-}
-.tjlist2 .item.item2 .p2 {
-	margin-bottom: 0;
-	margin-right: 28rpx;
-}
-.tjlist2 .item.item2 .p2 .num {
-	font-size: var(--fs-metric);
-}
-.tjlist2 .item.item2 .p3 {
-	align-items: baseline;
+.selector-row {
+  display: flex;
+  gap: 12rpx;
 }
 
-.bold {
-	font-weight: 700;
+.selector-cell {
+  display: block;
+  min-width: 0;
+  flex: 1;
+}
+
+.selector-cell-wide {
+  width: 100%;
+  flex: none;
+}
+
+.selector-main {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 96rpx;
+  padding: 16rpx 16rpx 14rpx;
+  background: var(--surface-sunken);
+  border: 1rpx solid var(--hairline-strong);
+  border-radius: var(--r-md);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10rpx;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.selector-label {
+  font-size: var(--fs-caption);
+  font-weight: 500;
+  color: var(--text-3);
+  letter-spacing: 1rpx;
+  line-height: 1;
+}
+
+.selector-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8rpx;
+}
+
+/* 选中值即读数，走等宽数字族，多个筛选器并排时字面宽度一致 */
+.selector-value {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-num);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-body);
+  color: var(--ink-700);
+  font-weight: 700;
+  line-height: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.selector-arrow {
+  width: 14rpx;
+  height: 14rpx;
+  flex-shrink: 0;
+  opacity: 0.45;
+}
+
+/* 五个分页标签：底色透明贴在纸面上，只留一条发丝基线。
+   选中态是全页唯一一处用琥珀的地方——「当前频道」值得那点颜色。 */
+.tabbar {
+  display: flex;
+  align-items: stretch;
+  margin: 18rpx 0 16rpx;
+  border-bottom: 1rpx solid var(--hairline-strong);
+}
+
+.tabitem {
+  flex: 1;
+  text-align: center;
+  font-size: var(--fs-body-s);
+  color: var(--text-3);
+  letter-spacing: 0.5rpx;
+  padding: 18rpx 0 14rpx;
+  border-bottom: 4rpx solid transparent;
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+
+.tabitem.active {
+  color: var(--ink-800);
+  font-weight: 700;
+  border-bottom-color: var(--signal);
+}
+
+.panel {
+  display: block;
+}
+
+.chart-card {
+  padding: 18rpx var(--gutter) 14rpx;
+  margin-bottom: 16rpx;
+}
+
+/* 卡头：标题带墨条，右侧副标题交代口径（同比/环比…），基线对齐 */
+.card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16rpx;
+  margin-bottom: 14rpx;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-body);
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: 0.5rpx;
+}
+
+.card-title::before {
+  content: "";
+  width: 5rpx;
+  height: 24rpx;
+  margin-right: 12rpx;
+  flex-shrink: 0;
+  border-radius: 5rpx;
+  background: linear-gradient(180deg, var(--ink-400) 0%, var(--ink-700) 100%);
+}
+
+.card-sub {
+  flex-shrink: 0;
+  font-size: var(--fs-caption);
+  color: var(--text-3);
+}
+
+.chart-frame {
+  width: 100%;
+  height: 340rpx;
+}
+
+.chart-frame-pie {
+  height: 320rpx;
+}
+
+.chartdom {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ---------- 品牌 / 价格段表 ----------
+   与 app.wxss 的表格同一套读法：不画竖线、不铺深色表头，
+   只靠一条较重的表头基线 + 数据行斑马纹分隔。
+   五列的品牌表尤其需要这样——竖线一多，眼睛就找不到行了。 */
+.price-table {
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+
+.price-table-head,
+.price-table-row {
+  display: flex;
+  align-items: stretch;
+}
+
+.price-table-head {
+  background-color: var(--surface);
+  border-bottom: 1rpx solid var(--hairline-strong);
+}
+
+.price-table-row {
+  border-bottom: 1rpx solid var(--hairline);
+}
+
+/* 表头占掉第 1 个子元素，故偶数序号正是第一行数据 —— 与 app.wxss
+   的 .tr:nth-child(even) 起点一致，同页两张表的斑马纹才不会错开 */
+.price-table-row:nth-child(even) {
+  background-color: var(--surface-sunken);
+}
+
+.price-table-row:last-child {
+  border-bottom: 0;
+}
+
+.price-cell {
+  box-sizing: border-box;
+  padding: 24rpx 10rpx;
+  text-align: center;
+  font-size: var(--fs-body-s);
+  line-height: 1.35;
+  color: var(--text-2);
+  min-height: 96rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.price-table-head .price-cell {
+  min-height: 68rpx;
+  padding: 12rpx 10rpx;
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  color: var(--ink-700);
+}
+
+/* 数值列统一等宽字形，市占率 / 均价 / 变化三列纵向自然成列 */
+.price-cell-share,
+.price-cell-change,
+.brand-cell-share,
+.brand-cell-change,
+.brand-cell-price,
+.brand-cell-pricec {
+  font-family: var(--font-num);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.price-table-head .price-cell-share,
+.price-table-head .price-cell-change,
+.price-table-head .brand-cell-share,
+.price-table-head .brand-cell-change,
+.price-table-head .brand-cell-price,
+.price-table-head .brand-cell-pricec {
+  font-family: var(--font-text);
+  font-weight: 600;
+}
+
+.price-cell-name {
+  flex: 1.05;
+}
+
+/* 市占率与均价是「水平」而非「变化」，一律墨蓝；
+   红色在本项目只留给同比上涨，绝不用来染读数 */
+.price-cell-share,
+.brand-cell-share,
+.brand-cell-price {
+  color: var(--ink-700);
+}
+
+.price-cell-share {
+  flex: 1;
+}
+
+.price-cell-change {
+  flex: 1.2;
+}
+
+.brand-cell-name {
+  flex: 1.2;
+  justify-content: flex-start;
+  text-align: left;
+  padding-left: 16rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.brand-cell-share {
+  flex: 1;
+}
+
+.brand-cell-change {
+  flex: 1.15;
+}
+
+.brand-cell-price {
+  flex: 1.15;
+}
+
+.brand-cell-pricec {
+  flex: 1.1;
+}
+
+/* 变化量：默认灰（含 0 与无数据），只有明确带符号时才上色。
+   红涨绿跌，与 .tvsrow-yoy、app.wxss 的 .hong/.lv 保持同一约定。 */
+.price-change {
+  display: inline-flex;
+  align-items: center;
+  gap: 6rpx;
+  color: var(--flat);
+}
+
+.price-change.up {
+  color: var(--rise);
+}
+
+.price-change.down {
+  color: var(--fall);
+}
+
+.price-arrow {
+  width: 18rpx;
+  height: 18rpx;
+  flex-shrink: 0;
+}
+
+.divider {
+  height: 1rpx;
+  background-color: var(--hairline);
+  margin: 10rpx 0;
+}
+
+/* ---------- AI 摘要 ----------
+   它已经嵌在 .chart-card 里，这里不能再来一层白底 + 阴影，
+   否则就是卡中卡。只当一个内容容器用。 */
+.ai-summary-card {
+  padding: 4rpx 0 0;
+}
+
+.ai-summary-list {
+  display: block;
+}
+
+.ai-summary-item {
+  display: flex;
+  align-items: center;
+  min-height: 104rpx;
+  padding: 14rpx 4rpx;
+  border-bottom: 1rpx solid var(--hairline);
+}
+
+.ai-summary-item:last-child {
+  border-bottom: 0;
+}
+
+/* 四个条目原本是四种几乎分不出差别的蓝，等于没分。
+   统一成同一枚墨蓝方章，让字形（↗ ◆ ☷ ▥）自己去区分。 */
+.ai-summary-icon {
+  width: 52rpx;
+  height: 52rpx;
+  margin-right: 18rpx;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-invert);
+  background: linear-gradient(145deg, var(--ink-400) 0%, var(--ink-700) 100%);
+  border-radius: var(--r-sm);
+  font-size: var(--fs-title);
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* 只调字号让四个字形视觉重量一致，底色不再各行一变 */
+.ai-summary-icon-brand {
+  font-size: var(--fs-body-s);
+}
+
+.ai-summary-icon-product {
+  font-size: var(--fs-heading);
+}
+
+.ai-summary-icon-price {
+  font-size: var(--fs-title);
+}
+
+.ai-summary-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  column-gap: 8rpx;
+  row-gap: 4rpx;
+  line-height: 1.45;
+}
+
+.ai-summary-title {
+  color: var(--ink-700);
+  font-size: var(--fs-body-s);
+  font-weight: 700;
+}
+
+.ai-summary-text,
+.ai-summary-value,
+.ai-summary-highlight {
+  font-size: var(--fs-body-s);
+}
+
+.ai-summary-text {
+  color: var(--text-2);
+}
+
+/* highlight 承载同比数值，走等宽字形，四行读数左边界自然对齐 */
+.ai-summary-value,
+.ai-summary-highlight {
+  font-weight: 700;
+}
+
+.ai-summary-highlight {
+  font-family: var(--font-num);
+  font-variant-numeric: tabular-nums;
+}
+
+/* tone 由 js 给出：rate>0 → up。因此 up 必须是红、down 必须是绿，
+   与页内 .tvsrow-yoy / .price-change 一致；此前这里正好写反了。 */
+.ai-summary-value.up,
+.ai-summary-highlight.up {
+  color: var(--rise);
+}
+
+.ai-summary-value.down,
+.ai-summary-highlight.down {
+  color: var(--fall);
+}
+
+.ai-summary-value.muted,
+.ai-summary-highlight.muted {
+  color: var(--flat);
+}
+
+/* 数据来源脚注：全页字号最小、色阶最浅的一层 */
+.source-note {
+  margin: 12rpx 4rpx 0;
+  font-size: var(--fs-caption);
+  color: var(--text-3);
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* 空态：与脚注区分开，居中留白，不要贴着上一张卡 */
+.empty-text {
+  padding: 72rpx 0;
+  font-size: var(--fs-body-s);
+  color: var(--text-3);
+  text-align: center;
 }

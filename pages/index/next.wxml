@@ -93,41 +93,23 @@
 
 	<block wx:else>
 		<view class="panel" wx:if="{{activeTab=='scale'}}">
-			<view class="metric-grid">
-				<block wx:for="{{xqData}}" wx:key="this">
-					<view class="metric-card">
-						<text class="metric-label">{{item.t1}}</text>
-						<view class="metric-row">
-							<text class="metric-num">{{item.t2}}</text>
-							<text class="metric-unit">{{item.dw}}</text>
-						</view>
-						<view class="metric-yoy">
-							<text class="metric-yoy-label">同比</text>
-							<text class="metric-yoy-val {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">{{item.t3}}</text>
-							<image src="../images/sheng1.png" mode="widthFix" class="metric-arrow" wx:if="{{item.t3zf=='+'}}"></image>
-							<image src="../images/jiang1.png" mode="widthFix" class="metric-arrow" wx:if="{{item.t3zf=='-'}}"></image>
-						</view>
-					</view>
-				</block>
-			</view>
-
 			<view class="chart-card">
 				<view class="card-head">
-					<view class="card-title">销量（{{arr_sj2_dw}}）</view>
-					<view class="card-sub">同比</view>
+					<view class="card-title">{{arrval2[val2] ? arrval2[val2].name : '销量'}}（{{arr_sj2_dw}}）</view>
+					<view class="card-sub">{{changeOptions[changeIndex]['name']}}</view>
 				</view>
 				<view class="chart-frame">
-					<ec-canvas id="mychart-dom-bar" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+					<ec-canvas id="mychart-dom-bar" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-scale" ec="{{ ec }}"></ec-canvas>
 				</view>
 			</view>
 
 			<view class="chart-card" hidden="{{!chart2x.length}}">
 				<view class="card-head">
 					<view class="card-title">平均价格（元）</view>
-					<view class="card-sub">同比</view>
+					<view class="card-sub">{{changeOptions[changeIndex]['name']}}</view>
 				</view>
 				<view class="chart-frame">
-					<ec-canvas id="mychart-dom-bar2" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-bar" ec="{{ ec2 }}"></ec-canvas>
+					<ec-canvas id="mychart-dom-bar2" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-price" ec="{{ ec2 }}"></ec-canvas>
 				</view>
 			</view>
 		</view>
@@ -201,25 +183,36 @@
 					<view class="card-title" wx:else>产品结构(%)</view>
 				</view>
 				<view class="chart-frame chart-frame-pie" hidden="{{!arr_sj6.t1}}">
-					<ec-canvas id="mychart-dom-bar3" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-bar" ec="{{ ec3 }}"></ec-canvas>
+					<ec-canvas id="mychart-dom-bar3" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-structure-1" ec="{{ ec3 }}"></ec-canvas>
 				</view>
 				<view class="divider" hidden="{{!arr_sj6.t1 || !arr_sj6.t2}}"></view>
 				<view class="chart-frame chart-frame-pie" hidden="{{!arr_sj6.t2}}">
-					<ec-canvas id="mychart-dom-bar4" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-bar" ec="{{ ec4 }}"></ec-canvas>
+					<ec-canvas id="mychart-dom-bar4" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-structure-2" ec="{{ ec4 }}"></ec-canvas>
 				</view>
 			</view>
 		</view>
 
 		<view class="panel" wx:if="{{activeTab=='ai'}}">
-			<view class="chart-card">
-				<view class="card-head">
-					<view class="card-title">AI说</view>
+			<view class="ai-summary-card">
+				<view class="ai-summary-list">
+					<block wx:for="{{aiSummary}}" wx:key="key">
+						<view class="ai-summary-item">
+							<view class="ai-summary-icon ai-summary-icon-{{item.key}}">{{item.icon}}</view>
+							<view class="ai-summary-content">
+								<text class="ai-summary-title">{{item.title}}</text>
+								<text class="ai-summary-text">{{item.before}}</text>
+								<text class="ai-summary-value {{item.tone}}">{{item.value}}</text>
+								<text class="ai-summary-highlight {{item.tone}}" wx:if="{{item.highlight}}">{{item.highlight}}</text>
+								<text class="ai-summary-text">{{item.after}}</text>
+							</view>
+							<text class="ai-summary-arrow">›</text>
+						</view>
+					</block>
 				</view>
-				<view class="ai-box">{{tips ? tips : '暂无AI解读'}}</view>
 			</view>
 		</view>
 
-		<view class="source-note">{{tips}}</view>
+		<view class="source-note" wx:if="{{activeTab!='ai' && tips}}">{{tips}}</view>
 	</block>
 
 	<view class="blank20"></view>

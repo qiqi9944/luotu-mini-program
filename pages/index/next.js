@@ -53,15 +53,18 @@ Page({
 		},
 		chart1: [],
 		chartYoy: [],
+		chartMom: [],
 		chart1x: [],
 		kuanian: null,
 		chart2: [],
 		chart2x: [],
 		chartYoy2: [],
+		chartMom2: [],
 		chart3: [],
 		chart4: [],
 		priceList: [],
 		brandList: [],
+		aiSummary: [],
 		price_dist: 1,
 		tips: '',
 		arr_sj2_dw: '',//市场规模单位
@@ -75,7 +78,7 @@ Page({
 			{ id: 'month', name: '月度' },
 			{ id: 'quarter', name: '季度' }
 		],
-		ytdIndex: 1,
+		ytdIndex: 0,
 		ytdOptions: [
 			{ id: 0, name: '当期' },
 			{ id: 1, name: '年累计' }
@@ -89,26 +92,111 @@ Page({
 	setOption: function (chart) {
 		let that = this
 		var data = this.data.chart1x
+		chart.clear()
+		const changeId = this.data.changeOptions && this.data.changeOptions[this.data.changeIndex] ? this.data.changeOptions[this.data.changeIndex].id : 'yoy'
+		const showYoy = changeId === 'yoy'
+		const legendData = [showYoy ? '同比' : '环比']
+		const lineSeries = []
+		if (showYoy) {
+			lineSeries.push({
+				name: '同比',
+				type: 'line',
+				yAxisIndex: 1,
+				z: 10,
+				connectNulls: true,
+				data: this.data.chartYoy,
+				smooth: false,
+				symbol: 'circle',
+				symbolSize: 3.5,
+				lineStyle: {
+					width: 1.5,
+					color: '#e04a5c'
+				},
+				itemStyle: {
+					color: '#e04a5c',
+					borderColor: '#ffffff',
+					borderWidth: 1
+				},
+				label: {
+					show: false
+				}
+			})
+		} else {
+			lineSeries.push({
+				name: '环比',
+				type: 'line',
+				yAxisIndex: 1,
+				z: 10,
+				connectNulls: true,
+				data: this.data.chartMom,
+				smooth: false,
+				symbol: 'circle',
+				symbolSize: 3.5,
+				lineStyle: {
+					width: 1.5,
+					color: '#f39c3d'
+				},
+				itemStyle: {
+					color: '#f39c3d',
+					borderColor: '#ffffff',
+					borderWidth: 1
+				},
+				label: {
+					show: false
+				}
+			})
+		}
 		const option = {
 			tooltip: {
 				trigger: 'axis',
 				triggerOn: 'click',
-				axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-					type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+				axisPointer: {
+					type: 'line',
+					lineStyle: {
+						color: '#c8d3df',
+						type: 'dashed'
+					}
+				},
+				backgroundColor: 'rgba(255,255,255,0.96)',
+				borderColor: '#e2e8f0',
+				borderWidth: 1,
+				padding: [8, 12],
+				textStyle: {
+					color: '#1f2a37',
+					fontSize: 11
 				},
 				formatter: function (val) {
-					var txt = val[0].name;
-					return val[0].marker + val[0].name + " : " + val[0].value + that.data.arr_sj2_dw;
+					if (!val || !val.length) return ''
+					const rows = [val[0].name]
+					val.forEach((item) => {
+						if (item.value === null || item.value === undefined || item.value === '-') return
+						const unit = item.seriesType === 'line' ? '%' : that.data.arr_sj2_dw
+						const num = Number(item.value)
+						const display = item.seriesType === 'line' && isFinite(num) ? num.toFixed(1) : item.value
+						rows.push(item.marker + item.seriesName + '：' + display + unit)
+					})
+					return rows.join('\n')
 				}
 			},
 			legend: {
-				show: false
+				show: true,
+				data: legendData,
+				top: 0,
+				right: 4,
+				icon: 'circle',
+				itemWidth: 8,
+				itemHeight: 8,
+				itemGap: 12,
+				textStyle: {
+					color: '#64748b',
+					fontSize: 10
+				}
 			},
 			grid: {
-				left: 25,
-				right: 10,
-				bottom: 15,
-				top: 30,
+				left: 2,
+				right: 12,
+				bottom: 0,
+				top: 36,
 				containLabel: true,
 			},
 			xAxis: [
@@ -116,16 +204,11 @@ Page({
 					type: 'category',
 					axisTick: { show: false },
 					data: data,
-					axisLine: {
-						show: false,
-						lineStyle: {
-							color: '#999'
-						}
-					},
+					axisLine: { show: false },
 					axisLabel: {
-						color: '#666',
+						color: '#8a97a7',
+						fontSize: 10,
 						interval: 0,
-						// rotate: 45
 						formatter: function (val, index) {
 							if (data.length > 4) {
 								if (index == 0 || index == data.length - 1 || index == Math.round(data.length / 2) - 1) {
@@ -144,46 +227,42 @@ Page({
 				{
 					type: 'value',
 					splitLine: {
-						show: false
-					},
-					axisLine: {
+						show: true,
 						lineStyle: {
-							color: '#999'
+							color: '#eef2f6',
+							type: 'dashed'
 						}
 					},
+					axisLine: { show: false },
 					axisLabel: {
-						color: '#666'
+						color: '#8a97a7',
+						fontSize: 10
 					}
 				},
 				{
 					type: 'value',
-					min: -100,
-					max: 100,
-					splitLine: {
-						show: false
-					},
+					scale: true,
+					splitLine: { show: false },
+					axisLine: { show: false },
 					axisLabel: {
-						color: '#999',
+						color: '#aab6c4',
+						fontSize: 10,
 						formatter: '{value}%'
 					}
 				}
 			],
 			series: [{
-				// name: '热度',
+				name: this.data.arrval2[this.data.val2] ? this.data.arrval2[this.data.val2].name : '销量',
 				type: 'bar',
 				label: {
-					normal: {
-						show: false,
-						position: 'top'
-					}
+					show: false,
+					position: 'top'
 				},
-				barMaxWidth: 15,
+				barMaxWidth: 14,
 				data: this.data.chart1,
 				itemStyle: {
-					borderRadius: 20,
+					borderRadius: [4, 4, 0, 0],
 					color: (params) => {
-						// console.log(params)
-						// if(this.data.kuanian!==null && params.dataIndex>this.data.kuanian){
 						if (0) {
 							return {
 								type: 'linear',
@@ -192,9 +271,9 @@ Page({
 								x2: 0,
 								y2: 1,
 								colorStops: [{
-									offset: 0, color: '#f16568' // 0% 处的颜色
+									offset: 0, color: '#f16568'
 								}, {
-									offset: 1, color: '#cd3c29' // 100% 处的颜色
+									offset: 1, color: '#cd3c29'
 								}],
 							}
 						} else {
@@ -205,63 +284,125 @@ Page({
 								x2: 0,
 								y2: 1,
 								colorStops: [{
-									offset: 0, color: '#3d9bbd' // 0% 处的颜色
+									offset: 0, color: '#3d9bbd'
 								}, {
-									offset: 1, color: '#005d99' // 100% 处的颜色
+									offset: 1, color: '#005d99'
 								}],
 							}
 						}
-
 					}
 				}
-			}, {
-				name: '同比/环比',
-				type: 'line',
-				yAxisIndex: 1,
-				data: this.data.chartYoy,
-				smooth: true,
-				symbol: 'circle',
-				symbolSize: 5,
-				lineStyle: {
-					width: 2,
-					color: '#e04a5c'
-				},
-				itemStyle: {
-					color: '#e04a5c'
-				},
-				label: {
-					show: true,
-					position: 'top',
-					formatter: '{c}%',
-					fontSize: 9,
-					color: '#e04a5c'
-				}
-			}]
+			}].concat(lineSeries)
 		};
-		chart.setOption(option);
+			chart.setOption(option, true);
 	},
 	setOption2: function (chart) {
 		let that = this
+		chart.clear()
+		const changeId = this.data.changeOptions && this.data.changeOptions[this.data.changeIndex] ? this.data.changeOptions[this.data.changeIndex].id : 'yoy'
+		const showYoy = changeId === 'yoy'
+		const legendData = [showYoy ? '同比' : '环比']
+		const lineSeries = []
+		if (showYoy) {
+			lineSeries.push({
+				name: '同比',
+				type: 'line',
+				yAxisIndex: 1,
+				z: 10,
+				connectNulls: true,
+				data: this.data.chartYoy2,
+				smooth: false,
+				symbol: 'circle',
+				symbolSize: 3.5,
+				lineStyle: {
+					width: 1.5,
+					color: '#e04a5c'
+				},
+				itemStyle: {
+					color: '#e04a5c',
+					borderColor: '#ffffff',
+					borderWidth: 1
+				},
+				label: {
+					show: false
+				}
+			})
+		} else {
+			lineSeries.push({
+				name: '环比',
+				type: 'line',
+				yAxisIndex: 1,
+				z: 10,
+				connectNulls: true,
+				data: this.data.chartMom2,
+				smooth: false,
+				symbol: 'circle',
+				symbolSize: 3.5,
+				lineStyle: {
+					width: 1.5,
+					color: '#f39c3d'
+				},
+				itemStyle: {
+					color: '#f39c3d',
+					borderColor: '#ffffff',
+					borderWidth: 1
+				},
+				label: {
+					show: false
+				}
+			})
+		}
 		const option = {
 			tooltip: {
 				trigger: 'axis',
 				triggerOn: 'click',
 				axisPointer: {
-					type: 'shadow'
+					type: 'line',
+					lineStyle: {
+						color: '#c8d3df',
+						type: 'dashed'
+					}
+				},
+				backgroundColor: 'rgba(255,255,255,0.96)',
+				borderColor: '#e2e8f0',
+				borderWidth: 1,
+				padding: [8, 12],
+				textStyle: {
+					color: '#1f2a37',
+					fontSize: 11
 				},
 				formatter: function (val) {
-					var txt = val[0].name;
-					return val[0].marker + val[0].name + " : " + val[0].value + "元";
+					if (!val || !val.length) return ''
+					const rows = [val[0].name]
+					val.forEach((item) => {
+						if (item.value === null || item.value === undefined || item.value === '-') return
+						const unit = item.seriesType === 'line' ? '%' : '元'
+						const num = Number(item.value)
+						const display = item.seriesType === 'line' && isFinite(num) ? num.toFixed(1) : item.value
+						rows.push(item.marker + item.seriesName + '：' + display + unit)
+					})
+					return rows.join('\n')
 				}
 			},
 			legend: {
-				show: false
+				show: true,
+				data: legendData,
+				top: 0,
+				right: 4,
+				icon: 'circle',
+				itemWidth: 8,
+				itemHeight: 8,
+				itemGap: 12,
+				textStyle: {
+					color: '#64748b',
+					fontSize: 10
+				}
 			},
 			grid: {
-				left: 10,
-				right: 30,
-				bottom: 15,
-				top: 30,
+				left: 2,
+				right: 12,
+				bottom: 0,
+				top: 36,
 				containLabel: true,
 			},
 			xAxis: [
@@ -269,14 +410,10 @@ Page({
 					type: 'category',
 					axisTick: { show: false },
 					data: this.data.chart2x,
-					axisLine: {
-						show: false,
-						lineStyle: {
-							color: '#999'
-						}
-					},
+					axisLine: { show: false },
 					axisLabel: {
-						color: '#666',
+						color: '#8a97a7',
+						fontSize: 10,
 						interval: 0,
 						formatter: function (val, index) {
 							if (val.length > 4) {
@@ -296,26 +433,26 @@ Page({
 				{
 					type: 'value',
 					splitLine: {
-						show: false
-					},
-					axisLine: {
+						show: true,
 						lineStyle: {
-							color: '#999'
+							color: '#eef2f6',
+							type: 'dashed'
 						}
 					},
+					axisLine: { show: false },
 					axisLabel: {
-						color: '#666'
+						color: '#8a97a7',
+						fontSize: 10
 					}
 				},
 				{
 					type: 'value',
-					min: -100,
-					max: 100,
-					splitLine: {
-						show: false
-					},
+					scale: true,
+					splitLine: { show: false },
+					axisLine: { show: false },
 					axisLabel: {
-						color: '#999',
+						color: '#aab6c4',
+						fontSize: 10,
 						formatter: '{value}%'
 					}
 				}
@@ -323,16 +460,14 @@ Page({
 			series: [{
 				name: '均价',
 				type: 'bar',
-				barMaxWidth: 15,
+				barMaxWidth: 14,
 				label: {
-					normal: {
-						show: false,
-						position: 'top'
-					}
+					show: false,
+					position: 'top'
 				},
 				data: this.data.chart2,
 				itemStyle: {
-					borderRadius: 20,
+					borderRadius: [4, 4, 0, 0],
 					color: {
 						type: 'linear',
 						colorStops: [{
@@ -342,32 +477,11 @@ Page({
 						}],
 					},
 				}
-			}, {
-				name: '均价同比/环比',
-				type: 'line',
-				yAxisIndex: 1,
-				data: this.data.chartYoy2,
-				smooth: true,
-				symbol: 'circle',
-				symbolSize: 5,
-				lineStyle: {
-					width: 2,
-					color: '#e04a5c'
-				},
-				itemStyle: {
-					color: '#e04a5c'
-				},
-				label: {
-					show: true,
-					position: 'top',
-					formatter: '{c}%',
-					fontSize: 9,
-					color: '#e04a5c'
-				}
-			}]
+			}].concat(lineSeries)
 		};
-		chart.setOption(option);
+			chart.setOption(option, true);
 	},
+
 	setOption3: function (chart) {
 		let that = this
 		const option = {
@@ -393,16 +507,19 @@ Page({
 					name: '',
 					type: 'pie',
 					radius: ['45%', '60%'],
-					avoidLabelOverlap: false,
+					avoidLabelOverlap: true,
+					minShowLabelAngle: 5,
 					labelLine: {
 						show: true,
 						smooth: true,
-						length: 2
+						length: 8,
+						length2: 4
 					},
 					label: {
             // show: that.data.is_ck == 1 ? true : false,
 						// formatter: '{b} {d}%',
 						color: '#333',
+						fontSize: 11,
 						formatter: function (a, b, c) {
 							// console.log(a)
 							// console.log(b)
@@ -414,6 +531,10 @@ Page({
               // }
               return a.data.name + ' ' + (that.data.is_ck == 1 ? (parseFloat(a.percent).toFixed(1) + "%") : '');
 						},
+					},
+					labelLayout: {
+						hideOverlap: true,
+						moveOverlap: 'shiftY'
 					},
 					itemStyle: {
 						borderColor: '#fff',
@@ -450,16 +571,19 @@ Page({
 					name: '',
 					type: 'pie',
 					radius: ['45%', '60%'],
-					avoidLabelOverlap: false,
+					avoidLabelOverlap: true,
+					minShowLabelAngle: 5,
 					labelLine: {
 						show: true,
 						smooth: true,
-						length: 2
+						length: 8,
+						length2: 4
 					},
 					label: {
             // show: that.data.is_ck == 1 ? true : false,
 						// formatter: '{b} {d}%',
 						color: '#333',
+						fontSize: 11,
 						formatter: function (a, b, c) {
 							// console.log(a)
 							// console.log(b)
@@ -471,6 +595,10 @@ Page({
               // }
               return a.data.name + ' ' + (that.data.is_ck == 1 ?(parseFloat(a.percent).toFixed(1) + "%") : '');
 						},
+					},
+					labelLayout: {
+						hideOverlap: true,
+						moveOverlap: 'shiftY'
 					},
 					itemStyle: {
 						borderColor: '#fff',
@@ -486,6 +614,15 @@ Page({
 		const num = Number(value)
 		if (!isFinite(num)) return '--'
 		return `${num.toFixed(1)}%`
+	},
+	// 统一百分比显示：符号 + 1 位小数 + %
+	fmtPct: function (value) {
+		if (value === null || value === undefined || value === '' || value === '--' || value === '-') return '--'
+		const s = String(value)
+		const sign = s.charAt(0) === '+' || s.charAt(0) === '-' ? s.charAt(0) : ''
+		const num = parseFloat(s)
+		if (!isFinite(num)) return '--'
+		return sign + Math.abs(num).toFixed(1) + '%'
 	},
 	buildPriceList: function (list) {
 		const priceRanges = ['0-99', '100-199', '200-299', '300-399', '400-499', '500+']
@@ -509,7 +646,7 @@ Page({
 				const name = item && item.name ? String(item.name).replace(/元/g, '').trim() : '--'
 				const value = Number(item && item.value)
 				const share = total > 0 && isFinite(value) ? value / total * 100 : 0
-				const change = item && item.t3 ? item.t3 : '--'
+				const change = item && item.t3 ? this.fmtPct(item.t3) : '--'
 				const changeFlag = change === '--' ? '' : change.substr(0, 1)
 				return {
 					name,
@@ -523,7 +660,7 @@ Page({
 		return priceRanges.map((name) => {
 			const item = priceMap[name] || { value: 0, t3: '' }
 			const share = total > 0 ? item.value / total * 100 : 0
-			const change = item.t3 ? item.t3 : '--'
+			const change = item.t3 ? this.fmtPct(item.t3) : '--'
 			const changeFlag = change === '--' ? '' : change.substr(0, 1)
 			return {
 				name,
@@ -538,18 +675,18 @@ Page({
 	buildBrandList: function (list, fallbackX, fallbackY) {
 		if (Array.isArray(list) && list.length) {
 			return list.map((item) => {
-				const share = item.share !== undefined && item.share !== '' ? String(item.share) + '%' : '--'
-				const shareC = item.share_c !== undefined && item.share_c !== '' ? String(item.share_c) : '--'
+				const shareRaw = item.share !== undefined && item.share !== '' ? String(item.share) : '--'
+				const shareCRaw = item.share_c !== undefined && item.share_c !== '' ? String(item.share_c) : '--'
 				const price = item.price !== undefined && item.price !== '' ? String(item.price) : '--'
-				const priceC = item.price_c !== undefined && item.price_c !== '' ? String(item.price_c) : '--'
+				const priceCRaw = item.price_c !== undefined && item.price_c !== '' ? String(item.price_c) : '--'
 				return {
 					name: item.name || '--',
-					share,
-					share_c: shareC === '--' ? '--' : shareC + '%',
-					share_czf: shareC === '--' ? '' : shareC.substr(0, 1),
+					share: shareRaw === '--' ? '--' : this.fmtPct(shareRaw),
+					share_c: shareCRaw === '--' ? '--' : this.fmtPct(shareCRaw),
+					share_czf: shareCRaw === '--' ? '' : shareCRaw.charAt(0),
 					price,
-					price_c: priceC === '--' ? '--' : priceC + '%',
-					price_czf: priceC === '--' ? '' : priceC.substr(0, 1),
+					price_c: priceCRaw === '--' ? '--' : this.fmtPct(priceCRaw),
+					price_czf: priceCRaw === '--' ? '' : priceCRaw.charAt(0),
 				}
 			})
 		}
@@ -558,7 +695,7 @@ Page({
 		if (x.length) {
 			return x.map((name, i) => ({
 				name,
-				share: y[i] !== undefined ? String(y[i]) + '%' : '--',
+				share: y[i] !== undefined ? this.fmtPct(y[i]) : '--',
 				share_c: '--',
 				share_czf: '',
 				price: '--',
@@ -568,6 +705,75 @@ Page({
 		}
 		return []
 	},
+	buildAiSummary: function (response, chartYoy, brandList, productList, priceList) {
+		const trend = response && response.arr_sj2 ? response.arr_sj2 : {}
+		const firstValid = (values) => {
+			if (!Array.isArray(values)) return null
+			for (let i = 0; i < values.length; i++) {
+				if (values[i] === null || values[i] === undefined || values[i] === '') continue
+				const value = Number(values[i])
+				if (isFinite(value)) return value
+			}
+			return null
+		}
+		const formatRate = (value) => {
+			if (value === null || value === undefined || !isFinite(Number(value))) return '--'
+			return (Number(value) > 0 ? '+' : '') + Number(value).toFixed(1) + '%'
+		}
+		const rate = firstValid(chartYoy || trend.yoy)
+		const scaleName = this.data.arrval2[this.data.val2] ? this.data.arrval2[this.data.val2].name : '销量'
+		const brandRows = Array.isArray(brandList) ? brandList.slice(0, 20) : []
+		const risingBrands = brandRows.filter((item) => {
+			const value = parseFloat(String(item.share_c || '').replace('%', ''))
+			return isFinite(value) && value > 0
+		}).length
+		const brandChanges = brandRows.filter((item) => isFinite(parseFloat(String(item.share_c || '').replace('%', '')))).length
+		const productRows = Array.isArray(productList) ? productList : []
+		const priceRows = Array.isArray(priceList) ? priceList : []
+		const topProduct = productRows.length ? productRows[0].name : ''
+		const productName = response && response.arr_sj6 && response.arr_sj6.t1 ? response.arr_sj6.t1 : '产品类型'
+		const risingPriceRanges = priceRows.filter((item) => String(item.t3 || '').charAt(0) === '+').length
+		return [
+			{
+				key: 'scale',
+				title: '行业规模',
+				icon: '↗',
+				before: scaleName + '同比',
+				value: rate === null ? '--' : (rate > 0 ? '上升 ' : rate < 0 ? '下降 ' : '持平 '),
+				highlight: rate === null ? '--' : formatRate(rate),
+				tone: rate === null ? 'muted' : rate < 0 ? 'down' : 'up'
+			},
+			{
+				key: 'brand',
+				title: '畅销品牌',
+				icon: '◆',
+				before: 'TOP20品牌中',
+				value: brandChanges ? risingBrands + '个品牌' : '',
+				after: brandChanges ? '市占同比上升' : '暂无同比数据',
+				highlight: '',
+				tone: brandChanges ? 'up' : 'muted'
+			},
+			{
+				key: 'product',
+				title: '产品趋势',
+				icon: '☷',
+				before: topProduct ? topProduct + productName + '占比最高' : '产品结构暂无数据',
+				value: productRows.length ? risingPriceRanges + '种产品规格' : '',
+				after: productRows.length ? '占比同比上升' : '',
+				highlight: '',
+				tone: productRows.length ? 'up' : 'muted'
+			},
+			{
+				key: 'price',
+				title: '价格趋势',
+				icon: '▥',
+				before: priceRows.length ? risingPriceRanges + '个价格段' : '价格分布暂无数据',
+				value: priceRows.length ? '占比同比上升' : '',
+				highlight: '',
+				tone: priceRows.length ? 'up' : 'muted'
+			}
+		]
+	},
 	// 点击按钮后初始化图表
 	init: function () {
 		let that = this
@@ -575,8 +781,8 @@ Page({
 		this.ecComponent2 = this.selectComponent('#mychart-dom-bar2');
 		this.ecComponent3 = this.selectComponent('#mychart-dom-bar3');
 		this.ecComponent4 = this.selectComponent('#mychart-dom-bar4');
-		if (this.chart1) {
-			this.chart1.dispose();
+		if (this.chart) {
+			this.chart.dispose();
 		}
 		if (this.chart2) {
 			this.chart2.dispose();
@@ -661,6 +867,9 @@ Page({
 		})
 		if (name == 'val0') {
 			that.resetdspt()
+			that.setData({
+				periodIndex: ['5', '6', '7', '8', '18'].indexOf(String(realval)) >= 0 ? 1 : 0
+			})
     }
     if (name == 'val1') {
 			that.resetdspt2()
@@ -672,6 +881,39 @@ Page({
 	bindLocalPickerChange: function (e) {
 		const name = e.currentTarget.dataset.name
 		const value = Number(e.detail.value)
+		// 季度品类（商用显示）数据按季度，不允许切到月度
+		const qTypes = ['5', '6', '7', '8', '18']
+		const typeId = String(this.data.realval0 || this.options.type || '')
+		if (name === 'periodIndex') {
+			if (qTypes.indexOf(typeId) >= 0 && value === 0) {
+				wx.showToast({ title: '该品类为季度数据', icon: 'none' })
+				this.setData({ periodIndex: 1 })
+				return
+			}
+			this.setData({ periodIndex: value, val3: 0, realval3: 1 }, () => {
+				this.getshuju()
+			})
+			return
+		}
+		// 累计：当期↔年累计，同步「周期」下拉到 首项/年累计
+		if (name === 'ytdIndex') {
+			const patch = { ytdIndex: value }
+			const arr = this.data.arrval3 || []
+			if (arr.length) {
+				if (value === 1) {
+					const last = arr.length - 1
+					patch.val3 = last
+					patch.realval3 = arr[last].id
+				} else {
+					patch.val3 = 0
+					patch.realval3 = arr[0].id
+				}
+			}
+			this.setData(patch, () => {
+				this.getshuju()
+			})
+			return
+		}
 		this.setData({
 			[name]: value
 		}, () => {
@@ -836,6 +1078,29 @@ Page({
         uid:userData.id?userData.id:0
 			},
 			success(res) {
+				const scaleData = res.data.arr_sj2 || {}
+				const fallbackChange = (values) => {
+					if (!Array.isArray(values)) return []
+					return values.map((value, index) => {
+						const current = parseFloat(value)
+						const previous = parseFloat(values[index - 1])
+						if (index === 0 || !isFinite(current) || !isFinite(previous) || previous === 0) return null
+						return Number(((current - previous) / previous * 100).toFixed(1))
+					})
+				}
+				const normalizeChange = (values) => {
+					if (!Array.isArray(values)) return []
+					return values.map((value) => {
+						const number = parseFloat(value)
+						return isFinite(number) ? Math.round(number * 10) / 10 : null
+					})
+				}
+				const hasNumericValues = (values) => normalizeChange(values).some((value) => value !== null)
+				const chartYoy = hasNumericValues(scaleData.yoy) ? normalizeChange(scaleData.yoy) : fallbackChange(scaleData.y)
+				const chartMom = hasNumericValues(scaleData.mom) ? normalizeChange(scaleData.mom) : fallbackChange(scaleData.y)
+				const chartYoy2 = hasNumericValues(scaleData.avg_yoy) ? normalizeChange(scaleData.avg_yoy) : fallbackChange(scaleData.avg)
+				const chartMom2 = hasNumericValues(scaleData.avg_mom) ? normalizeChange(scaleData.avg_mom) : fallbackChange(scaleData.avg)
+				const hasAveragePrice = Array.isArray(scaleData.avg) && scaleData.avg.some((value) => value !== null && value !== undefined)
 				
 				setTimeout(function () {
 					if (!res.data.arr_sj1) {
@@ -863,13 +1128,18 @@ Page({
 					arrval1: res.data.arr_ds ? res.data.arr_ds : [],
 					arrval2: res.data.arr_xl ? res.data.arr_xl : [],
 					arrval3: res.data.arr_yd ? res.data.arr_yd : [],
-					xqData: res.data.arr_sj1 ? res.data.arr_sj1 : [],
-					chart1: res.data.arr_sj2 ? res.data.arr_sj2.y : [],
-					chartYoy: res.data.arr_sj2 && res.data.arr_sj2.yoy ? res.data.arr_sj2.yoy : [],
-					chart1x: res.data.arr_sj2 ? res.data.arr_sj2.x : [],
-					chart2: res.data.arr_sj2 && res.data.arr_sj2.avg ? res.data.arr_sj2.avg : [],
-					chart2x: res.data.arr_sj2 ? res.data.arr_sj2.x : [],
-					chartYoy2: res.data.arr_sj2 && res.data.arr_sj2.avg_yoy ? res.data.arr_sj2.avg_yoy : [],
+					xqData: res.data.arr_sj1 ? res.data.arr_sj1.map(row => {
+						if (!row || row.t3 === undefined || row.t3 === '') return row
+						return Object.assign({}, row, { t3: that.fmtPct(row.t3) })
+					}) : [],
+					chart1: scaleData.y || [],
+					chartYoy: chartYoy,
+					chartMom: chartMom,
+					chart1x: scaleData.x || [],
+					chart2: scaleData.avg || [],
+					chart2x: hasAveragePrice ? (scaleData.x || []) : [],
+					chartYoy2: chartYoy2,
+					chartMom2: chartMom2,
 					chart3: res.data.arr_sj4 ? res.data.arr_sj4 : [],
 					chart4: res.data.arr_sj5 ? res.data.arr_sj5 : [],
 					priceList: that.buildPriceList(res.data.arr_sj5 ? res.data.arr_sj5 : []),
@@ -877,14 +1147,33 @@ Page({
 					price_dist: res.data.price_dist !== undefined ? res.data.price_dist : 1,
 					arr_sj6: res.data.arr_sj6 ? res.data.arr_sj6 : [],
 					tips: res.data.arr_sj ? res.data.arr_sj : '',
+					aiSummary: that.buildAiSummary(
+						res.data,
+						chartYoy,
+						that.buildBrandList(res.data.arr_sj8 || [], res.data.arr_sj3 ? res.data.arr_sj3.x : [], res.data.arr_sj3 ? res.data.arr_sj3.y : []),
+						res.data.arr_sj4 ? res.data.arr_sj4 : [],
+						that.buildPriceList(res.data.arr_sj5 ? res.data.arr_sj5 : [])
+					),
 					kuanian: res.data.arr_sj2_num,
           arr_sj2_dw: res.data.arr_sj2_dw,
-          is_ck:res.data.is_ck
-				})
-				setTimeout(() => {
+					is_ck:res.data.is_ck
+				}, () => {
 					that.chuli()
 					that.init()
 					that.autorealval()
+					// 同步「周期」下拉与当前 累计/时间 状态一致（年累计显示最后一项，其余保持有效项）
+					const ydArr = that.data.arrval3 || []
+					if (ydArr.length) {
+						let tv = that.data.realval3
+						if (that.data.ytdIndex === 1) {
+							tv = ydArr[ydArr.length - 1].id
+						} else if (!ydArr.some(x => String(x.id) === String(that.data.realval3))) {
+							tv = ydArr[0].id
+						}
+						let idx = 0
+						ydArr.forEach((x, i) => { if (String(x.id) === String(tv)) idx = i })
+						that.setData({ val3: idx, realval3: tv })
+					}
 					let typename = that.changetitle()
 					app.gethistory('首页-' + typename + '-数据', '/pages/index/next?type=' + type, 1)
 				})
@@ -927,6 +1216,7 @@ Page({
 		console.log(type)
 		that.setData({
 			realval0: type,
+			periodIndex: ['5', '6', '7', '8', '18'].indexOf(String(type)) >= 0 ? 1 : 0
 		})
 		var type2 = that.options.type2
 		if (type2) {
@@ -934,9 +1224,6 @@ Page({
 				realval1: type2,
 			})
 		}
-		setTimeout(() => {
-			that.init()
-		}, 100);
 		setTimeout(() => {
 			that.getshuju()
 		}, 100)

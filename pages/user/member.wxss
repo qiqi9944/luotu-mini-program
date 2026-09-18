@@ -1,0 +1,250 @@
+/* pages/user/member.wxss */
+page {
+	background-color: #eef3f8;
+}
+
+.member {
+	box-sizing: border-box;
+	padding: 24rpx 18rpx 30rpx;
+}
+
+/* ---------- 会员状态卡 ---------- */
+.status-card {
+	position: relative;
+	overflow: hidden;
+	box-sizing: border-box;
+	padding: 48rpx 30rpx 40rpx;
+	background: linear-gradient(160deg, var(--ink-700) 0%, var(--ink-900) 100%);
+	border-radius: var(--r-lg);
+	box-shadow: var(--shadow-card);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+}
+
+.status-card::after {
+	content: "";
+	position: absolute;
+	right: -80rpx;
+	top: -120rpx;
+	width: 360rpx;
+	height: 360rpx;
+	border-radius: 50%;
+	pointer-events: none;
+	background: radial-gradient(circle, rgba(46, 134, 184, 0.45) 0%, rgba(46, 134, 184, 0) 70%);
+}
+
+.status-badge {
+	position: relative;
+	z-index: 1;
+	padding: 10rpx 30rpx;
+	border-radius: 999rpx;
+	font-size: var(--fs-body);
+	font-weight: 700;
+	margin-bottom: 22rpx;
+}
+
+.status-badge.member {
+	color: #fff;
+	background: linear-gradient(135deg, #e7b64c 0%, #c8912c 100%);
+	box-shadow: 0 6rpx 18rpx rgba(0, 0, 0, 0.25);
+}
+
+.status-badge.normal {
+	color: rgba(255, 255, 255, 0.9);
+	background: rgba(255, 255, 255, 0.14);
+	border: 1rpx solid rgba(255, 255, 255, 0.24);
+}
+
+.status-name {
+	position: relative;
+	z-index: 1;
+	color: #fff;
+	font-size: 38rpx;
+	font-weight: 700;
+	margin-bottom: 16rpx;
+}
+
+.status-desc {
+	position: relative;
+	z-index: 1;
+	color: rgba(255, 255, 255, 0.72);
+	font-size: var(--fs-body-s);
+	line-height: 1.6;
+}
+
+/* ---------- 区块标题 ---------- */
+.group-title {
+	margin: 30rpx 8rpx 16rpx;
+	font-size: var(--fs-title);
+	font-weight: 700;
+	color: var(--text-1);
+	letter-spacing: 1rpx;
+}
+
+/* ---------- 会员权益（价格表） ---------- */
+.plan-card {
+	background: var(--surface);
+	border-radius: var(--r-lg);
+	box-shadow: var(--shadow-card);
+	overflow: hidden;
+	border: 1rpx solid #1f6b9d;
+}
+
+.plan-row {
+	display: flex;
+	align-items: stretch;
+}
+
+.plan-row-head {
+	background: #1f6b9d;
+}
+
+.plan-row {
+	border-top: 1rpx solid #d7e3ec;
+}
+
+.plan-row-head {
+	border-top: 0;
+}
+
+.plan-cell {
+	box-sizing: border-box;
+	flex: 1;
+	min-width: 0;
+	padding: 24rpx 10rpx;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	border-right: 1rpx solid #d7e3ec;
+	text-align: center;
+}
+
+.plan-cell:last-child {
+	border-right: 0;
+}
+
+.plan-cell-name {
+	flex: 1.25;
+	align-items: flex-start;
+	justify-content: center;
+	text-align: left;
+	padding-left: 22rpx;
+	color: var(--text-1);
+	font-size: var(--fs-body-s);
+	font-weight: 600;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.plan-row-head .plan-cell-name {
+	color: #fff;
+	font-weight: 700;
+}
+
+.plan-cell-tier {
+	padding: 26rpx 6rpx;
+}
+
+.plan-tier-name {
+	color: #fff;
+	font-size: var(--fs-body-s);
+	font-weight: 700;
+	white-space: nowrap;
+	margin-bottom: 12rpx;
+}
+
+.plan-tier-price {
+	color: #fff;
+	font-size: 20rpx;
+	opacity: 0.9;
+	white-space: nowrap;
+}
+
+.plan-price {
+	font-size: 36rpx;
+	font-weight: 700;
+	color: #ffe3a3;
+}
+
+.plan-cell-mark {
+	flex-direction: row;
+}
+
+.mark {
+	width: 40rpx;
+	height: 40rpx;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 26rpx;
+	font-weight: 700;
+	line-height: 1;
+}
+
+.mark-yes {
+	color: #fff;
+	background: #1f9e74;
+}
+
+.mark-no {
+	color: #b7c2cd;
+	background: #eef2f6;
+}
+
+.plan-note {
+	margin: 18rpx 8rpx 0;
+	font-size: var(--fs-body-s);
+	color: var(--text-3);
+	text-align: center;
+}
+
+/* ---------- 开通引导 ---------- */
+.cta-card {
+	background: var(--surface);
+	border-radius: var(--r-lg);
+	box-shadow: var(--shadow-card);
+	padding: 34rpx 28rpx;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.cta-desc {
+	font-size: var(--fs-body-s);
+	color: var(--text-3);
+	margin-bottom: 26rpx;
+	text-align: center;
+	line-height: 1.6;
+}
+
+.btn {
+	box-sizing: border-box;
+	min-width: 320rpx;
+	text-align: center;
+	padding: 20rpx 40rpx;
+	border-radius: 999rpx;
+	font-size: var(--fs-body);
+	font-weight: 700;
+}
+
+.btn-primary {
+	color: #fff;
+	background: linear-gradient(135deg, #e7b64c 0%, #c8912c 100%);
+	box-shadow: 0 8rpx 20rpx rgba(200, 145, 44, 0.35);
+}
+
+.btn-login {
+	color: #fff;
+	background: rgba(255, 255, 255, 0.18);
+	border: 1rpx solid rgba(255, 255, 255, 0.3);
+	margin-top: 6rpx;
+}
+
+.safe-bottom {
+	height: 40rpx;
+}

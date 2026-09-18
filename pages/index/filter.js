@@ -375,10 +375,20 @@ Page({
         const s6 = d.arr_sj6 || {}
         // 有实际数值才算有数据
         const hasNum = (arr1.some(it => Number(it.t2) !== 0)) || (Array.isArray(s2) && s2.some(r => Number(r.num) !== 0))
+        const subRowsData = (d.arr_sub || []).map(row => {
+          const clone = Object.assign({}, row)
+          ;['xl_yoy', 'xe_yoy', 'avg_yoy'].forEach(k => {
+            if (clone[k] !== undefined && clone[k] !== '' && clone[k] !== '--') clone[k] = that.fmtPct(clone[k])
+          })
+          return clone
+        })
         that.setData({
-          xqData: arr1,
-          subRows: d.arr_sub || [],
-          tvsGroups: that.buildTvsGroups(d.arr_sub || []),
+          xqData: arr1.map(row => {
+            if (!row || row.t3 === undefined || row.t3 === '') return row
+            return Object.assign({}, row, { t3: that.fmtPct(row.t3) })
+          }),
+          subRows: subRowsData,
+          tvsGroups: that.buildTvsGroups(subRowsData),
           subMode: d.sub_mode || 'yoy',
           tvsYears: (() => {
             // 按 sub_group 聚合期数列表（同一 sub_group 里第一行的 avail_periods 代表该组）
@@ -453,6 +463,16 @@ Page({
       cur.rows.push(row)
     })
     return groups
+  },
+
+  // 统一百分比显示：符号 + 1 位小数 + %
+  fmtPct(value) {
+    if (value === null || value === undefined || value === '' || value === '--' || value === '-') return '--'
+    const s = String(value)
+    const sign = s.charAt(0) === '+' || s.charAt(0) === '-' ? s.charAt(0) : ''
+    const num = parseFloat(s)
+    if (!isFinite(num)) return '--'
+    return sign + Math.abs(num).toFixed(1) + '%'
   },
 
   // 每组（维度分组）的时间 picker 切换，data-sid = sub_group key，如 "9-m"

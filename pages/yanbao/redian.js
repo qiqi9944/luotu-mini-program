@@ -6,14 +6,6 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
-		banner: [],
-		indicatorDots: true,
-		vertical: false,
-		autoplay: false,
-		interval: 2000,
-		duration: 500,
-		indicatorColor: 'rgba(255, 255, 255, .3)',
-		indicatorActiveColor: 'rgba(255, 255, 255, 1)',
 		keywords: '',
 		currentTab: 1,
 		pagetype: 1,
@@ -28,19 +20,6 @@ Page({
 		lastpage2: 0,
 		videolist: [],
 		videoUrl: '',
-	},
-	getbanner: function () {
-		let that = this;
-		wx.request({
-			url: app.globalData.siteUrl + '/Wxapi/getbanner',
-			data: { 'wz': 2 },
-			success: function (res) {
-				console.log(res);
-				that.setData({
-					banner: res.data.datalist
-				})
-			}
-		})
 	},
 	getnews: function () {
 		let that = this;
@@ -167,7 +146,6 @@ Page({
 			var pagename = '活动'
 		}
 		// app.gethistory('观研','/pages/yanbao/redian',2)
-		this.getbanner()
 		this.getnews()
 		this.getnews2()
 		this.getnews3()
@@ -193,7 +171,6 @@ Page({
 	 */
 	onPullDownRefresh: function () {
 		let pagetype = this.data.pagetype
-		this.getbanner()
 		if(pagetype==1){
 			this.setData({
 				p: 1,

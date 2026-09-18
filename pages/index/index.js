@@ -5,6 +5,7 @@ const app = getApp()
 Page({
   data: {
     keywords: '',
+    catSuggest: [],
     banner: {
       indicatorDots: true,
       indicatorColor: '#747d94',
@@ -23,6 +24,7 @@ Page({
       { id: 2, url: '', picurl: '/pages/images/ad.jpg' },
     ],
     menulist: [],
+    menuGroups: [],
     newslist: []
   },
   onLoad() {
@@ -98,8 +100,42 @@ Page({
       success: function (res) {
         console.log(res);
         if (res.data.status == 1 && res.data.datalist) {
+          // 分类 type → 图标 class（首页 9 个品类使用彩色分类图标，配色/图形见 index.wxss 的 .svg-* 与 .icon-*）
+          const iconClassMap = {
+            1: 'ent',         // 影音娱乐
+            14: 'edu',        // 电子教育
+            2: 'work',        // 商务办公
+            3: 'wear',        // 智能穿戴
+            5: 'secure',      // 安防监控
+            6: 'sport',       // 运动户外
+            7: 'screen',      // 商用显示
+            18: 'life',       // 品质生活
+            9: 'core',        // 核心器件
+            // 以下为其余 type 的兜底，沿用原单色线性图标
+            10: 'phone',      // 手机供应链
+            11: 'display',    // 商用显示供应链
+            12: 'paper',      // 电子纸供应链
+            13: 'camera',     // 摄像头
+            15: 'ar',         // AR 设备
+            16: 'speaker',    // 回音壁
+            17: 'display',    // 显示器供应链
+            19: 'vr',         // VR 设备
+            20: 'speaker',    // 无线蓝牙音箱
+            21: 'laptop'      // 笔记本电脑供应链
+          }
+          const menulist = res.data.datalist.map(function (item) {
+            return Object.assign({}, item, {
+              iconClass: iconClassMap[item.type] || 'more'
+            })
+          })
+          // 每 3 个一组，拆成独立卡片（首页金刚区分组卡片布局）
+          const menuGroups = []
+          for (let i = 0; i < menulist.length; i += 3) {
+            menuGroups.push(menulist.slice(i, i + 3))
+          }
           that.setData({
-            menulist: res.data.datalist
+            menulist: menulist,
+            menuGroups: menuGroups
           })
         }
       }
@@ -107,7 +143,7 @@ Page({
   },
   toNews: function (e) {
     console.log(e)
-    wx.setStorageSync('pagetype', 3)
+    wx.setStorageSync('pagetype', 1)
     wx.switchTab({
       url: '/pages/yanbao/redian',
       success: (result) => {
@@ -263,6 +299,38 @@ Page({
     that.setData({
       [name]: val
     })
+    if (name == 'keywords') {
+      that.updateCatSuggest(val)
+    }
+  },
+  // 搜索联动：按关键字请求后端品类搜索（含设备级品类），供用户直接跳转到该品类数据
+  updateCatSuggest: function (val) {
+    let that = this
+    let kw = (val || '').trim()
+    if (!kw) {
+      that.setData({ catSuggest: [] })
+      return
+    }
+    if (that._sugTimer) {
+      clearTimeout(that._sugTimer)
+    }
+    that._sugTimer = setTimeout(function () {
+      wx.request({
+        url: app.globalData.siteUrl + '/Wxapi/searchcategory',
+        data: { keywords: kw },
+        success: function (res) {
+          // 仅在关键字未变时更新，避免请求乱序覆盖
+          if (that.data.keywords.trim() === kw && res.data && res.data.status == 1) {
+            that.setData({ catSuggest: res.data.datalist || [] })
+          }
+        }
+      })
+    }, 250)
+  },
+  // 点击品类联想项：清空联想并复用 nextpage 的登录校验 + 跳转品类数据
+  gotoCat: function (e) {
+    this.setData({ catSuggest: [] })
+    this.nextpage(e)
   },
   search: function () {
     let that = this
