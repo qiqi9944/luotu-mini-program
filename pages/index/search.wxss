@@ -30,11 +30,10 @@ page{
 	box-shadow: 0 6rpx 20rpx rgba(3,37,60,0.05);
 }
 .newsbox .newshd{
-	padding: 0 2rpx 12rpx;
+	padding: 0 2rpx 14rpx;
 	font-size: 13px;
 	color: #8698a5;
 	letter-spacing: 1rpx;
-	border-bottom: 1rpx solid #eef3f7;
 }
 .newsbox .down {
 	width: 100%;
@@ -118,7 +117,7 @@ page{
 	box-shadow: 0 6rpx 20rpx rgba(3,37,60,0.05);
 }
 .catbox .cathd{
-	padding: 0 2rpx 16rpx;
+	padding: 0 2rpx 14rpx;
 	font-size: 13px;
 	color: #8698a5;
 	letter-spacing: 1rpx;
