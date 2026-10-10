@@ -19,7 +19,7 @@
 				<view class="underline"></view>
 			</view>
 			<view class="item {{currentTab==2?'hover':''}}" data-type="2" bindtap="nextpage">
-				<text>下载专区</text>
+				<text>报告专区</text>
 				<view class="underline"></view>
 			</view>
 			<view class="item {{currentTab==3?'hover':''}}" data-type="3" bindtap="nextpage">
@@ -38,7 +38,7 @@
 			<view class="main">
 				<view class="down">
 					<block wx:for="{{newslist}}" wx:key="id">
-						<navigator url="./view?id={{item.id}}" class="item" hover-class="tap-row">
+						<navigator url="/pkg-research/yanbao/view?id={{item.id}}" class="item" hover-class="tap-row">
 							<view class="l">
 								<view class="shang">
 									<view class="title">
@@ -60,13 +60,13 @@
 			<view class="main">
 				<view class="up">
 					<view class="title">洛图<view class="sp">月</view>报</view>
-					<navigator url="/pages/yanbao/list?type=3" class="more">
+					<navigator url="/pkg-research/yanbao/list?type=3" class="more">
 						<image src="/pages/images/dian.png" mode="widthFix"></image>
 					</navigator>
 				</view>
 				<view class="down">
 					<block wx:for="{{yuebao}}" wx:key="id">
-						<navigator url="./view?id={{item.id}}" class="item" hover-class="tap-row">
+						<navigator url="/pkg-research/yanbao/view?id={{item.id}}" class="item" hover-class="tap-row">
 							<view class="shang">
 								<image src="/pages/images/liststyle.png" mode="widthFix" class="pic"></image>
 								<view class="title">{{item.name}}</view>
@@ -81,13 +81,13 @@
 			<view class="main">
 				<view class="up">
 					<view class="title">洛图<view class="sp">季</view>报</view>
-					<navigator url="/pages/yanbao/list?type=4" class="more">
+					<navigator url="/pkg-research/yanbao/list?type=4" class="more">
 						<image src="/pages/images/dian.png" mode="widthFix"></image>
 					</navigator>
 				</view>
 				<view class="down">
 					<block wx:for="{{jibao}}" wx:key="id">
-						<navigator url="./view?id={{item.id}}" class="item" hover-class="tap-row">
+						<navigator url="/pkg-research/yanbao/view?id={{item.id}}" class="item" hover-class="tap-row">
 							<view class="shang">
 								<image src="/pages/images/liststyle.png" mode="widthFix" class="pic"></image>
 								<view class="title">{{item.name}}</view>
@@ -102,13 +102,13 @@
 			<view class="main">
 				<view class="up">
 					<view class="title">洛图<view class="sp">年</view>报</view>
-					<navigator url="/pages/yanbao/list?type=5" class="more">
+					<navigator url="/pkg-research/yanbao/list?type=5" class="more">
 						<image src="/pages/images/dian.png" mode="widthFix"></image>
 					</navigator>
 				</view>
 				<view class="down">
 					<block wx:for="{{nianbao}}" wx:key="id">
-						<navigator url="./view?id={{item.id}}" class="item" hover-class="tap-row">
+						<navigator url="/pkg-research/yanbao/view?id={{item.id}}" class="item" hover-class="tap-row">
 							<view class="shang">
 								<image src="/pages/images/liststyle.png" mode="widthFix" class="pic"></image>
 								<view class="title">{{item.name}}</view>
@@ -122,7 +122,7 @@
 	</view>
 	<view class="redian" wx:if="{{pagetype==3}}">
 		<view class="video-grid">
-			<view class="video-card" wx:for="{{videolist}}" wx:key="id" data-url="{{item.url}}" data-id="{{item.id}}" bindtap="playVideo" hover-class="tap-row">
+			<view class="video-card" wx:for="{{videolist}}" wx:key="id" data-url="{{item.url}}" data-feedid="{{item.feed_id}}" data-feedtoken="{{item.feed_token}}" data-finder="{{item.finder_user_name}}" data-id="{{item.id}}" bindtap="playVideo" hover-class="tap-row">
 				<view class="video-thumb">
 					<image src="{{item.pic}}" mode="aspectFill" class="video-pic"></image>
 					<view class="video-play-icon"></view>
@@ -135,7 +135,18 @@
 		</view>
 	</view>
 	<view class="redian" wx:if="{{pagetype==4}}">
-		<view class="newsbox">
+		<view class="activity-list" wx:if="{{activityBanners.length}}">
+			<block wx:for="{{activityBanners}}" wx:key="id">
+				<navigator url="./view?id={{item.id}}" class="activity-banner" hover-class="tap-dim" hover-stay-time="80">
+					<image wx:if="{{item.bannerpic || item.pic}}" src="{{item.bannerpic || item.pic}}" mode="widthFix" class="activity-banner-img"></image>
+					<view wx:else class="activity-banner-fallback">
+						<view class="activity-banner-title">{{item.name}}</view>
+						<view class="activity-banner-date">{{item.addtime}}</view>
+					</view>
+				</navigator>
+			</block>
+		</view>
+		<view class="newsbox" wx:if="{{newslist2.length}}">
 			<view class="main">
 				<view class="down">
 					<block wx:for="{{newslist2}}" wx:key="id">
@@ -151,15 +162,17 @@
 							<image src="{{item.pic}}" mode="widthFix" wx:if="{{item.pic}}" class="r"></image>
 						</navigator>
 					</block>
-					<view class="more" wx:if="{{!lastpage2}}" bindtap="getnews3">查看更多></view>
 				</view>
 			</view>
 		</view>
+		<view class="more" wx:if="{{!lastpage2}}" bindtap="getnews3">查看更多></view>
 	</view>
-	<view class="video-mask" wx:if="{{videoUrl}}" catchtouchmove="noop" bindtap="closeVideo">
+	<view class="video-mask" wx:if="{{showVideoMask}}" catchtouchmove="noop" bindtap="closeVideo">
 		<view class="video-mask-inner" catchtap="true">
 			<view class="video-close" catchtap="closeVideo">✕</view>
-			<video src="{{videoUrl}}" class="video-player" autoplay controls object-fit="contain"></video>
+			<channel-video wx:if="{{videoFeedId}}" class="video-player" feed-id="{{videoFeedId}}" finder-user-name="{{videoFinder}}" autoplay="{{true}}" object-fit="contain"></channel-video>
+			<channel-video wx:elif="{{videoFeedToken}}" class="video-player" feed-token="{{videoFeedToken}}" object-fit="contain"></channel-video>
+			<video wx:elif="{{videoUrl}}" src="{{videoUrl}}" class="video-player" autoplay controls object-fit="contain"></video>
 		</view>
 	</view>
 	<view class="safe-bottom"></view>

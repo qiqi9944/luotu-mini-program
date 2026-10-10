@@ -18,8 +18,13 @@ Page({
 		p2: 1,
 		newslist2: [],
 		lastpage2: 0,
+		activityBanners: [],
 		videolist: [],
 		videoUrl: '',
+		videoFeedId: '',
+		videoFeedToken: '',
+		videoFinder: '',
+		showVideoMask: false,
 	},
 	getnews: function () {
 		let that = this;
@@ -63,12 +68,24 @@ Page({
 			success: function (res) {
 				console.log(res);
 				let oldData = that.data.newslist2;
-				if (res.data.datalist.length > 0) {
+				let oldBanners = that.data.activityBanners;
+				let pageData = res.data.datalist || [];
+				let banners = [];
+				let rest = [];
+				pageData.forEach(function (item) {
+					if (item.isbanner == 1) {
+						banners.push(item);
+					} else {
+						rest.push(item);
+					}
+				});
+				if (pageData.length > 0) {
 					p = p + 1;
 				}
 				that.setData({
 					p2: p,
-					newslist2: oldData.concat(res.data.datalist),
+					newslist2: oldData.concat(rest),
+					activityBanners: oldBanners.concat(banners),
 					lastpage2: res.data.lastpage
 				})
 			}
@@ -86,24 +103,31 @@ Page({
 		})
 	},
 	playVideo: function (e) {
-		let url = e.currentTarget.dataset.url
-		let id = e.currentTarget.dataset.id
-		if (!url) {
+		let d = e.currentTarget.dataset
+		if (!d.url && !d.feedid && !d.feedtoken) {
 			return false
 		}
 		this.setData({
-			videoUrl: url
+			showVideoMask: true,
+			videoUrl: d.url || '',
+			videoFeedId: d.feedid || '',
+			videoFeedToken: d.feedtoken || '',
+			videoFinder: d.finder || ''
 		})
-		if (id) {
+		if (d.id) {
 			wx.request({
 				url: app.globalData.siteUrl + '/Wxapi/getvideoclick',
-				data: { id: id }
+				data: { id: d.id }
 			})
 		}
 	},
 	closeVideo: function () {
 		this.setData({
-			videoUrl: ''
+			showVideoMask: false,
+			videoUrl: '',
+			videoFeedId: '',
+			videoFeedToken: '',
+			videoFinder: ''
 		})
 	},
 	noop: function () {
@@ -188,6 +212,7 @@ Page({
 			this.setData({
 				p2: 1,
 				newslist2: [],
+				activityBanners: [],
 			})
 			this.getnews3()
 		}
@@ -237,7 +262,7 @@ Page({
 		let keywords = this.data.keywords
 		if (keywords) {
 			wx.navigateTo({
-				url: '/pages/index/search?keywords=' + encodeURIComponent(keywords),
+				url: '/pkg-home/index/search?keywords=' + encodeURIComponent(keywords),
 			})
 		} else {
 			wx.showToast({
