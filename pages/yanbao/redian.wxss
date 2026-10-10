@@ -412,19 +412,6 @@
 	border-top: 13rpx solid transparent;
 	border-bottom: 13rpx solid transparent;
 }
-.video-grid .video-source-tag {
-	position: absolute;
-	left: 12rpx;
-	top: 12rpx;
-	z-index: 2;
-	padding: 4rpx 14rpx;
-	border-radius: 20rpx;
-	font-size: 22rpx;
-	line-height: 1.4;
-	letter-spacing: 0.5rpx;
-	color: #ffffff;
-	background: rgba(8, 48, 71, 0.55);
-}
 .video-grid .video-body {
 	padding: 18rpx 20rpx 24rpx;
 }

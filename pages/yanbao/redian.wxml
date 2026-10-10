@@ -22,6 +22,10 @@
 				<text>报告专区</text>
 				<view class="underline"></view>
 			</view>
+			<view class="item {{currentTab==3?'hover':''}}" data-type="3" bindtap="nextpage">
+				<text>小视频</text>
+				<view class="underline"></view>
+			</view>
 			<view class="item {{currentTab==4?'hover':''}}" data-type="4" bindtap="nextpage">
 				<text>活动</text>
 				<view class="underline"></view>
@@ -124,7 +128,6 @@
 					<channel-video wx:elif="{{item.feed_token}}" class="video-pic" feed-token="{{item.feed_token}}" object-fit="cover"></channel-video>
 					<video wx:elif="{{item.url}}" class="video-pic" src="{{item.url}}" object-fit="cover" controls="{{true}}"></video>
 					<view wx:else class="video-pic video-pic--ph"><view class="video-play-badge"></view></view>
-					<view wx:if="{{item.feed_id || item.feed_token}}" class="video-source-tag">视频号</view>
 				</view>
 				<view class="video-body">
 					<view class="video-title">{{item.name || '洛图视频'}}</view>
