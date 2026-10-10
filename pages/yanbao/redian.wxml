@@ -122,12 +122,12 @@
 	</view>
 	<view class="redian" wx:if="{{pagetype==3}}">
 		<view class="video-grid">
-			<view class="video-card" wx:for="{{videolist}}" wx:key="id" data-url="{{item.url}}" data-feedid="{{item.feed_id}}" data-feedtoken="{{item.feed_token}}" data-finder="{{item.finder_user_name}}" data-id="{{item.id}}" bindtap="playVideo" hover-class="tap-card">
+			<view class="video-card" wx:for="{{videolist}}" wx:key="id">
 				<view class="video-cover">
-					<image wx:if="{{item.pic}}" class="video-pic" src="{{item.pic}}" mode="aspectFill"></image>
-					<video wx:elif="{{item.url}}" class="video-pic" src="{{item.url}}" object-fit="cover" muted controls="{{false}}" show-center-play-btn="{{false}}" show-play-btn="{{false}}" show-fullscreen-btn="{{false}}" show-progress="{{false}}" enable-progress-gesture="{{false}}"></video>
-					<view wx:else class="video-pic video-pic--ph"></view>
-					<view class="video-play-badge"></view>
+					<channel-video wx:if="{{item.feed_id}}" class="video-pic" feed-id="{{item.feed_id}}" finder-user-name="{{item.finder_user_name}}" object-fit="cover"></channel-video>
+					<channel-video wx:elif="{{item.feed_token}}" class="video-pic" feed-token="{{item.feed_token}}" object-fit="cover"></channel-video>
+					<video wx:elif="{{item.url}}" class="video-pic" src="{{item.url}}" object-fit="cover" controls="{{true}}"></video>
+					<view wx:else class="video-pic video-pic--ph"><view class="video-play-badge"></view></view>
 					<view wx:if="{{item.feed_id || item.feed_token}}" class="video-source-tag">视频号</view>
 				</view>
 				<view class="video-body">
@@ -172,14 +172,6 @@
 			</view>
 		</view>
 		<view class="more" wx:if="{{!lastpage2}}" bindtap="getnews3">查看更多></view>
-	</view>
-	<view class="video-mask" wx:if="{{showVideoMask}}" catchtouchmove="noop" bindtap="closeVideo">
-		<view class="video-mask-inner" catchtap="true">
-			<view class="video-close" catchtap="closeVideo">✕</view>
-			<channel-video wx:if="{{videoFeedId}}" class="video-player" feed-id="{{videoFeedId}}" finder-user-name="{{videoFinder}}" autoplay="{{true}}" object-fit="contain"></channel-video>
-			<channel-video wx:elif="{{videoFeedToken}}" class="video-player" feed-token="{{videoFeedToken}}" object-fit="contain"></channel-video>
-			<video wx:elif="{{videoUrl}}" src="{{videoUrl}}" class="video-player" autoplay controls object-fit="contain"></video>
-		</view>
 	</view>
 	<view class="safe-bottom"></view>
 </view>
