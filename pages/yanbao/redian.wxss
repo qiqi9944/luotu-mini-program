@@ -350,17 +350,17 @@
 .video-grid .video-card {
 	width: calc(50% - 10rpx);
 	margin-bottom: 30rpx;
-	background-color: var(--surface);
-	border-radius: var(--r-lg);
-	box-shadow: var(--shadow-card);
+	background-color: #ffffff;
+	border-radius: 24rpx;
+	box-shadow: 0 2rpx 8rpx rgba(3, 37, 60, 0.04), 0 12rpx 30rpx rgba(3, 37, 60, 0.05);
 	overflow: hidden;
 	box-sizing: border-box;
 }
 .video-grid .video-cover {
 	position: relative;
 	width: 100%;
-	padding-bottom: 62%;
-	background-color: var(--surface-sunken);
+	height: 220rpx;
+	background-color: #dfe8ee;
 	overflow: hidden;
 }
 .video-grid .video-cover .video-pic {
@@ -371,7 +371,7 @@
 	height: 100%;
 }
 .video-grid .video-pic--ph {
-	background: linear-gradient(150deg, var(--ink-600) 0%, var(--ink-900) 100%);
+	background: linear-gradient(150deg, #1287c8 0%, #083047 100%);
 }
 .video-grid .video-pic--ph::before {
 	content: "";
@@ -408,7 +408,7 @@
 	width: 0;
 	height: 0;
 	margin-left: 6rpx;
-	border-left: 22rpx solid var(--text-invert);
+	border-left: 22rpx solid #ffffff;
 	border-top: 13rpx solid transparent;
 	border-bottom: 13rpx solid transparent;
 }
@@ -419,20 +419,20 @@
 	z-index: 2;
 	padding: 4rpx 14rpx;
 	border-radius: 20rpx;
-	font-size: var(--fs-caption);
+	font-size: 22rpx;
 	line-height: 1.4;
 	letter-spacing: 0.5rpx;
-	color: var(--text-invert);
+	color: #ffffff;
 	background: rgba(8, 48, 71, 0.55);
 }
 .video-grid .video-body {
 	padding: 18rpx 20rpx 24rpx;
 }
 .video-grid .video-title {
-	font-size: var(--fs-body);
+	font-size: 28rpx;
 	font-weight: 600;
 	line-height: 1.4;
-	color: var(--text-1);
+	color: #12212b;
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 2;
@@ -440,9 +440,9 @@
 }
 .video-grid .video-desc {
 	margin-top: 8rpx;
-	font-size: var(--fs-caption);
+	font-size: 22rpx;
 	line-height: 1.5;
-	color: var(--text-3);
+	color: #8698a5;
 	white-space: pre-line;
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
@@ -455,8 +455,8 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: var(--fs-body-s);
-	color: var(--text-3);
+	font-size: 24rpx;
+	color: #8698a5;
 }
 
 /* ---------- 活动专区：整张 banner 长图，去掉标题+小图的行式列表 ---------- */

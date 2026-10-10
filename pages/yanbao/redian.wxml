@@ -122,7 +122,7 @@
 	</view>
 	<view class="redian" wx:if="{{pagetype==3}}">
 		<view class="video-grid">
-			<view class="video-card rise" wx:for="{{videolist}}" wx:key="id" style="animation-delay:{{index < 8 ? index * 40 : 0}}ms" data-url="{{item.url}}" data-feedid="{{item.feed_id}}" data-feedtoken="{{item.feed_token}}" data-finder="{{item.finder_user_name}}" data-id="{{item.id}}" bindtap="playVideo" hover-class="tap-card">
+			<view class="video-card" wx:for="{{videolist}}" wx:key="id" data-url="{{item.url}}" data-feedid="{{item.feed_id}}" data-feedtoken="{{item.feed_token}}" data-finder="{{item.finder_user_name}}" data-id="{{item.id}}" bindtap="playVideo" hover-class="tap-card">
 				<view class="video-cover">
 					<image wx:if="{{item.pic}}" class="video-pic" src="{{item.pic}}" mode="aspectFill"></image>
 					<video wx:elif="{{item.url}}" class="video-pic" src="{{item.url}}" object-fit="cover" muted controls="{{false}}" show-center-play-btn="{{false}}" show-play-btn="{{false}}" show-fullscreen-btn="{{false}}" show-progress="{{false}}" enable-progress-gesture="{{false}}"></video>
