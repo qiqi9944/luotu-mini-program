@@ -175,7 +175,7 @@ Page({
                 success(res) {
                   if (res.confirm) {
                     wx.redirectTo({
-                      url: '/pages/user/myinfo',
+                      url: '/pkg-user/user/myinfo',
                     })
                   }
                 }
@@ -201,7 +201,7 @@ Page({
             return
           }
           wx.navigateTo({
-            url: '/pages/index/filter?type=' + type,
+            url: '/pkg-home/index/filter?type=' + type,
           })
         }
       })
@@ -223,7 +223,7 @@ Page({
   },
   more: function (e) {
     wx.navigateTo({
-      url: '/pages/index/more',
+      url: '/pkg-home/index/more',
     })
   },
   error: function (e) {
@@ -245,7 +245,7 @@ Page({
                 success(res) {
                   if (res.confirm) {
                     wx.redirectTo({
-                      url: '/pages/user/myinfo',
+                      url: '/pkg-user/user/myinfo',
                     })
                   }
                 }
@@ -339,7 +339,7 @@ Page({
     console.log(keywords)
     if (keywords) {
       wx.navigateTo({
-        url: '/pages/index/search?keywords=' + keywords,
+        url: '/pkg-home/index/search?keywords=' + keywords,
       })
     } else {
       wx.showToast({

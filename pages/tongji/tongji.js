@@ -165,7 +165,12 @@ Page({
 		chartMom2: [],
 		priceList: [],
 		brandList: [],
-		price_dist: 1,
+		brandTitle: '品牌竞争',
+		brandNameLabel: '品牌',
+		brandHasPrice: false,
+		price_dist: false,
+		priceDistTitle: '价格分布',
+		priceDistNameLabel: '价格段',
 		aiSummary: [],
 	},
 	formatPercent: function (value) {
@@ -181,6 +186,21 @@ Page({
 		const num = parseFloat(s)
 		if (!isFinite(num)) return '--'
 		return sign + Math.abs(num).toFixed(1) + '%'
+	},
+	getDistributionPresentation: function (response, list, type) {
+		const structure = response && response.arr_sj6 ? response.arr_sj6 : {}
+		const enabled = !response || (response.price_dist !== false && String(response.price_dist) !== '0')
+		const label = String(structure.t2 || '').trim()
+		const isPriceType = ['3', '13'].indexOf(String(type || '')) > -1
+		const isPrice = isPriceType || label === '价格段' || label.indexOf('价格') > -1
+		const isSize = label.indexOf('尺寸') > -1
+		const show = enabled && Array.isArray(list) && list.length > 0 && (isPrice || isSize)
+		return {
+			show,
+			isPrice,
+			title: isSize && !isPrice ? '尺寸分布' : '价格分布',
+			nameLabel: isSize && !isPrice ? label : '价格段'
+		}
 	},
 	buildPriceList: function (list) {
 		const priceRanges = ['0-99', '100-199', '200-299', '300-399', '400-499', '500+']
@@ -262,7 +282,25 @@ Page({
 		}
 		return []
 	},
-	buildAiSummary: function (response, chartYoy, brandList, productList, priceList) {
+	getBrandPresentation: function (type, selDs, list) {
+		const supplyChainTypes = ['9', '11', '12', '17', '21']
+		const typeId = String(type || '')
+		const dsId = String(selDs || '')
+		let brandNameLabel = '品牌'
+		if (typeId === '9' && dsId === '2') brandNameLabel = '代工厂'
+		if ((typeId === '9' && dsId === '3') || (typeId === '11' && dsId === '9')) brandNameLabel = '面板厂'
+		if (typeId === '12' && dsId === '4') brandNameLabel = '模组厂'
+		const brandHasPrice = Array.isArray(list) && list.some((item) => {
+			if (!item || item.price === undefined || item.price === null || item.price === '' || item.price === '--') return false
+			return isFinite(Number(item.price))
+		})
+		return {
+			brandTitle: supplyChainTypes.indexOf(typeId) > -1 ? brandNameLabel + '竞争' : '品牌竞争',
+			brandNameLabel,
+			brandHasPrice
+		}
+	},
+	buildAiSummary: function (response, rateSeries, brandList, productList, priceList, changeName) {
 		const trend = response && response.arr_sj2 ? response.arr_sj2 : {}
 		const firstValid = (values) => {
 			if (!Array.isArray(values)) return null
@@ -277,7 +315,7 @@ Page({
 			if (value === null || value === undefined || !isFinite(Number(value))) return '--'
 			return (Number(value) > 0 ? '+' : '') + Number(value).toFixed(1) + '%'
 		}
-		const rate = firstValid(chartYoy || trend.yoy)
+		const rate = firstValid(rateSeries || trend.yoy)
 		const scaleName = this.data.arrval2[this.data.val2] ? this.data.arrval2[this.data.val2].name : '销量'
 		const brandRows = Array.isArray(brandList) ? brandList.slice(0, 20) : []
 		const risingBrands = brandRows.filter((item) => {
@@ -289,13 +327,25 @@ Page({
 		const priceRows = Array.isArray(priceList) ? priceList : []
 		const topProduct = productRows.length ? productRows[0].name : ''
 		const productName = response && response.arr_sj6 && response.arr_sj6.t1 ? response.arr_sj6.t1 : '产品类型'
-		const risingPriceRanges = priceRows.filter((item) => String(item.t3 || '').charAt(0) === '+').length
+		// 中高端价格段（下界 ≥ 300 元）占比变化：各段 t3 为份额增减，求和得出整体变化
+		const priceLower = (name) => {
+			const m = String(name).match(/(\d+)\s*[-+]?/)
+			return m ? parseInt(m[1], 10) : null
+		}
+		const midHighRows = priceRows.filter((item) => {
+			const lb = priceLower(item.name)
+			return lb !== null && lb >= 300
+		})
+		const midHighChanges = midHighRows.map((item) => parseFloat(String(item.t3 || '').replace('%', ''))).filter((v) => isFinite(v))
+		const midHighTotal = midHighChanges.reduce((sum, v) => sum + v, 0)
+		const midHighRising = midHighChanges.filter((v) => v > 0).length
+		const hasMidHighData = midHighRows.length > 0 && midHighChanges.length > 0
 		return [
 			{
 				key: 'scale',
 				title: '行业规模',
 				icon: '↗',
-				before: scaleName + '同比',
+				before: scaleName + (changeName || '同比'),
 				value: rate === null ? '--' : (rate > 0 ? '上升 ' : rate < 0 ? '下降 ' : '持平 '),
 				highlight: rate === null ? '--' : formatRate(rate),
 				tone: rate === null ? 'muted' : rate < 0 ? 'down' : 'up'
@@ -314,20 +364,21 @@ Page({
 				key: 'product',
 				title: '产品趋势',
 				icon: '☷',
-				before: topProduct ? topProduct + productName + '占比最高' : '产品结构暂无数据',
-				value: productRows.length ? risingPriceRanges + '种产品规格' : '',
-				after: productRows.length ? '占比同比上升' : '',
-				highlight: '',
-				tone: productRows.length ? 'up' : 'muted'
+				before: topProduct ? productName + '中' : '产品结构暂无数据',
+				value: topProduct ? topProduct : '',
+				highlight: topProduct ? '占比最高' : '',
+				after: '',
+				tone: topProduct ? 'up' : 'muted'
 			},
 			{
 				key: 'price',
 				title: '价格趋势',
 				icon: '▥',
-				before: priceRows.length ? risingPriceRanges + '个价格段' : '价格分布暂无数据',
-				value: priceRows.length ? '占比同比上升' : '',
-				highlight: '',
-				tone: priceRows.length ? 'up' : 'muted'
+				before: hasMidHighData ? '中高端价格段（300元及以上）占比' : '价格分布暂无数据',
+				value: hasMidHighData ? (midHighTotal > 0 ? '整体上升' : midHighTotal < 0 ? '整体下降' : '基本持平') : '',
+				highlight: hasMidHighData ? formatRate(midHighTotal) : '',
+				tone: hasMidHighData ? (midHighTotal > 0 ? 'up' : midHighTotal < 0 ? 'down' : 'muted') : 'muted',
+				after: hasMidHighData && midHighRising ? midHighRising + '个价格段上涨' : ''
 			}
 		]
 	},
@@ -1024,6 +1075,7 @@ Page({
 					type: m.type,
 					name: m.name || ('组' + (i + 1)),
 					iconClass: iconClassMap[m.type] || 'more',
+					colorIndex: i % 9,
 					types: (m.types || []).map((t) => ({ id: String(t.id), name: t.name }))
 				}))
 				that.setData({ groupList: gl }, () => { if (cb) cb() })
@@ -1094,7 +1146,7 @@ Page({
 								success(res) {
 									if (res.confirm) {
 										wx.redirectTo({
-											url: '/pages/user/myinfo',
+											url: '/pkg-user/user/myinfo',
 										})
 									}
 								}
@@ -1192,6 +1244,7 @@ Page({
 	},
 	switchTab: function (e) {
 		const tab = e.currentTarget.dataset.tab
+		if (tab === 'price' && !this.data.price_dist) return
 		if (!tab || tab === this.data.activeTab) return
 		this.setData({ activeTab: tab })
 		setTimeout(() => {
@@ -1378,8 +1431,15 @@ data: {
 				const chartMom2 = hasNumericValues(scaleData.avg_mom) ? normalizeChange(scaleData.avg_mom) : fallbackChange(scaleData.avg)
 				const hasAveragePrice = Array.isArray(scaleData.avg) && scaleData.avg.some((value) => value !== null && value !== undefined)
 				const brandList = that.buildBrandList(res.data.arr_sj8 || [], res.data.arr_sj3 ? res.data.arr_sj3.x : [], res.data.arr_sj3 ? res.data.arr_sj3.y : [])
-				const priceList = that.buildPriceList(res.data.arr_sj5 ? res.data.arr_sj5 : [])
-				const aiSummary = that.buildAiSummary(res.data, chartYoy, brandList, res.data.arr_sj4 ? res.data.arr_sj4 : [], priceList)
+				const brandPresentation = that.getBrandPresentation(type, sel_ds, res.data.arr_sj8 || [])
+				const distributionSource = res.data.arr_sj5 || []
+				const distribution = that.getDistributionPresentation(res.data, distributionSource, type)
+				const priceList = distribution.show ? that.buildPriceList(distributionSource) : []
+				const activeTab = !distribution.show && that.data.activeTab === 'price' ? 'scale' : that.data.activeTab
+				const changeId = that.data.changeOptions && that.data.changeOptions[that.data.changeIndex] ? that.data.changeOptions[that.data.changeIndex].id : 'yoy'
+				const changeName = changeId === 'yoy' ? '同比' : '环比'
+				const rateSeries = changeId === 'yoy' ? chartYoy : chartMom
+				const aiSummary = that.buildAiSummary(res.data, rateSeries, brandList, res.data.arr_sj4 ? res.data.arr_sj4 : [], distribution.isPrice ? priceList : [], changeName)
 				that.setData({
 					arrval0: that.data.curTypes && that.data.curTypes.length ? that.data.curTypes : (res.data.arr_type ? res.data.arr_type : []),
 					arrval1: res.data.arr_ds ? res.data.arr_ds : [],
@@ -1401,13 +1461,19 @@ data: {
 					chart4: res.data.arr_sj5 ? res.data.arr_sj5 : [],
 					priceList: priceList,
 					brandList: brandList.slice(0, 10),
-					price_dist: res.data.price_dist !== undefined ? res.data.price_dist : 1,
+					brandTitle: brandPresentation.brandTitle,
+					brandNameLabel: brandPresentation.brandNameLabel,
+					brandHasPrice: brandPresentation.brandHasPrice,
+					price_dist: distribution.show,
+					priceDistTitle: distribution.title,
+					priceDistNameLabel: distribution.nameLabel,
 					aiSummary: aiSummary,
 					arr_sj6: res.data.arr_sj6 ? res.data.arr_sj6 : [],
 					tips: res.data.arr_sj ? res.data.arr_sj : '',
 					kuanian: res.data.arr_sj2_num,
           arr_sj2_dw: res.data.arr_sj2_dw,
-          is_ck:res.data.is_ck
+					is_ck:res.data.is_ck,
+					activeTab: activeTab
 				})
 				setTimeout(() => {
 					that.autorealval()
@@ -1565,7 +1631,7 @@ data: {
 									success(res) {
 										if (res.confirm) {
 											wx.redirectTo({
-												url: '/pages/user/myinfo',
+												url: '/pkg-user/user/myinfo',
 											})
 										}
 									}
@@ -1573,7 +1639,7 @@ data: {
 								return
               }
               wx.navigateTo({
-                url: '/pages/index/next?type=' + realval0 +
+                url: '/pkg-home/index/next?type=' + realval0 +
                   '&type2=' + (realval1 || '') +
                   '&typename=' + encodeURIComponent(typename || '')
               })

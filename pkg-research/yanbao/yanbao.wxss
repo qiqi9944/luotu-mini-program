@@ -1,0 +1,109 @@
+/* pages/yanbao/yanbao.wxss */
+page{
+	background-color: #f3f3f3;
+}
+.con{
+	padding: 0 25rpx;
+	padding-top: 30rpx;
+	background-color: #ebf6fc;
+	margin-top: -70rpx;
+	position: relative;
+	z-index: 99;
+	border-radius: 35rpx 35rpx 0 0 ;
+	box-sizing: border-box;
+  }
+  .sellist {
+	  padding-bottom: 110rpx;
+  }
+  .swiper-item .pic {
+	  border-radius: 20rpx;
+  }
+.newsbox {
+	width: 100%;
+	padding-top: 40rpx;
+	background-color: #fff;
+	margin-bottom: 25rpx;
+	border-radius: 25rpx;
+}
+
+.newsbox .up {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: stretch;
+}
+
+.newsbox .up .title {
+	font-size: 16px;
+	color: #333;
+	font-weight: bold;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.newsbox .up .title .sp{
+	color: #fff;
+	background-color: #cd3824;
+	border-radius: 50%;
+	padding: 0 8rpx;
+	margin: 0 3rpx;
+}
+
+.newsbox .up .more {
+	width: 35rpx;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.newsbox .up .more image {
+	width: 100%;
+}
+
+.newsbox .down {
+	width: 100%;
+	min-height: 300rpx;
+}
+
+.newsbox .down .item {
+	width: 100%;
+	padding: 30rpx 0;
+	border-bottom: 1rpx solid #eee;
+}
+.newsbox .down .item:last-child {
+	border-bottom: 0;
+}
+
+.newsbox .down .item .shang {
+	width: 100%;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	margin-bottom: 20rpx;
+}
+
+.newsbox .down .item .shang .pic {
+	width: 25rpx;
+	margin-right: 15rpx;
+	max-height: 12px;
+}
+
+.newsbox .down .item .shang .title {
+	width: 100%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	font-size: 14px;
+	color: #333;
+}
+
+.newsbox .down .item .xia {
+	width: 100%;
+	box-sizing: border-box;
+	font-size: 12px;
+	color: #999;
+}
+.swiper {
+    --box-width: 100vw;
+    height: calc(var(--box-width) / 3.6);
+    margin-bottom: 20rpx;
+}

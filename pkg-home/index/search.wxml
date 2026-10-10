@@ -1,0 +1,48 @@
+<!--pages/index/search.wxml-->
+<view class="con">
+	<view class="page-section page-section-spacing swiper">
+		<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}"
+			duration="{{duration}}" indicator-color="{{indicatorColor}}"
+			indicator-active-color="{{indicatorActiveColor}}">
+			<block wx:for="{{banner}}" wx:key="*this">
+				<swiper-item>
+					<view class="swiper-item">
+						<navigator url="{{item.url}}" class="swiper-item {{index}}"
+                            >
+						<image src="{{item.pic}}" mode="widthFix" class="pic"></image>
+						</navigator>
+					</view>
+				</swiper-item>
+			</block>
+		</swiper>
+	</view>
+	<!-- 搜索联动：相关品类，横向一行可滑动，避免多行留白 -->
+	<view class="catbox" wx:if="{{cats.length}}">
+		<view class="cathd">相关品类</view>
+		<scroll-view class="cattags" scroll-x enhanced show-scrollbar="{{false}}">
+			<block wx:for="{{cats}}" wx:key="name">
+				<view class="cattag" hover-class="tap-dim" bindtap="gotoCat" data-type="{{item.id}}">{{item.name}}</view>
+			</block>
+		</scroll-view>
+	</view>
+	<view class="newsbox" >
+		<view class="main" wx:if="{{list.length!=0}}">
+			<view class="newshd">相关报告</view>
+			<view class="down">
+				<block wx:for="{{list}}" wx:key="id">
+					<navigator url="/pkg-research/yanbao/view?id={{item.id}}" class="item">
+						<view class="l">
+							<view class="shang">
+								<view class="title"><image src="/pages/images/liststyle2.png" mode="widthFix" class="pic"></image>{{item.name}}</view>
+							</view>
+							<view class="xia">{{item.addtime}}</view>
+						</view>
+						<image src="{{item.pic}}" mode="widthFix" wx:if="{{item.pic}}" class="r"></image>
+					</navigator>
+				</block>
+			</view>
+			<view class="more" wx:if="{{!lastpage}}"  bindtap="getnews">查看更多></view>
+		</view>
+		<view class="noitem" wx:if="{{list.length==0}}">未搜索到相关内容</view>
+	</view>
+</view>

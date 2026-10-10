@@ -29,7 +29,7 @@ page::before {
 	box-sizing: border-box;
 	display: block;
 	white-space: nowrap;
-	background: linear-gradient(160deg, var(--ink-700) 0%, var(--ink-900) 100%);
+	background: linear-gradient(160deg, var(--ink-600) 0%, var(--ink-900) 100%);
 }
 .sellist2 .navrow {
 	position: relative;
@@ -64,7 +64,7 @@ page::before {
 	height: 420rpx;
 	border-radius: 50%;
 	pointer-events: none;
-	background: radial-gradient(circle, rgba(46, 134, 184, 0.42) 0%, rgba(46, 134, 184, 0) 70%);
+	background: radial-gradient(circle, rgba(66, 170, 225, 0.42) 0%, rgba(66, 170, 225, 0) 70%);
 }
 
 .sellist2 .item {
@@ -82,8 +82,8 @@ page::before {
 	text-align: center;
 	font-size: var(--fs-body-s);
 	line-height: 1.3;
-	/* 原 rgba(255,255,255,.3) 在深蓝上仅约 1.5:1，属于不可读；提到 .62 */
-	color: rgba(255, 255, 255, 0.62);
+	/* 原 rgba(255,255,255,.3) 在深蓝上仅约 1.5:1，属于不可读；提亮带后用 .8 维持对比 */
+	color: rgba(255, 255, 255, 0.8);
 	transition: color 0.2s ease;
 }
 .sellist2 .item.hover .title {
@@ -103,56 +103,55 @@ page::before {
 	margin-bottom: 16rpx;
 	transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
-/* 首字母底色：直接取设计令牌的标准分类色板（与产品结构饼图同源），
-   主色 → 压暗 -ink 做渐变，循环取色（index % 9），相邻品类色相尽量拉开。
+/* 顶部品类色：使用更明确的 RGB 分类色，循环取色（index % 9），相邻品类色相尽量拉开。
    注意这几条必须写在 .item.hover .pic 之前——两者选择器权重相同，
    靠书写顺序定胜负，否则选中态的白底会被渐变盖掉。 */
 .sellist2 .item .pic.icon-all {
-	background: linear-gradient(145deg, #7fb2cf 0%, #3d7b9e 100%);
+	background: linear-gradient(145deg, rgb(104, 151, 184) 0%, rgb(63, 106, 139) 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-c0 {
-	background: linear-gradient(145deg, var(--c-blue) 0%, var(--c-blue-ink) 100%);
+	background: linear-gradient(145deg, rgb(104, 151, 184) 0%, rgb(63, 106, 139) 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-c1 {
-	background: linear-gradient(145deg, var(--c-red) 0%, var(--c-red-ink) 100%);
+	background: linear-gradient(145deg, rgb(194, 125, 126) 0%, rgb(143, 78, 82) 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-c2 {
-	background: linear-gradient(145deg, var(--c-green) 0%, var(--c-green-ink) 100%);
+	background: linear-gradient(145deg, rgb(116, 168, 137) 0%, rgb(70, 122, 94) 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-c3 {
-	background: linear-gradient(145deg, var(--c-orange) 0%, var(--c-orange-ink) 100%);
+	background: linear-gradient(145deg, rgb(208, 158, 100) 0%, rgb(157, 105, 56) 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-c4 {
-	background: linear-gradient(145deg, var(--c-violet) 0%, var(--c-violet-ink) 100%);
+	background: linear-gradient(145deg, rgb(133, 137, 184) 0%, rgb(86, 89, 135) 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-c5 {
-	background: linear-gradient(145deg, var(--c-cyan) 0%, var(--c-cyan-ink) 100%);
+	background: linear-gradient(145deg, rgb(106, 165, 176) 0%, rgb(63, 117, 128) 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-c6 {
-	background: linear-gradient(145deg, var(--c-amber) 0%, var(--c-amber-ink) 100%);
+	background: linear-gradient(145deg, rgb(198, 170, 101) 0%, rgb(143, 116, 56) 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-c7 {
-	background: linear-gradient(145deg, var(--c-indigo) 0%, var(--c-indigo-ink) 100%);
+	background: linear-gradient(145deg, rgb(161, 132, 176) 0%, rgb(108, 81, 123) 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-c8 {
-	background: linear-gradient(145deg, var(--c-magenta) 0%, var(--c-magenta-ink) 100%);
+	background: linear-gradient(145deg, rgb(200, 135, 156) 0%, rgb(148, 82, 105) 100%);
 	border-color: transparent;
 }
 
-/* 选中态：白底 + 一圈外发光，在深色带上形成明确的焦点 */
+/* 选中态：白底 + 一圈琥珀外发光，在蓝色带上形成冷暖双色焦点 */
 .sellist2 .item.hover .pic {
 	background: var(--surface);
 	border-color: var(--surface);
-	box-shadow: 0 0 0 8rpx rgba(255, 255, 255, 0.14);
+	box-shadow: 0 0 0 8rpx rgba(255, 201, 60, 0.42);
 }
 /* 选中后底色转白，字必须跟着转墨蓝，否则白底白字 */
 .sellist2 .item.hover .pic .icon-letter {
@@ -176,7 +175,7 @@ page::before {
 }
 
 /* ---------- 顶部导航图标：复用首页那套线性图标（mask 上色） ----------
-   深色带上默认白色，选中态底色转白后图标随之转墨蓝。 */
+   深色带上默认白色，选中态底色转白后图标保留对应分类色。 */
 .sellist2 .svg-icon {
 	width: 48rpx;
 	height: 48rpx;
@@ -191,6 +190,34 @@ page::before {
 }
 .sellist2 .item.hover .pic .svg-icon {
 	background-color: var(--ink-700);
+}
+.sellist2 .item.hover .pic.icon-all .svg-icon,
+.sellist2 .item.hover .pic.icon-c0 .svg-icon {
+	background-color: rgb(78, 126, 160);
+}
+.sellist2 .item.hover .pic.icon-c1 .svg-icon {
+	background-color: rgb(171, 99, 102);
+}
+.sellist2 .item.hover .pic.icon-c2 .svg-icon {
+	background-color: rgb(86, 143, 110);
+}
+.sellist2 .item.hover .pic.icon-c3 .svg-icon {
+	background-color: rgb(181, 128, 72);
+}
+.sellist2 .item.hover .pic.icon-c4 .svg-icon {
+	background-color: rgb(108, 112, 163);
+}
+.sellist2 .item.hover .pic.icon-c5 .svg-icon {
+	background-color: rgb(78, 137, 148);
+}
+.sellist2 .item.hover .pic.icon-c6 .svg-icon {
+	background-color: rgb(169, 141, 71);
+}
+.sellist2 .item.hover .pic.icon-c7 .svg-icon {
+	background-color: rgb(132, 100, 148);
+}
+.sellist2 .item.hover .pic.icon-c8 .svg-icon {
+	background-color: rgb(171, 102, 127);
 }
 .svg-overview {
 	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4.5' width='18' height='12' rx='2'/%3E%3Cpath d='M9 20h6M12 16.5v3.5'/%3E%3Cpath d='M8 13v-2.5M12 13v-5M16 13v-3.5'/%3E%3C/svg%3E");
@@ -339,12 +366,25 @@ page::before {
 /* 分组容器：把「汇总卡 + 明细表」两段并进同一张外框，明确它们属于同一品类组。
    外框承载卡片外观（描边/圆角/阴影），内部两个 .box 退化为无外观的分区，中间一道分隔线。 */
 .group-wrap {
+	position: relative;
 	background-color: var(--surface);
-	border: 1rpx solid rgba(24, 58, 95, 0.08);
+	border: 1rpx solid var(--hairline-strong);
 	border-radius: 16rpx;
-	box-shadow: 0 10rpx 28rpx rgba(24, 58, 95, 0.05);
-	margin-bottom: 24rpx;
+	box-shadow: 0 10rpx 28rpx rgba(24, 58, 95, 0.06);
+	margin-bottom: 34rpx;
 	overflow: hidden;
+}
+/* 板块起始色条：每个品类组顶部一道品牌蓝渐变，作为「另起一块」的硬分隔，
+   配合组头的浅蓝底，组与组的边界在纸面上一眼可辨 */
+.group-wrap::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 6rpx;
+	z-index: 1;
+	background: linear-gradient(90deg, var(--ink-600) 0%, var(--ink-400) 100%);
 }
 .box.group-head,
 .box.group-body {
@@ -355,7 +395,18 @@ page::before {
 	background-color: transparent;
 }
 .box.group-head {
-	border-bottom: 1rpx solid var(--hairline);
+	border-bottom: 4rpx solid var(--signal);
+	background-color: var(--ink-050);
+}
+/* 表格区顶部叠一道内阴影，与组头的粗分割线一起形成「翻页」的层次，
+   让「品类总览」和「品类表格」明确分成上下两块 */
+.box.group-body {
+	box-shadow: inset 0 12rpx 16rpx -14rpx rgba(24, 58, 95, 0.22);
+}
+/* 组头浅蓝底铺满整块，内部行与指标区一律透明，避免出现白色补丁 */
+.box.group-head .up,
+.box.group-head .up4 {
+	background-color: transparent;
 }
 .box .up {
 	width: 100%;
@@ -380,11 +431,11 @@ page::before {
 	align-items: center;
 }
 .box .up .l .title {
-	font-size: var(--fs-body);
+	font-size: var(--fs-title);
 	line-height: 1.2;
 	font-weight: 700;
-	color: var(--ink-800);
-	letter-spacing: 0;
+	color: var(--ink-700);
+	letter-spacing: 0.5rpx;
 }
 .box .up .r {
 	display: flex;
@@ -399,17 +450,17 @@ page::before {
 /* 两根小竖条原为红色方块，与「红＝上涨」的语义冲突。
    改成墨蓝的递增双柱，正好读作一枚微型柱状图字符。 */
 .box .up .l .fk {
-	width: 4rpx;
-	height: 16rpx;
+	width: 5rpx;
+	height: 20rpx;
 	margin-right: 5rpx;
 	border-radius: 6rpx;
 	background-color: rgba(0, 93, 153, 0.28);
 	flex-shrink: 0;
 }
 .box .up .l .fk2 {
-	width: 4rpx;
-	height: 24rpx;
-	margin-right: 12rpx;
+	width: 6rpx;
+	height: 30rpx;
+	margin-right: 14rpx;
 	border-radius: 6rpx;
 	background-color: var(--ink-600);
 	flex-shrink: 0;
@@ -650,50 +701,55 @@ page::before {
 	border: 0;
 	margin-bottom: 24rpx;
 }
-/* 数据格纵向堆叠：上=本期值（大、墨蓝），下=同比（小、带涨跌色的胶囊），
-   两者层级拉开，避免「两个数字挤一行」分不清谁是本期值、谁是同比 */
+/* 数据格横向排布：左=本期值（墨蓝加粗），紧跟一个纯文字同比（彩色+小箭头），
+   数字与涨跌同一行、贴紧排列，去掉胶囊背景，表更清爽 */
 .box .down .table .td:not(.titletd2) {
-	flex-direction: column;
+	flex-direction: row;
 	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: center;
 	gap: 6rpx;
+}
+.box .down .table .td:not(.titletd2) .num {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 .box .down .table .num {
 	margin-right: 0;
-	font-size: var(--fs-title);
+	font-size: var(--fs-body);
 	font-weight: 700;
 	line-height: 1.1;
+	font-variant-numeric: tabular-nums;
 	color: var(--ink-700);
 }
 .box .down .table .num2 {
-	display: flex;
+	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	padding: 2rpx 10rpx;
-	border-radius: 999rpx;
+	padding: 0;
+	border-radius: 0;
 	font-size: var(--fs-caption);
 	font-weight: 600;
-	line-height: 1.4;
+	line-height: 1.1;
 	color: var(--text-3);
-	background-color: var(--ink-050);
+	background-color: transparent;
 }
 .box .down .table .num2.hong {
 	color: var(--rise);
-	background-color: var(--c-red-soft);
+	background-color: transparent;
 }
 .box .down .table .num2.lv {
 	color: var(--fall);
-	background-color: var(--c-green-soft);
+	background-color: transparent;
 }
 .box .down .table .num2 .img {
-	width: 14rpx;
-	margin-left: 6rpx;
-	max-height: 18rpx;
+	width: 12rpx;
+	margin-left: 4rpx;
+	max-height: 14rpx;
 }
 .box .down .table .juzhong {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
+	display: contents;
 }
 
 /* 首列可点进详情，用墨蓝字色 + 右侧小箭头把「可点」说清楚。
@@ -705,6 +761,16 @@ page::before {
 	font-size: var(--fs-body-s);
 	font-weight: 500;
 	color: var(--ink-700);
+	flex-wrap: nowrap;
+	overflow: hidden;
+	white-space: nowrap;
+}
+.titletd2 .title-text {
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 .titletd2::after {
 	content: "";
@@ -729,6 +795,12 @@ page::before {
 .titleth {
 	justify-content: flex-start;
 	padding-left: 12rpx;
+}
+
+/* 数值列按列居中，表头和内容保持同一视觉中心 */
+.box .down .table .tr:first-child .th:not(.titleth) {
+	justify-content: center;
+	text-align: center;
 }
 
 /* ---------- 图表 ---------- */

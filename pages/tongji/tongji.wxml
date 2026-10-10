@@ -2,13 +2,13 @@
 <scroll-view class="sellist2" scroll-x enhanced show-scrollbar="{{false}}" scroll-with-animation>
 	<view class="navrow">
 		<view class="item {{sel==1?'hover':''}}" data-type="1" bindtap="selchage" hover-class="tap-dim" hover-stay-time="80">
-			<view class="pic">
+			<view class="pic icon-all">
 				<view class="svg-icon svg-overview"></view>
 			</view>
 			<view class="title">总览</view>
 		</view>
 		<view class="item {{sel==item.sel?'hover':''}}" wx:for="{{groupList}}" wx:key="sel" data-type="{{item.sel}}" data-id="{{item.type}}" bindtap="selchage" hover-class="tap-dim" hover-stay-time="80">
-			<view class="pic">
+			<view class="pic icon-c{{item.colorIndex}}">
 				<view class="svg-icon svg-{{item.iconClass}}"></view>
 			</view>
 			<view class="title">{{item.name}}</view>
@@ -68,14 +68,14 @@
 				<view class="down">
 					<view class="table">
 						<view class="tr">
-							<view class="th wd30 titleth">品类</view>
-							<view class="th wd40">销售数量（万台）</view>
-							<view class="th wd30">平均价格（元）</view>
+							<view class="th wd26 titleth">品类</view>
+							<view class="th wd38">销售数量（万台）</view>
+							<view class="th wd36">平均价格（元）</view>
 						</view>
 						<block wx:for="{{group.sj2}}" wx:for-item="row" wx:key="index">
 							<view class="tr">
-								<view class="td wd30 titletd2" hover-class="tap-row" data-type="{{group.sel}}" data-id="{{row.id}}" data-typename="{{row.t1}}" bindtap="selchage">{{row.t1}}</view>
-								<view class="td wd40">
+								<view class="td wd26 titletd2" hover-class="tap-row" data-type="{{group.sel}}" data-id="{{row.id}}" data-typename="{{row.t1}}" bindtap="selchage"><view class="title-text">{{row.t1}}</view></view>
+								<view class="td wd38">
 									<view class="num">{{row.t2}}</view>
 									<view class="juzhong">
 										<view class="num2 {{row.t3zf=='+'?'hong':row.t3zf=='-'?'lv':null}}">
@@ -85,7 +85,7 @@
 										</view>
 									</view>
 								</view>
-								<view class="td wd30">
+								<view class="td wd36">
 									<view class="num">{{row.t4}}</view>
 									<view class="juzhong">
 										<view class="num2 {{row.t5zf=='+'?'hong':row.t5zf=='-'?'lv':null}}">
@@ -104,14 +104,25 @@
 			</view>
 			</block>
 			<!-- 核心器件：供应链子块 -->
-			<view class="box" wx:if="{{group.branch=='tvs'}}">
+			<view class="group-wrap" wx:if="{{group.branch=='tvs'}}">
+			<view class="box group-head">
 				<view class="up up4">
 					<view class="l">
 						<view class="fk"></view>
 						<view class="fk2"></view>
 						<view class="title">{{group.name}}</view>
 					</view>
+					<view class="r">
+						<picker bindchange="bindPickerChange" data-name="yjn2" data-real="realyjn2" value="{{yjn2}}" range-key="name" range="{{arryjn2}}">
+							<view class="picker">
+								{{arryjn2[yjn2].name}}
+								<image src="/pages/images/sanjiao3.png" mode="widthFix" class="sj"></image>
+							</view>
+						</picker>
+					</view>
 				</view>
+			</view>
+			<view class="box group-body">
 				<view class="down">
 					<view class="subbox">
 						<view class="tvsgroup-hd"><text class="tvsgroup-title">电视供应链</text></view>
@@ -230,6 +241,7 @@
 				</view>
 				<view class="tips">{{group.tips}}</view>
 			</view>
+			</view>
 		</block>
 	</block>
 	<block wx:if="{{(!xqData || xqData.length==0) && sel!=1}}">
@@ -318,7 +330,7 @@
 		<view class="tabbar">
 			<view class="tabitem {{activeTab=='scale'?'active':''}}" hover-class="tap-dim" bindtap="switchTab" data-tab="scale">行业规模</view>
 			<view class="tabitem {{activeTab=='brand'?'active':''}}" hover-class="tap-dim" bindtap="switchTab" data-tab="brand">品牌竞争</view>
-			<view class="tabitem {{activeTab=='price'?'active':''}}" hover-class="tap-dim" bindtap="switchTab" data-tab="price">价格分布</view>
+			<view class="tabitem {{activeTab=='price'?'active':''}}" hover-class="tap-dim" bindtap="switchTab" data-tab="price" wx:if="{{price_dist}}">{{priceDistTitle}}</view>
 			<view class="tabitem {{activeTab=='structure'?'active':''}}" hover-class="tap-dim" bindtap="switchTab" data-tab="structure">产品结构</view>
 			<view class="tabitem {{activeTab=='ai'?'active':''}}" hover-class="tap-dim" bindtap="switchTab" data-tab="ai">AI说</view>
 		</view>
@@ -348,15 +360,15 @@
 		<view class="panel" wx:if="{{activeTab=='brand'}}">
 			<view class="chart-card" hidden="{{!brandList.length}}">
 				<view class="card-head">
-					<view class="card-title">品牌竞争</view>
+					<view class="card-title">{{brandTitle}}</view>
 				</view>
 				<view class="price-table">
 					<view class="price-table-head">
-						<view class="price-cell brand-cell-name">品牌</view>
+						<view class="price-cell brand-cell-name">{{brandNameLabel}}</view>
 						<view class="price-cell brand-cell-share">市占率</view>
 						<view class="price-cell brand-cell-change">市占率增减</view>
-						<view class="price-cell brand-cell-price">平均价格</view>
-						<view class="price-cell brand-cell-pricec">均价变化</view>
+						<view class="price-cell brand-cell-price" wx:if="{{brandHasPrice}}">平均价格</view>
+						<view class="price-cell brand-cell-pricec" wx:if="{{brandHasPrice}}">均价变化</view>
 					</view>
 					<block wx:for="{{brandList}}" wx:key="index">
 						<view class="price-table-row">
@@ -367,8 +379,8 @@
 								<image src="../images/sheng1.png" mode="widthFix" class="price-arrow" wx:if="{{item.share_czf=='+'}}"></image>
 								<image src="../images/jiang1.png" mode="widthFix" class="price-arrow" wx:if="{{item.share_czf=='-'}}"></image>
 							</view>
-							<view class="price-cell brand-cell-price">{{item.price}}</view>
-							<view class="price-cell brand-cell-pricec">
+							<view class="price-cell brand-cell-price" wx:if="{{brandHasPrice}}">{{item.price}}</view>
+							<view class="price-cell brand-cell-pricec" wx:if="{{brandHasPrice}}">
 								<text class="price-change {{item.price_czf=='+'?'up':item.price_czf=='-'?'down':''}}">{{item.price_c}}</text>
 								<image src="../images/sheng1.png" mode="widthFix" class="price-arrow" wx:if="{{item.price_czf=='+'}}"></image>
 								<image src="../images/jiang1.png" mode="widthFix" class="price-arrow" wx:if="{{item.price_czf=='-'}}"></image>
@@ -380,14 +392,14 @@
 			<view class="empty-text" hidden="{{brandList.length}}">暂无品牌竞争数据</view>
 		</view>
 
-		<view class="panel" wx:if="{{activeTab=='price'}}">
+		<view class="panel" wx:if="{{activeTab=='price' && price_dist}}">
 			<view class="chart-card" hidden="{{!price_dist || !priceList.length}}">
 				<view class="card-head">
-					<view class="card-title">价格分布</view>
+					<view class="card-title">{{priceDistTitle}}</view>
 				</view>
 				<view class="price-table">
 					<view class="price-table-head">
-						<view class="price-cell price-cell-name">价格段</view>
+						<view class="price-cell price-cell-name">{{priceDistNameLabel}}</view>
 						<view class="price-cell price-cell-share">市占率</view>
 						<view class="price-cell price-cell-change">市占率增减</view>
 					</view>
@@ -404,7 +416,7 @@
 					</block>
 				</view>
 			</view>
-			<view class="empty-text" hidden="{{price_dist && priceList.length}}">暂无价格分布数据</view>
+			<view class="empty-text" hidden="{{priceList.length}}">暂无价格分布数据</view>
 		</view>
 
 		<view class="panel" wx:if="{{activeTab=='structure'}}">

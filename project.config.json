@@ -5,6 +5,10 @@
       {
         "value": ".eslintrc.js",
         "type": "file"
+      },
+      {
+        "value": "pkg-research/wxParse/emojis",
+        "type": "folder"
       }
     ],
     "include": []

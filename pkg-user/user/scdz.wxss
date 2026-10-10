@@ -1,0 +1,69 @@
+/* pages/user/scdz.wxss */
+page {
+	background-color: #ebf6fc;
+}
+
+.con {
+	padding: 0 10rpx;
+	padding-top: 30rpx;
+	background-color: #ebf6fc;
+	margin-top: -70rpx;
+	position: relative;
+	z-index: 99;
+	border-radius: 35rpx 35rpx 0 0;
+	box-sizing: border-box;
+	min-height: 400rpx;
+}
+
+.sellist {
+	padding-bottom: 110rpx;
+}
+.con scroll-view{
+	height: 100%;
+}
+.con .item{
+	width: calc(100% - 30rpx);
+	padding: 40rpx 25rpx;
+	background-color: #fff;
+	box-sizing: border-box;
+	box-shadow: 0 0 25rpx #ddd;
+	border-radius: 25rpx;
+	display: flex;
+	justify-content: flex-start;
+	align-items: stretch;
+	margin: 15rpx;
+	margin-bottom: 20rpx;
+}
+.con .item .l{
+	width: 140rpx;
+	height: auto;
+	margin-right: 25rpx;
+	flex-shrink: 0;
+}
+.con .item .r{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.con .item .r .p1{
+	width: 100%;
+	font-size: 14px;
+	color: #333;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+	margin-bottom: 15rpx;
+}
+.con .item .r .p2{
+	width: 100%;
+	font-size: 12px;
+	color: #999;
+}
+.tips{
+	width: 100%;
+	font-size: 14px;
+	color: #999;
+	text-align: center;
+}

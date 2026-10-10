@@ -3,28 +3,47 @@
 		"pages/index/index",
 		"pages/user/user",
 		"pages/tongji/tongji",
-		"pages/yanbao/yanbao",
-		"pages/news/news",
-		"pages/index/next",
-		"pages/index/next1",
-		"pages/index/next2",
-		"pages/index/list",
 		"pages/yanbao/redian",
-		"pages/yanbao/list",
-		"pages/yanbao/view",
-		"pages/user/myinfo",
-		"pages/user/member",
-		"pages/user/history",
-		"pages/user/scdz",
-		"pages/error/error",
-		"pages/index/more",
-		"pages/user/about",
-		"pages/index/search",
-		"pages/index/filter",
-		"pages/user/join"
+		"pages/error/error"
+	],
+	"subpackages": [
+		{
+			"root": "pkg-home",
+			"name": "home",
+			"pages": [
+				"index/next",
+				"index/next1",
+				"index/next2",
+				"index/more",
+				"index/search",
+				"index/filter"
+			]
+		},
+		{
+			"root": "pkg-research",
+			"name": "research",
+			"pages": [
+				"yanbao/yanbao",
+				"yanbao/list",
+				"yanbao/view",
+				"news/news"
+			]
+		},
+		{
+			"root": "pkg-user",
+			"name": "user",
+			"pages": [
+				"user/myinfo",
+				"user/member",
+				"user/history",
+				"user/scdz",
+				"user/about",
+				"user/join"
+			]
+		}
 	],
 	"tabBar": {
-		"selectedColor": "#055586",
+		"selectedColor": "#1287c8",
 		"color": "#333",
 		"list": [
 			{
@@ -55,10 +74,10 @@
 	},
 	"window": {
 		"backgroundTextStyle": "light",
-		"navigationBarBackgroundColor": "#044168",
+		"navigationBarBackgroundColor": "#1287c8",
 		"navigationBarTitleText": "洛图科技",
 		"navigationBarTextStyle": "white",
-		"backgroundColor": "#edf3f7",
+		"backgroundColor": "#eef6fb",
 		"enablePullDownRefresh": true
 	},
 	"style": "v2",

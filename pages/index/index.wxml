@@ -71,7 +71,7 @@ module.exports.pad = function (n) { return n > 9 ? '' + n : '0' + n }
         </view>
         <view class="dclist">
             <block wx:for="{{newslist}}" wx:key="id">
-                <navigator url="../yanbao/view?id={{item.id}}" class="item" hover-class="tap-row">
+                <navigator url="/pkg-research/yanbao/view?id={{item.id}}" class="item" hover-class="tap-row">
                     <view class="ord">{{fmt.pad(index + 1)}}</view>
                     <view class="body">
                         <view class="p1">

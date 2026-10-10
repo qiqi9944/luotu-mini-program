@@ -82,7 +82,7 @@ App({
                   success(res) {
                     if (res.confirm) {
                       wx.redirectTo({
-                        url: '/pages/user/myinfo',
+                        url: '/pkg-user/user/myinfo',
                       })
                     }
                   }

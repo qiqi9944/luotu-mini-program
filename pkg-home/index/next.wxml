@@ -1,0 +1,219 @@
+<!-- pages/index/next.wxml -->
+<view class="page">
+	<view class="filter-card">
+		<view class="selector-grid">
+			<picker class="selector-cell selector-cell-wide" bindchange="bindPickerChange" data-name="val0" data-real="realval0" value="{{val0}}" range-key="name" range="{{arrval0}}">
+				<view class="selector-main">
+					<text class="selector-label">品类</text>
+					<view class="selector-meta">
+						<text class="selector-value">{{arrval0[val0] ? arrval0[val0]['name'] : '请选择'}}</text>
+						<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
+					</view>
+				</view>
+			</picker>
+
+			<view class="selector-row">
+				<picker class="selector-cell" bindchange="bindPickerChange" data-name="val1" data-real="realval1" value="{{val1}}" range-key="name" range="{{arrval1}}">
+					<view class="selector-main">
+						<text class="selector-label">渠道</text>
+						<view class="selector-meta">
+							<text class="selector-value">{{arrval1[val1] ? arrval1[val1]['name'] : '全部'}}</text>
+							<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
+						</view>
+					</view>
+				</picker>
+
+				<picker class="selector-cell" bindchange="bindPickerChange" data-name="val2" data-real="realval2" value="{{val2}}" range-key="name" range="{{arrval2}}">
+					<view class="selector-main">
+						<text class="selector-label">销售</text>
+						<view class="selector-meta">
+							<text class="selector-value">{{arrval2[val2] ? arrval2[val2]['name'] : '全部'}}</text>
+							<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
+						</view>
+					</view>
+				</picker>
+
+				<picker class="selector-cell" bindchange="bindLocalPickerChange" data-name="changeIndex" value="{{changeIndex}}" range-key="name" range="{{changeOptions}}">
+					<view class="selector-main">
+						<text class="selector-label">变化</text>
+						<view class="selector-meta">
+							<text class="selector-value">{{changeOptions[changeIndex]['name']}}</text>
+							<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
+						</view>
+					</view>
+				</picker>
+			</view>
+
+			<view class="selector-row">
+				<picker class="selector-cell" bindchange="bindLocalPickerChange" data-name="periodIndex" value="{{periodIndex}}" range-key="name" range="{{periodOptions}}">
+					<view class="selector-main">
+						<text class="selector-label">时间</text>
+						<view class="selector-meta">
+							<text class="selector-value">{{periodOptions[periodIndex]['name']}}</text>
+							<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
+						</view>
+					</view>
+				</picker>
+
+				<picker class="selector-cell" bindchange="bindPickerChange" data-name="val3" data-real="realval3" value="{{val3}}" range-key="name" range="{{arrval3}}">
+					<view class="selector-main">
+						<text class="selector-label">周期</text>
+						<view class="selector-meta">
+							<text class="selector-value">{{arrval3[val3] ? arrval3[val3]['name'] : '请选择'}}</text>
+							<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
+						</view>
+					</view>
+				</picker>
+
+				<picker class="selector-cell" bindchange="bindLocalPickerChange" data-name="ytdIndex" value="{{ytdIndex}}" range-key="name" range="{{ytdOptions}}">
+					<view class="selector-main">
+						<text class="selector-label">累计</text>
+						<view class="selector-meta">
+							<text class="selector-value">{{ytdOptions[ytdIndex]['name']}}</text>
+							<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
+						</view>
+					</view>
+				</picker>
+			</view>
+		</view>
+	</view>
+
+	<view class="tabbar">
+		<view class="tabitem {{activeTab=='scale'?'active':''}}" bindtap="switchTab" data-tab="scale">行业规模</view>
+		<view class="tabitem {{activeTab=='brand'?'active':''}}" bindtap="switchTab" data-tab="brand">品牌竞争</view>
+		<view class="tabitem {{activeTab=='price'?'active':''}}" bindtap="switchTab" data-tab="price" wx:if="{{price_dist}}">{{priceDistTitle}}</view>
+		<view class="tabitem {{activeTab=='structure'?'active':''}}" bindtap="switchTab" data-tab="structure">产品结构</view>
+		<view class="tabitem {{activeTab=='ai'?'active':''}}" bindtap="switchTab" data-tab="ai">AI说</view>
+	</view>
+
+	<view wx:if="{{!xqData || xqData.length==0}}" class="empty-state">
+		<image src="/pages/images/error.png" mode="widthFix" class="empty-icon"></image>
+		<view class="empty-text">正在建设中，敬请期待...</view>
+	</view>
+
+	<block wx:else>
+		<view class="panel" wx:if="{{activeTab=='scale'}}">
+			<view class="chart-card">
+				<view class="card-head">
+					<view class="card-title">{{arrval2[val2] ? arrval2[val2].name : '销量'}}（{{arr_sj2_dw}}）</view>
+					<view class="card-sub">{{changeOptions[changeIndex]['name']}}</view>
+				</view>
+				<view class="chart-frame">
+					<ec-canvas id="mychart-dom-bar" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-scale" ec="{{ ec }}"></ec-canvas>
+				</view>
+			</view>
+
+			<view class="chart-card" hidden="{{!chart2x.length}}">
+				<view class="card-head">
+					<view class="card-title">平均价格（元）</view>
+					<view class="card-sub">{{changeOptions[changeIndex]['name']}}</view>
+				</view>
+				<view class="chart-frame">
+					<ec-canvas id="mychart-dom-bar2" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-price" ec="{{ ec2 }}"></ec-canvas>
+				</view>
+			</view>
+		</view>
+
+		<view class="panel" wx:if="{{activeTab=='brand'}}">
+			<view class="chart-card" hidden="{{!brandList.length}}">
+				<view class="card-head">
+					<view class="card-title">{{brandTitle}}</view>
+				</view>
+				<view class="price-table">
+					<view class="price-table-head">
+						<view class="price-cell brand-cell-name">{{brandNameLabel}}</view>
+						<view class="price-cell brand-cell-share">市占率</view>
+						<view class="price-cell brand-cell-change">市占率增减</view>
+						<view class="price-cell brand-cell-price" wx:if="{{brandHasPrice}}">平均价格</view>
+						<view class="price-cell brand-cell-pricec" wx:if="{{brandHasPrice}}">均价变化</view>
+					</view>
+					<block wx:for="{{brandList}}" wx:key="index">
+						<view class="price-table-row">
+							<view class="price-cell brand-cell-name">{{item.name}}</view>
+							<view class="price-cell brand-cell-share">{{item.share}}</view>
+							<view class="price-cell brand-cell-change">
+								<text class="price-change {{item.share_czf=='+'?'up':item.share_czf=='-'?'down':''}}">{{item.share_c}}</text>
+								<image src="../images/sheng1.png" mode="widthFix" class="price-arrow" wx:if="{{item.share_czf=='+'}}"></image>
+								<image src="../images/jiang1.png" mode="widthFix" class="price-arrow" wx:if="{{item.share_czf=='-'}}"></image>
+							</view>
+							<view class="price-cell brand-cell-price" wx:if="{{brandHasPrice}}">{{item.price}}</view>
+							<view class="price-cell brand-cell-pricec" wx:if="{{brandHasPrice}}">
+								<text class="price-change {{item.price_czf=='+'?'up':item.price_czf=='-'?'down':''}}">{{item.price_c}}</text>
+								<image src="../images/sheng1.png" mode="widthFix" class="price-arrow" wx:if="{{item.price_czf=='+'}}"></image>
+								<image src="../images/jiang1.png" mode="widthFix" class="price-arrow" wx:if="{{item.price_czf=='-'}}"></image>
+							</view>
+						</view>
+					</block>
+				</view>
+			</view>
+			<view class="empty-text" hidden="{{brandList.length}}">暂无品牌竞争数据</view>
+		</view>
+
+		<view class="panel" wx:if="{{activeTab=='price' && price_dist}}">
+			<view class="chart-card" hidden="{{!price_dist || !priceList.length}}">
+				<view class="card-head">
+					<view class="card-title">{{priceDistTitle}}</view>
+				</view>
+				<view class="price-table">
+					<view class="price-table-head">
+						<view class="price-cell price-cell-name">{{priceDistNameLabel}}</view>
+						<view class="price-cell price-cell-share">市占率</view>
+						<view class="price-cell price-cell-change">市占率增减</view>
+					</view>
+					<block wx:for="{{priceList}}" wx:key="index">
+						<view class="price-table-row">
+							<view class="price-cell price-cell-name">{{item.t1}}</view>
+							<view class="price-cell price-cell-share">{{item.t2}}</view>
+							<view class="price-cell price-cell-change">
+								<text class="price-change {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">{{item.t3}}</text>
+								<image src="../images/sheng1.png" mode="widthFix" class="price-arrow" wx:if="{{item.t3zf=='+'}}"></image>
+								<image src="../images/jiang1.png" mode="widthFix" class="price-arrow" wx:if="{{item.t3zf=='-'}}"></image>
+							</view>
+						</view>
+					</block>
+				</view>
+			</view>
+			<view class="empty-text" hidden="{{priceList.length}}">暂无价格分布数据</view>
+		</view>
+
+		<view class="panel" wx:if="{{activeTab=='structure'}}">
+			<view class="chart-card" hidden="{{(!arr_sj6.t1 && !arr_sj6.t2)?true:false}}">
+				<view class="card-head">
+					<view class="card-title" wx:if="{{realval1 == 10}}">地区出口量结构(%)</view>
+					<view class="card-title" wx:else>产品结构(%)</view>
+				</view>
+				<view class="chart-frame chart-frame-pie" hidden="{{!arr_sj6.t1}}">
+					<ec-canvas id="mychart-dom-bar3" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-structure-1" ec="{{ ec3 }}"></ec-canvas>
+				</view>
+				<view class="divider" hidden="{{!arr_sj6.t1 || !arr_sj6.t2}}"></view>
+				<view class="chart-frame chart-frame-pie" hidden="{{!arr_sj6.t2}}">
+					<ec-canvas id="mychart-dom-bar4" force-use-old-canvas="true" class="chartdom" canvas-id="mychart-structure-2" ec="{{ ec4 }}"></ec-canvas>
+				</view>
+			</view>
+		</view>
+
+		<view class="panel" wx:if="{{activeTab=='ai'}}">
+			<view class="ai-summary-card">
+				<view class="ai-summary-list">
+					<block wx:for="{{aiSummary}}" wx:key="key">
+						<view class="ai-summary-item">
+							<view class="ai-summary-icon ai-summary-icon-{{item.key}}">{{item.icon}}</view>
+							<view class="ai-summary-content">
+								<text class="ai-summary-title">{{item.title}}</text>
+								<text class="ai-summary-text">{{item.before}}</text>
+								<text class="ai-summary-value {{item.tone}}">{{item.value}}</text>
+								<text class="ai-summary-highlight {{item.tone}}" wx:if="{{item.highlight}}">{{item.highlight}}</text>
+								<text class="ai-summary-text">{{item.after}}</text>
+							</view>
+							<text class="ai-summary-arrow">›</text>
+						</view>
+					</block>
+				</view>
+			</view>
+		</view>
+
+		<view class="source-note" wx:if="{{activeTab!='ai' && tips}}">{{tips}}</view>
+	</block>
+
+	<view class="blank20"></view>
+</view>

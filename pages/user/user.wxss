@@ -12,7 +12,7 @@ page {
 	left: 0;
 	z-index: -1;
 	overflow: hidden;
-	background: linear-gradient(160deg, var(--ink-700) 0%, var(--ink-900) 100%);
+	background: linear-gradient(160deg, var(--ink-600) 0%, var(--ink-900) 100%);
 }
 .banner::before {
 	content: "";
@@ -36,7 +36,7 @@ page {
 	width: 420rpx;
 	height: 420rpx;
 	border-radius: 50%;
-	background: radial-gradient(circle, rgba(46, 134, 184, 0.42) 0%, rgba(46, 134, 184, 0) 70%);
+	background: radial-gradient(circle, rgba(66, 170, 225, 0.42) 0%, rgba(66, 170, 225, 0) 70%);
 }
 
 .main {
