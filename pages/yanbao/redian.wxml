@@ -22,10 +22,6 @@
 				<text>报告专区</text>
 				<view class="underline"></view>
 			</view>
-			<view class="item {{currentTab==3?'hover':''}}" data-type="3" bindtap="nextpage">
-				<text>小视频</text>
-				<view class="underline"></view>
-			</view>
 			<view class="item {{currentTab==4?'hover':''}}" data-type="4" bindtap="nextpage">
 				<text>活动</text>
 				<view class="underline"></view>
