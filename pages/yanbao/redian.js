@@ -20,6 +20,11 @@ Page({
 		lastpage2: 0,
 		activityBanners: [],
 		videolist: [],
+		videoUrl: '',
+		videoFeedId: '',
+		videoFeedToken: '',
+		videoFinder: '',
+		showVideoMask: false,
 	},
 	getnews: function () {
 		let that = this;
@@ -102,12 +107,28 @@ Page({
 		if (!d.url && !d.feedid && !d.feedtoken) {
 			return false
 		}
+		this.setData({
+			showVideoMask: true,
+			videoUrl: d.url || '',
+			videoFeedId: d.feedid || '',
+			videoFeedToken: d.feedtoken || '',
+			videoFinder: d.finder || ''
+		})
 		if (d.id) {
 			wx.request({
 				url: app.globalData.siteUrl + '/Wxapi/getvideoclick',
 				data: { id: d.id }
 			})
 		}
+	},
+	closeVideo: function () {
+		this.setData({
+			showVideoMask: false,
+			videoUrl: '',
+			videoFeedId: '',
+			videoFeedToken: '',
+			videoFinder: ''
+		})
 	},
 	noop: function () {
 	},
