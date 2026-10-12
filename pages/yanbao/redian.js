@@ -91,6 +91,13 @@ Page({
 			}
 		})
 	},
+	bannerImgError: function (e) {
+		let id = e.currentTarget.dataset.id
+		let banners = this.data.activityBanners.map(function (b) {
+			return b.id == id ? Object.assign({}, b, { bannerpic: '', pic: '' }) : b
+		})
+		this.setData({ activityBanners: banners })
+	},
 	getvideo: function () {
 		let that = this;
 		wx.request({

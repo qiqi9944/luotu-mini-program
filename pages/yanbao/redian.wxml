@@ -143,7 +143,7 @@
 		<view class="activity-list" wx:if="{{activityBanners.length}}">
 			<block wx:for="{{activityBanners}}" wx:key="id">
 				<navigator url="/pkg-research/yanbao/view?id={{item.id}}" class="activity-banner" hover-class="tap-dim" hover-stay-time="80">
-					<image wx:if="{{item.bannerpic || item.pic}}" src="{{item.bannerpic || item.pic}}" mode="widthFix" class="activity-banner-img"></image>
+					<image wx:if="{{item.bannerpic || item.pic}}" src="{{item.bannerpic || item.pic}}" mode="widthFix" class="activity-banner-img" data-id="{{item.id}}" binderror="bannerImgError"></image>
 					<view wx:else class="activity-banner-fallback">
 						<view class="activity-banner-title">{{item.name}}</view>
 						<view class="activity-banner-date">{{item.addtime}}</view>
