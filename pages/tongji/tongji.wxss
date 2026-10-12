@@ -552,18 +552,26 @@ page::before {
 	display: flex;
 	align-items: baseline;
 	flex-shrink: 0;
+	/* 右侧整块定宽 + 右对齐：表头与各行数字右缘落在同一列 */
+	min-width: 240rpx;
+	justify-content: flex-end;
 }
 
-/* 数量列：固定最小宽 + 右对齐，保证各行与表头「销量（万台）」右缘对齐 */
 .tvsrow-qtywrap {
 	display: flex;
 	align-items: baseline;
 }
-/* 同比百分比紧贴销量，去掉原来右对齐的独立列 */
+/* 同比百分比紧贴销量 */
 .tvsrow-qtywrap .tvsrow-yoy {
+	display: flex;
+	align-items: center;
 	min-width: 0;
-	margin-left: 10rpx;
+	margin-left: 6rpx;
 	justify-content: flex-start;
+}
+.tvsrow-qtywrap .subarrow {
+	width: 18rpx;
+	margin-left: 4rpx;
 }
 
 .tvsrow-qty {
@@ -601,6 +609,8 @@ page::before {
 	display: flex;
 	align-items: center;
 	flex-shrink: 0;
+	min-width: 240rpx;
+	justify-content: flex-end;
 }
 .tvshead-qty {
 	font-size: var(--fs-caption);

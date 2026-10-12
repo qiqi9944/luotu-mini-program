@@ -468,6 +468,8 @@ page {
   align-items: center;
   gap: 4rpx;
   flex-shrink: 0;
+  min-width: 240rpx;
+  justify-content: flex-end;
 }
 
 .tvsrow-qtywrap {
@@ -476,9 +478,15 @@ page {
 }
 
 .tvsrow-qtywrap .tvsrow-yoy {
+  display: flex;
+  align-items: center;
   min-width: 0;
-  margin-left: 10rpx;
+  margin-left: 6rpx;
   justify-content: flex-start;
+}
+.tvsrow-qtywrap .subarrow {
+  width: 18rpx;
+  margin-left: 4rpx;
 }
 
 .tvsrow-qty {
@@ -512,6 +520,8 @@ page {
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  min-width: 240rpx;
+  justify-content: flex-end;
 }
 .tvshead-qty {
   font-size: 22rpx;
