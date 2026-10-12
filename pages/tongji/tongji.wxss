@@ -591,7 +591,13 @@ page::before {
 	white-space: nowrap;
 }
 
-/* 供应链子列表表头：与 .tvsrow 列对齐（品类/销量/同比） */
+/* 供应链子列表：改用与「品质生活」一致的标准表格，保证行列对齐 */
+.wd74 {
+	width: 74%;
+}
+.tvs-table {
+	margin-bottom: 8rpx;
+}
 .tvshead {
 	display: flex;
 	align-items: center;
