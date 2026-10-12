@@ -561,12 +561,14 @@ page::before {
 	font-weight: 700;
 	line-height: 1.1;
 	color: var(--ink-700);
+	white-space: nowrap;
 }
 
 .tvsrow-unit {
 	margin-left: 4rpx;
 	font-size: var(--fs-caption);
 	color: var(--text-3);
+	white-space: nowrap;
 }
 
 /* 同比固定 96rpx 并右对齐，六个子块的箭头因此上下成列 */

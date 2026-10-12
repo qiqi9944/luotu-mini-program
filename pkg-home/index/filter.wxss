@@ -474,11 +474,13 @@ page {
   font-size: 30rpx;
   font-weight: 700;
   color: #0e608d;
+  white-space: nowrap;
 }
 
 .tvsrow-unit {
   font-size: 22rpx;
   color: #7d8a99;
+  white-space: nowrap;
 }
 
 .tvsrow-yoy {
