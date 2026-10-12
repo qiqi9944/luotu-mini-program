@@ -82,8 +82,8 @@
                                     <text class="subval">{{item.qty}}</text>
                                     <view class="subyoy {{item.xl_yoy[0]=='+'?'up':item.xl_yoy[0]=='-'?'down':''}}">
                                         <text>{{item.xl_yoy}}</text>
-                                        <image src="/pages/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.xl_yoy[0]=='+'}}"></image>
-                                        <image src="/pages/images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.xl_yoy[0]=='-'}}"></image>
+                                        <image src="/pkg-home/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.xl_yoy[0]=='+'}}"></image>
+                                        <image src="/pkg-home/images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.xl_yoy[0]=='-'}}"></image>
                                     </view>
                                 </view>
                             </view>
@@ -92,8 +92,8 @@
                                     <text class="subval">{{item.avg_price}}</text>
                                     <view class="subyoy {{item.avg_yoy[0]=='+'?'up':item.avg_yoy[0]=='-'?'down':''}}">
                                         <text>{{item.avg_yoy}}</text>
-                                        <image src="/pages/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.avg_yoy[0]=='+'}}"></image>
-                                        <image src="/pages/images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.avg_yoy[0]=='-'}}"></image>
+                                        <image src="/pkg-home/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.avg_yoy[0]=='+'}}"></image>
+                                        <image src="/pkg-home/images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.avg_yoy[0]=='-'}}"></image>
                                     </view>
                                 </view>
                             </view>
@@ -113,19 +113,19 @@
                             <view class="subtd col-name">{{item.name}}</view>
                             <view class="subtd {{item.xl_yoy[0]=='+'?'up':item.xl_yoy[0]=='-'?'down':''}}">
                                 {{item.xl_yoy}}
-                                <image src="/pages/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.xl_yoy[0]=='+'}}"></image>
-                                <image src="/pages/images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.xl_yoy[0]=='-'}}"></image>
+                                <image src="/pkg-home/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.xl_yoy[0]=='+'}}"></image>
+                                <image src="/pkg-home/images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.xl_yoy[0]=='-'}}"></image>
                             </view>
                             <view class="subtd {{item.xe_yoy[0]=='+'?'up':item.xe_yoy[0]=='-'?'down':''}}">
                                 {{item.xe_yoy}}
-                                <image src="/pages/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.xe_yoy[0]=='+'}}"></image>
-                                <image src="/pages/images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.xe_yoy[0]=='-'}}"></image>
+                                <image src="/pkg-home/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.xe_yoy[0]=='+'}}"></image>
+                                <image src="/pkg-home/images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.xe_yoy[0]=='-'}}"></image>
                             </view>
                             <view class="subtd">{{item.avg_price}}<text class="unit">元</text></view>
                             <view class="subtd {{item.avg_yoy[0]=='+'?'up':item.avg_yoy[0]=='-'?'down':''}}">
                                 {{item.avg_yoy}}
-                                <image src="/pages/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.avg_yoy[0]=='+'}}"></image>
-                                <image src="/pages/images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.avg_yoy[0]=='-'}}"></image>
+                                <image src="/pkg-home/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.avg_yoy[0]=='+'}}"></image>
+                                <image src="/pkg-home/images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.avg_yoy[0]=='-'}}"></image>
                             </view>
                         </view>
                     </block>
@@ -166,14 +166,13 @@
                                         <text class="tvsrow-qty">{{r.qty}}</text>
                                         <text class="tvsrow-unit">万台</text>
                                         <view class="tvsrow-yoy {{r.xl_yoy[0]=='+'?'up':r.xl_yoy[0]=='-'?'down':''}}">
-                                            <image src="/pages/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{r.xl_yoy[0]=='+'}}"></image>
-                                            <image src="/pages/images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{r.xl_yoy[0]=='-'}}"></image>
+                                            <image src="/pkg-home/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{r.xl_yoy[0]=='+'}}"></image>
+                                            <image src="/pkg-home/images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{r.xl_yoy[0]=='-'}}"></image>
                                             {{r.xl_yoy}}
                                         </view>
                                     </view>
                                 </view>
                             </view>
-                        </view>
                     </block>
                 </view>
             </view>
