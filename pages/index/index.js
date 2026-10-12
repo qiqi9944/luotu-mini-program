@@ -202,6 +202,20 @@ Page({
           }
           wx.navigateTo({
             url: '/pkg-home/index/filter?type=' + type,
+            fail: function (err) {
+              console.log('[nextpage] navigateTo fail', err)
+              wx.showToast({
+                title: '页面打开失败，请重试',
+                icon: 'none'
+              })
+            }
+          })
+        },
+        fail: function (err) {
+          console.log('[nextpage] getuser fail', err)
+          wx.showToast({
+            title: '网络异常，请稍后重试',
+            icon: 'none'
           })
         }
       })
