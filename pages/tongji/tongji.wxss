@@ -558,8 +558,12 @@ page::before {
 .tvsrow-qtywrap {
 	display: flex;
 	align-items: baseline;
-	min-width: 150rpx;
-	justify-content: flex-end;
+}
+/* 同比百分比紧贴销量，去掉原来右对齐的独立列 */
+.tvsrow-qtywrap .tvsrow-yoy {
+	min-width: 0;
+	margin-left: 10rpx;
+	justify-content: flex-start;
 }
 
 .tvsrow-qty {
@@ -599,16 +603,6 @@ page::before {
 	flex-shrink: 0;
 }
 .tvshead-qty {
-	min-width: 150rpx;
-	text-align: right;
-	font-size: var(--fs-caption);
-	color: var(--text-3);
-	white-space: nowrap;
-}
-.tvshead-yoy {
-	min-width: 96rpx;
-	margin-left: 16rpx;
-	text-align: right;
 	font-size: var(--fs-caption);
 	color: var(--text-3);
 	white-space: nowrap;

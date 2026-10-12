@@ -473,8 +473,12 @@ page {
 .tvsrow-qtywrap {
   display: flex;
   align-items: baseline;
-  min-width: 150rpx;
-  justify-content: flex-end;
+}
+
+.tvsrow-qtywrap .tvsrow-yoy {
+  min-width: 0;
+  margin-left: 10rpx;
+  justify-content: flex-start;
 }
 
 .tvsrow-qty {
@@ -510,16 +514,6 @@ page {
   flex-shrink: 0;
 }
 .tvshead-qty {
-  min-width: 150rpx;
-  text-align: right;
-  font-size: 22rpx;
-  color: #7d8a99;
-  white-space: nowrap;
-}
-.tvshead-yoy {
-  min-width: 80rpx;
-  margin-left: 12rpx;
-  text-align: right;
   font-size: 22rpx;
   color: #7d8a99;
   white-space: nowrap;

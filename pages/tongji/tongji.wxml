@@ -131,7 +131,6 @@
 							<text class="tvshead-name">品类</text>
 							<view class="tvshead-right">
 								<text class="tvshead-qty">销量（万台）</text>
-								<view class="tvshead-yoy">同比</view>
 							</view>
 						</view>
 							<block wx:for="{{listData3}}" wx:key="index">
@@ -141,11 +140,11 @@
 										<view class="tvsrow-qtywrap">
 											<text class="tvsrow-qty">{{item.t2}}</text>
 											<text class="tvsrow-unit">万台</text>
-										</view>
-										<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
-											{{item.t3}}
-											<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
-											<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+											<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
+												<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
+												<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+												{{item.t3}}
+											</view>
 										</view>
 									</view>
 								</view>
@@ -159,7 +158,6 @@
 							<text class="tvshead-name">品类</text>
 							<view class="tvshead-right">
 								<text class="tvshead-qty">销量（万台）</text>
-								<view class="tvshead-yoy">同比</view>
 							</view>
 						</view>
 							<block wx:for="{{listData4}}" wx:key="index">
@@ -169,11 +167,11 @@
 										<view class="tvsrow-qtywrap">
 											<text class="tvsrow-qty">{{item.t2}}</text>
 											<text class="tvsrow-unit">万台</text>
-										</view>
-										<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
-											{{item.t3}}
-											<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
-											<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+											<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
+												<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
+												<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+												{{item.t3}}
+											</view>
 										</view>
 									</view>
 								</view>
@@ -187,7 +185,6 @@
 							<text class="tvshead-name">品类</text>
 							<view class="tvshead-right">
 								<text class="tvshead-qty">销量（万台）</text>
-								<view class="tvshead-yoy">同比</view>
 							</view>
 						</view>
 							<block wx:for="{{listData7}}" wx:key="index">
@@ -197,11 +194,11 @@
 										<view class="tvsrow-qtywrap">
 											<text class="tvsrow-qty">{{item.t2}}</text>
 											<text class="tvsrow-unit">万台</text>
-										</view>
-										<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
-											{{item.t3}}
-											<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
-											<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+											<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
+												<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
+												<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+												{{item.t3}}
+											</view>
 										</view>
 									</view>
 								</view>
@@ -215,7 +212,6 @@
 							<text class="tvshead-name">品类</text>
 							<view class="tvshead-right">
 								<text class="tvshead-qty">销量（万台）</text>
-								<view class="tvshead-yoy">同比</view>
 							</view>
 						</view>
 							<block wx:for="{{listData9}}" wx:key="index">
@@ -225,11 +221,11 @@
 										<view class="tvsrow-qtywrap">
 											<text class="tvsrow-qty">{{item.t2}}</text>
 											<text class="tvsrow-unit">万台</text>
-										</view>
-										<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
-											{{item.t3}}
-											<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
-											<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+											<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
+												<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
+												<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+												{{item.t3}}
+											</view>
 										</view>
 									</view>
 								</view>
@@ -243,7 +239,6 @@
 							<text class="tvshead-name">品类</text>
 							<view class="tvshead-right">
 								<text class="tvshead-qty">销量（万台）</text>
-								<view class="tvshead-yoy">同比</view>
 							</view>
 						</view>
 							<block wx:for="{{listData8}}" wx:key="index">
@@ -253,11 +248,11 @@
 										<view class="tvsrow-qtywrap">
 											<text class="tvsrow-qty">{{item.t2}}</text>
 											<text class="tvsrow-unit">万台</text>
-										</view>
-										<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
-											{{item.t3}}
-											<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
-											<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+											<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
+												<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
+												<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+												{{item.t3}}
+											</view>
 										</view>
 									</view>
 								</view>
@@ -271,7 +266,6 @@
 							<text class="tvshead-name">品类</text>
 							<view class="tvshead-right">
 								<text class="tvshead-qty">销量（万台）</text>
-								<view class="tvshead-yoy">同比</view>
 							</view>
 						</view>
 							<block wx:for="{{listData5}}" wx:key="index">
@@ -281,11 +275,11 @@
 										<view class="tvsrow-qtywrap">
 											<text class="tvsrow-qty">{{item.t2}}</text>
 											<text class="tvsrow-unit">万台</text>
-										</view>
-										<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
-											{{item.t3}}
-											<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
-											<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+											<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
+												<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
+												<image src="../images/jiang1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='-'}}"></image>
+												{{item.t3}}
+											</view>
 										</view>
 									</view>
 								</view>
