@@ -172,13 +172,22 @@
 		</view>
 		<view class="more" wx:if="{{!lastpage2}}" bindtap="getnews3">查看更多></view>
 	</view>
-	<view class="video-mask" wx:if="{{showVideoMask}}" catchtouchmove="noop" bindtap="closeVideo">
-		<view class="video-mask-inner" catchtap="true">
-			<view class="video-close" catchtap="closeVideo">✕</view>
-			<channel-video wx:if="{{videoFeedId}}" class="video-player" feed-id="{{videoFeedId}}" finder-user-name="{{videoFinder}}" autoplay="{{true}}" object-fit="contain"></channel-video>
-			<channel-video wx:elif="{{videoFeedToken}}" class="video-player" feed-token="{{videoFeedToken}}" object-fit="contain"></channel-video>
-			<video wx:elif="{{videoUrl}}" src="{{videoUrl}}" class="video-player" autoplay controls object-fit="contain"></video>
-		</view>
+	<view class="video-mask" wx:if="{{showVideoMask}}">
+		<swiper class="video-swiper" vertical="{{true}}" current="{{videoCurrent}}" duration="300" bindchange="onVideoChange">
+			<swiper-item wx:for="{{playList}}" wx:key="id" wx:for-item="item" wx:for-index="idx">
+				<view class="video-swiper-item">
+					<channel-video wx:if="{{item.feed_id}}" class="video-player" feed-id="{{item.feed_id}}" finder-user-name="{{item.finder_user_name}}" autoplay="{{idx == videoCurrent}}" object-fit="contain"></channel-video>
+					<channel-video wx:elif="{{item.feed_token}}" class="video-player" feed-token="{{item.feed_token}}" object-fit="contain"></channel-video>
+					<video wx:elif="{{item.url}}" src="{{item.url}}" class="video-player" autoplay="{{idx == videoCurrent}}" controls object-fit="contain"></video>
+					<view class="video-swiper-meta">
+						<view class="video-swiper-title">{{item.name || '洛图视频'}}</view>
+						<view class="video-swiper-desc" wx:if="{{item.description}}">{{item.description}}</view>
+					</view>
+				</view>
+			</swiper-item>
+		</swiper>
+		<view class="video-close" catchtap="closeVideo">✕</view>
+		<view class="video-countnum" wx:if="{{playList.length > 1}}"><text>{{videoCurrent + 1}}/{{playList.length}}</text></view>
 	</view>
 	<view class="safe-bottom"></view>
 </view>

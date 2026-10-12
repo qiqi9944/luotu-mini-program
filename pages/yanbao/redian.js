@@ -20,10 +20,8 @@ Page({
 		lastpage2: 0,
 		activityBanners: [],
 		videolist: [],
-		videoUrl: '',
-		videoFeedId: '',
-		videoFeedToken: '',
-		videoFinder: '',
+		playList: [],
+		videoCurrent: 0,
 		showVideoMask: false,
 	},
 	getnews: function () {
@@ -114,12 +112,20 @@ Page({
 		if (!d.url && !d.feedid && !d.feedtoken) {
 			return false
 		}
+		let that = this
+		let srcList = (this.data.videolist || []).filter(function (v) {
+			return v.url || v.feed_id || v.feed_token
+		})
+		let cur = 0
+		srcList.forEach(function (v, i) {
+			if (v.id == d.id) {
+				cur = i
+			}
+		})
 		this.setData({
 			showVideoMask: true,
-			videoUrl: d.url || '',
-			videoFeedId: d.feedid || '',
-			videoFeedToken: d.feedtoken || '',
-			videoFinder: d.finder || ''
+			playList: srcList,
+			videoCurrent: cur
 		})
 		if (d.id) {
 			wx.request({
@@ -128,13 +134,16 @@ Page({
 			})
 		}
 	},
+	onVideoChange: function (e) {
+		this.setData({
+			videoCurrent: e.detail.current
+		})
+	},
 	closeVideo: function () {
 		this.setData({
 			showVideoMask: false,
-			videoUrl: '',
-			videoFeedId: '',
-			videoFeedToken: '',
-			videoFinder: ''
+			playList: [],
+			videoCurrent: 0
 		})
 	},
 	noop: function () {
