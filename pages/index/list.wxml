@@ -25,7 +25,7 @@
 		<view class="main">
 			<view class="down">
 				<block wx:for="{{newslist}}" wx:key="id">
-					<navigator url="../yanbao/view?id={{item.id}}" class="item">
+					<navigator url="/pkg-research/yanbao/view?id={{item.id}}" class="item">
 						<view class="l">
 							<view class="shang">
 								<view class="title"><image src="/pages/images/liststyle2.png" mode="widthFix" class="pic"></image>{{item.name}}</view>

@@ -142,7 +142,7 @@
 	<view class="redian" wx:if="{{pagetype==4}}">
 		<view class="activity-list" wx:if="{{activityBanners.length}}">
 			<block wx:for="{{activityBanners}}" wx:key="id">
-				<navigator url="./view?id={{item.id}}" class="activity-banner" hover-class="tap-dim" hover-stay-time="80">
+				<navigator url="/pkg-research/yanbao/view?id={{item.id}}" class="activity-banner" hover-class="tap-dim" hover-stay-time="80">
 					<image wx:if="{{item.bannerpic || item.pic}}" src="{{item.bannerpic || item.pic}}" mode="widthFix" class="activity-banner-img"></image>
 					<view wx:else class="activity-banner-fallback">
 						<view class="activity-banner-title">{{item.name}}</view>
@@ -155,7 +155,7 @@
 			<view class="main">
 				<view class="down">
 					<block wx:for="{{newslist2}}" wx:key="id">
-						<navigator url="./view?id={{item.id}}" class="item" hover-class="tap-row">
+						<navigator url="/pkg-research/yanbao/view?id={{item.id}}" class="item" hover-class="tap-row">
 							<view class="l">
 								<view class="shang">
 									<view class="title">
