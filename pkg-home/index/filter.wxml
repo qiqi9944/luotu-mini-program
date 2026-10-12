@@ -163,8 +163,10 @@
                         <view class="tvsrow" bindtap="onSubTypeTap" data-v="{{r.id}}">
                             <text class="tvsrow-name">{{r.name}}</text>
                             <view class="tvsrow-right">
-                                <text class="tvsrow-qty">{{r.qty}}</text>
-                                <text class="tvsrow-unit">万台</text>
+                                <view class="tvsrow-qtywrap">
+                                    <text class="tvsrow-qty">{{r.qty}}</text>
+                                    <text class="tvsrow-unit">万台</text>
+                                </view>
                                 <view class="tvsrow-yoy {{r.xl_yoy[0]=='+'?'up':r.xl_yoy[0]=='-'?'down':''}}">
                                     {{r.xl_yoy}}
                                     <image src="/pages/images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{r.xl_yoy[0]=='+'}}"></image>

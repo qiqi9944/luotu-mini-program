@@ -138,8 +138,10 @@
 								<view class="tvsrow" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
 									<text class="tvsrow-name">{{item.t1}}</text>
 									<view class="tvsrow-right">
-										<text class="tvsrow-qty">{{item.t2}}</text>
-										<text class="tvsrow-unit">万台</text>
+										<view class="tvsrow-qtywrap">
+											<text class="tvsrow-qty">{{item.t2}}</text>
+											<text class="tvsrow-unit">万台</text>
+										</view>
 										<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
 											{{item.t3}}
 											<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
@@ -164,8 +166,10 @@
 								<view class="tvsrow" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
 									<text class="tvsrow-name">{{item.t1}}</text>
 									<view class="tvsrow-right">
-										<text class="tvsrow-qty">{{item.t2}}</text>
-										<text class="tvsrow-unit">万台</text>
+										<view class="tvsrow-qtywrap">
+											<text class="tvsrow-qty">{{item.t2}}</text>
+											<text class="tvsrow-unit">万台</text>
+										</view>
 										<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
 											{{item.t3}}
 											<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
@@ -190,8 +194,10 @@
 								<view class="tvsrow" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
 									<text class="tvsrow-name">{{item.t1}}</text>
 									<view class="tvsrow-right">
-										<text class="tvsrow-qty">{{item.t2}}</text>
-										<text class="tvsrow-unit">万台</text>
+										<view class="tvsrow-qtywrap">
+											<text class="tvsrow-qty">{{item.t2}}</text>
+											<text class="tvsrow-unit">万台</text>
+										</view>
 										<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
 											{{item.t3}}
 											<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
@@ -216,8 +222,10 @@
 								<view class="tvsrow" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
 									<text class="tvsrow-name">{{item.t1}}</text>
 									<view class="tvsrow-right">
-										<text class="tvsrow-qty">{{item.t2}}</text>
-										<text class="tvsrow-unit">万台</text>
+										<view class="tvsrow-qtywrap">
+											<text class="tvsrow-qty">{{item.t2}}</text>
+											<text class="tvsrow-unit">万台</text>
+										</view>
 										<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
 											{{item.t3}}
 											<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
@@ -242,8 +250,10 @@
 								<view class="tvsrow" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
 									<text class="tvsrow-name">{{item.t1}}</text>
 									<view class="tvsrow-right">
-										<text class="tvsrow-qty">{{item.t2}}</text>
-										<text class="tvsrow-unit">万台</text>
+										<view class="tvsrow-qtywrap">
+											<text class="tvsrow-qty">{{item.t2}}</text>
+											<text class="tvsrow-unit">万台</text>
+										</view>
 										<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
 											{{item.t3}}
 											<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>
@@ -268,8 +278,10 @@
 								<view class="tvsrow" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
 									<text class="tvsrow-name">{{item.t1}}</text>
 									<view class="tvsrow-right">
-										<text class="tvsrow-qty">{{item.t2}}</text>
-										<text class="tvsrow-unit">万台</text>
+										<view class="tvsrow-qtywrap">
+											<text class="tvsrow-qty">{{item.t2}}</text>
+											<text class="tvsrow-unit">万台</text>
+										</view>
 										<view class="tvsrow-yoy {{item.t3zf=='+'?'up':item.t3zf=='-'?'down':''}}">
 											{{item.t3}}
 											<image src="../images/sheng1.png" mode="widthFix" class="subarrow" wx:if="{{item.t3zf=='+'}}"></image>

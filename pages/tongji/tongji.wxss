@@ -554,6 +554,14 @@ page::before {
 	flex-shrink: 0;
 }
 
+/* 数量列：固定最小宽 + 右对齐，保证各行与表头「销量（万台）」右缘对齐 */
+.tvsrow-qtywrap {
+	display: flex;
+	align-items: baseline;
+	min-width: 150rpx;
+	justify-content: flex-end;
+}
+
 .tvsrow-qty {
 	font-family: var(--font-num);
 	font-variant-numeric: tabular-nums;
@@ -591,6 +599,8 @@ page::before {
 	flex-shrink: 0;
 }
 .tvshead-qty {
+	min-width: 150rpx;
+	text-align: right;
 	font-size: var(--fs-caption);
 	color: var(--text-3);
 	white-space: nowrap;

@@ -470,6 +470,13 @@ page {
   flex-shrink: 0;
 }
 
+.tvsrow-qtywrap {
+  display: flex;
+  align-items: baseline;
+  min-width: 150rpx;
+  justify-content: flex-end;
+}
+
 .tvsrow-qty {
   font-size: 30rpx;
   font-weight: 700;
@@ -503,6 +510,8 @@ page {
   flex-shrink: 0;
 }
 .tvshead-qty {
+  min-width: 150rpx;
+  text-align: right;
   font-size: 22rpx;
   color: #7d8a99;
   white-space: nowrap;
