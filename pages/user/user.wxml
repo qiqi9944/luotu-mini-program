@@ -23,7 +23,7 @@
 
 	<view class="group-title rise rise-2">账户</view>
 	<view class="list rise rise-2">
-		<view class="item" bindtap="nextpage" data-url="../user/myinfo" hover-class="tap-row">
+		<view class="item" bindtap="nextpage" data-url="/pkg-user/user/myinfo" hover-class="tap-row">
 			<view class="l">
 				<view class="ico"><image mode="widthFix" class="img" src="/pages/images/u7.png"></image></view>我的信息
 			</view>
@@ -35,7 +35,7 @@
 			</view>
 			<image src="/pages/images/jiantou.png" mode="widthFix" class="r"></image>
 		</navigator>
-		<view class="item" bindtap="nextpage" data-url="../user/member" hover-class="tap-row">
+		<view class="item" bindtap="nextpage" data-url="/pkg-user/user/member" hover-class="tap-row">
 			<view class="l">
 				<view class="ico"><image mode="widthFix" class="img" src="/pages/images/u8.png"></image></view>会员中心
 			</view>

@@ -1,6 +1,5 @@
 // pages/user/about.js
 const app = getApp()
-var WxParse = require('../../wxParse/wxParse.js');
 Page({
 
 	/**
@@ -19,7 +18,6 @@ Page({
 					that.setData({
 						content:res.data.data.v,
 					})
-					WxParse.wxParse('content', 'html', res.data.data.v, that, 5);
 				}else{
 					wx.showToast({
 						title: res.data.msg,
