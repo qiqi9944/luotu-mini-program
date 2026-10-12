@@ -152,6 +152,13 @@
                     </picker>
                 </view>
                 <view class="tvslist">
+                    <view class="tvshead">
+                        <text class="tvshead-name">品类</text>
+                        <view class="tvshead-right">
+                            <text class="tvshead-qty">销量（万台）</text>
+                            <view class="tvshead-yoy">同比</view>
+                        </view>
+                    </view>
                     <block wx:for="{{g.rows}}" wx:key="id" wx:for-item="r">
                         <view class="tvsrow" bindtap="onSubTypeTap" data-v="{{r.id}}">
                             <text class="tvsrow-name">{{r.name}}</text>

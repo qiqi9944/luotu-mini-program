@@ -127,6 +127,13 @@
 					<view class="subbox">
 						<view class="tvsgroup-hd"><text class="tvsgroup-title">电视供应链</text></view>
 						<view class="tvslist">
+						<view class="tvshead">
+							<text class="tvshead-name">品类</text>
+							<view class="tvshead-right">
+								<text class="tvshead-qty">销量（万台）</text>
+								<view class="tvshead-yoy">同比</view>
+							</view>
+						</view>
 							<block wx:for="{{listData3}}" wx:key="index">
 								<view class="tvsrow" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
 									<text class="tvsrow-name">{{item.t1}}</text>
@@ -146,6 +153,13 @@
 					<view class="subbox">
 						<view class="tvsgroup-hd"><text class="tvsgroup-title">TV品牌出货</text></view>
 						<view class="tvslist">
+						<view class="tvshead">
+							<text class="tvshead-name">品类</text>
+							<view class="tvshead-right">
+								<text class="tvshead-qty">销量（万台）</text>
+								<view class="tvshead-yoy">同比</view>
+							</view>
+						</view>
 							<block wx:for="{{listData4}}" wx:key="index">
 								<view class="tvsrow" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
 									<text class="tvsrow-name">{{item.t1}}</text>
@@ -165,6 +179,13 @@
 					<view class="subbox">
 						<view class="tvsgroup-hd"><text class="tvsgroup-title">显示器供应链</text></view>
 						<view class="tvslist">
+						<view class="tvshead">
+							<text class="tvshead-name">品类</text>
+							<view class="tvshead-right">
+								<text class="tvshead-qty">销量（万台）</text>
+								<view class="tvshead-yoy">同比</view>
+							</view>
+						</view>
 							<block wx:for="{{listData7}}" wx:key="index">
 								<view class="tvsrow" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
 									<text class="tvsrow-name">{{item.t1}}</text>
@@ -184,6 +205,13 @@
 					<view class="subbox">
 						<view class="tvsgroup-hd"><text class="tvsgroup-title">笔记本电脑供应链</text></view>
 						<view class="tvslist">
+						<view class="tvshead">
+							<text class="tvshead-name">品类</text>
+							<view class="tvshead-right">
+								<text class="tvshead-qty">销量（万台）</text>
+								<view class="tvshead-yoy">同比</view>
+							</view>
+						</view>
 							<block wx:for="{{listData9}}" wx:key="index">
 								<view class="tvsrow" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
 									<text class="tvsrow-name">{{item.t1}}</text>
@@ -203,6 +231,13 @@
 					<view class="subbox">
 						<view class="tvsgroup-hd"><text class="tvsgroup-title">商用显示供应链</text></view>
 						<view class="tvslist">
+						<view class="tvshead">
+							<text class="tvshead-name">品类</text>
+							<view class="tvshead-right">
+								<text class="tvshead-qty">销量（万台）</text>
+								<view class="tvshead-yoy">同比</view>
+							</view>
+						</view>
 							<block wx:for="{{listData8}}" wx:key="index">
 								<view class="tvsrow" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
 									<text class="tvsrow-name">{{item.t1}}</text>
@@ -222,6 +257,13 @@
 					<view class="subbox">
 						<view class="tvsgroup-hd"><text class="tvsgroup-title">电子纸供应链</text></view>
 						<view class="tvslist">
+						<view class="tvshead">
+							<text class="tvshead-name">品类</text>
+							<view class="tvshead-right">
+								<text class="tvshead-qty">销量（万台）</text>
+								<view class="tvshead-yoy">同比</view>
+							</view>
+						</view>
 							<block wx:for="{{listData5}}" wx:key="index">
 								<view class="tvsrow" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
 									<text class="tvsrow-name">{{item.t1}}</text>

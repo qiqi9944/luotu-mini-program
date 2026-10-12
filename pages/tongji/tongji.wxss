@@ -571,6 +571,39 @@ page::before {
 	white-space: nowrap;
 }
 
+/* 供应链子列表表头：与 .tvsrow 列对齐（品类/销量/同比） */
+.tvshead {
+	display: flex;
+	align-items: center;
+	padding: 12rpx 0;
+	border-bottom: 1rpx solid var(--hairline);
+}
+.tvshead-name {
+	flex: 1;
+	min-width: 0;
+	font-size: var(--fs-caption);
+	color: var(--text-3);
+	white-space: nowrap;
+}
+.tvshead-right {
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+}
+.tvshead-qty {
+	font-size: var(--fs-caption);
+	color: var(--text-3);
+	white-space: nowrap;
+}
+.tvshead-yoy {
+	min-width: 96rpx;
+	margin-left: 16rpx;
+	text-align: right;
+	font-size: var(--fs-caption);
+	color: var(--text-3);
+	white-space: nowrap;
+}
+
 /* 同比固定 96rpx 并右对齐，六个子块的箭头因此上下成列 */
 .tvsrow-yoy {
 	display: flex;

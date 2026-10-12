@@ -483,6 +483,39 @@ page {
   white-space: nowrap;
 }
 
+/* 供应链子列表表头：与 .tvsrow 列对齐（品类/销量/同比） */
+.tvshead {
+  display: flex;
+  align-items: center;
+  padding: 12rpx 0;
+  border-bottom: 1rpx solid #e2ecf3;
+}
+.tvshead-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 22rpx;
+  color: #7d8a99;
+  white-space: nowrap;
+}
+.tvshead-right {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.tvshead-qty {
+  font-size: 22rpx;
+  color: #7d8a99;
+  white-space: nowrap;
+}
+.tvshead-yoy {
+  min-width: 80rpx;
+  margin-left: 12rpx;
+  text-align: right;
+  font-size: 22rpx;
+  color: #7d8a99;
+  white-space: nowrap;
+}
+
 .tvsrow-yoy {
   display: flex;
   align-items: center;
