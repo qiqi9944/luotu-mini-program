@@ -21,7 +21,6 @@
 		<image src="{{user.tx?user.tx:'/pages/images/tx.png'}}" mode="widthFix" class="r"></image>
 	</view>
 
-	<view class="group-title rise rise-2">账户</view>
 	<view class="list rise rise-2">
 		<view class="item" bindtap="nextpage" data-url="/pkg-user/user/myinfo" hover-class="tap-row">
 			<view class="l">
