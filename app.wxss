@@ -1,6 +1,6 @@
 /**app.wxss — 洛图科技 · 设计令牌层
- * 设计方向：「精密仪表」——面向显示产业分析师的行情终端。
- * 深墨蓝为地，冷白纸面为面，单一琥珀信号色为点；
+ * 设计方向：明亮天蓝，面向显示产业分析师的数据界面。
+ * 浅蓝页眉、白色卡片，天蓝强调；深色文字保证数据可读。
  * 数字使用等宽字形，让纵向数列自然对齐。
  * 约定：所有新增样式只使用 rpx 与下列变量，不再硬编码色值。
  */
@@ -8,19 +8,24 @@ page {
 	width: 100%;
 	height: 100%;
 
-	/* —— 墨蓝主轴（提亮版：去掉近黑收尾，整体更清亮通透）—— */
+	/* —— 品牌蓝：用于图标、选中标记和图表 —— */
+	--brand: #055586;
+	--brand-soft: #eaf5ff;
+	--header-bg: linear-gradient(160deg, #eaf5ff 0%, #dcebff 100%);
+
+	/* —— 文字与实色按钮：保留足够对比度 —— */
 	--ink-900: #083047;
 	--ink-800: #0a3f5e;
-	--ink-700: #0c547f;
-	--ink-600: #1287c8; /* 品牌蓝提亮：原 #055586，作为体系锚点 */
-	--ink-400: #359bce;
-	--ink-200: #c2dff0;
-	--ink-050: #ebf5fc;
+	--ink-700: #055586;
+	--ink-600: #055586;
+	--ink-400: #62b5ff;
+	--ink-200: #c9e5ff;
+	--ink-050: #eaf5ff;
 
 	/* —— 纸面（整体提亮、更通透）—— */
-	--paper: #f4f9fd;
+	--paper: #f5faff;
 	--surface: #ffffff;
-	--surface-sunken: #f6fafd;
+	--surface-sunken: #f8fbff;
 
 	/* —— 文字 —— */
 	--text-1: #12212b;
@@ -29,45 +34,45 @@ page {
 	--text-invert: #ffffff;
 
 	/* —— 发丝分隔线 —— */
-	--hairline: rgba(18, 135, 200, 0.12);
-	--hairline-strong: rgba(18, 135, 200, 0.22);
+	--hairline: rgba(5, 85, 134, 0.14);
+	--hairline-strong: rgba(5, 85, 134, 0.24);
 
 	/* —— 唯一强调色：信号琥珀（提亮更跳眼）—— */
-	--signal: #f29d1e;
-	--signal-soft: #fef1dd;
+	--signal: #ffb547;
+	--signal-soft: #fff4e2;
 
 	/* —— 涨跌：延续「红涨绿跌」惯例，提高饱和度与对比 —— */
-	--rise: #d24029;
-	--fall: #0b8f63;
+	--rise: #CA3828;
+	--fall: #00B050;
 	--flat: #8698a5;
 
 	/* —— 标准色板：与产品结构饼图 color 数组同源 ——
-	   蓝 #005d99 / 红 #cd3c29 为主锚点，其余为分类标识扩展色。
+	   品牌蓝 / 品牌红为主锚点，其余为分类标识扩展色。
 	   仅用于「分类」语义（宫格、标签、序号），不参与涨跌语义。 */
-	--c-blue: #0a74c0;
-	--c-red: #e24433;
-	--c-indigo: #5b76e6;
-	--c-green: #2fb37d;
-	--c-amber: #ffc93c;
-	--c-orange: #ff8a4c;
-	--c-cyan: #4fc0e8;
-	--c-violet: #a764d4;
-	--c-magenta: #f481d8;
+	--c-blue: #055586;
+	--c-red: #CA3828;
+	--c-indigo: #7188f0;
+	--c-green: #55bc8a;
+	--c-amber: #ffd166;
+	--c-orange: #ffa56b;
+	--c-cyan: #62c8e8;
+	--c-violet: #b18ae0;
+	--c-magenta: #f39bd9;
 
 	/* 分类浅底：各主色约 8% 提亮，预先调好以规避 color-mix 兼容性 */
-	--c-blue-soft: #e6f0f7;
-	--c-red-soft: #fbeceb;
-	--c-indigo-soft: #eceffa;
-	--c-green-soft: #e9f5f0;
-	--c-amber-soft: #fdf6e3;
-	--c-orange-soft: #fdf0e9;
-	--c-cyan-soft: #ecf6fa;
-	--c-violet-soft: #f2ecf7;
-	--c-magenta-soft: #fbecf7;
+	--c-blue-soft: #eaf5ff;
+	--c-red-soft: #fff0ed;
+	--c-indigo-soft: #eef1ff;
+	--c-green-soft: #eaf9f1;
+	--c-amber-soft: #fff7e3;
+	--c-orange-soft: #fff1e7;
+	--c-cyan-soft: #e9f9ff;
+	--c-violet-soft: #f5efff;
+	--c-magenta-soft: #fff0fa;
 
 	/* 分类文字色：主色压暗至可读对比度（≥4.5:1） */
-	--c-blue-ink: #004b7d;
-	--c-red-ink: #a52f20;
+	--c-blue-ink: #055586;
+	--c-red-ink: #CA3828;
 	--c-indigo-ink: #3f57a0;
 	--c-green-ink: #2c7d57;
 	--c-amber-ink: #96600f;
@@ -281,8 +286,7 @@ page {
 }
 
 /* ==========================================================================
-   3. 墨蓝页眉带 —— 深色渐变 + 淡蓝图网格纹（纯 CSS，零图片请求）
-   内容层 .con 上移压住其下缘，形成「纸面自深色底浮起」的层次
+   3. 浅蓝页眉带 —— 清亮底色 + 细网格纹（纯 CSS，零图片请求）
    ========================================================================== */
 .sellist {
 	position: relative;
@@ -294,7 +298,7 @@ page {
 	justify-content: space-around;
 	align-items: center;
 	overflow: hidden;
-	background: linear-gradient(150deg, #2fa9e4 0%, #1287c8 48%, var(--ink-900) 100%);
+	background: var(--header-bg);
 }
 
 /* 45° 蓝图纹：两组重复线性渐变交叉，营造制图纸质感 */
@@ -308,10 +312,10 @@ page {
 	pointer-events: none;
 	background-image: repeating-linear-gradient(
 			45deg,
-			rgba(255, 255, 255, 0.045) 0 1rpx,
+			rgba(5, 85, 134, 0.045) 0 1rpx,
 			transparent 1rpx 24rpx
 		),
-		repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.03) 0 1rpx, transparent 1rpx 24rpx);
+		repeating-linear-gradient(-45deg, rgba(5, 85, 134, 0.03) 0 1rpx, transparent 1rpx 24rpx);
 }
 
 /* 右上角一抹冷光，破除纯色的平板感 */
@@ -324,21 +328,20 @@ page {
 	height: 420rpx;
 	border-radius: 50%;
 	pointer-events: none;
-	background: radial-gradient(circle, rgba(120, 205, 245, 0.55) 0%, rgba(120, 205, 245, 0) 70%);
+	background: radial-gradient(circle, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 70%);
 }
 
 .sellist .item {
 	position: relative;
 	z-index: 1;
 	font-size: var(--fs-body);
-	/* 页眉带提亮后，非激活项提到 .82 维持可读对比 */
-	color: rgba(255, 255, 255, 0.82);
+	color: var(--text-2);
 	letter-spacing: 1rpx;
 	transition: color 0.2s ease;
 }
-/* 激活项：白字 + 底部琥珀短横，蓝色带上的暖色锚点（保证文字对比，琥珀只做标记） */
+/* 激活项：可读蓝字 + 天蓝短横 */
 .sellist .item.hover {
-	color: var(--text-invert);
+	color: var(--ink-700);
 	font-weight: 600;
 }
 .sellist .item.hover::after {
@@ -350,7 +353,7 @@ page {
 	height: 5rpx;
 	margin-left: -20rpx;
 	border-radius: 5rpx;
-	background: var(--c-amber);
+	background: var(--brand);
 }
 
 /* ==========================================================================

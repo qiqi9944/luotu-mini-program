@@ -1,6 +1,6 @@
 /* pages/index/more.wxss */
 page{
-	background-color: #ebf6fc;
+	background-color: #f5faff;
 }
 .main{
 	padding-top: 25rpx;
@@ -44,7 +44,7 @@ page{
 	margin-right: 15rpx;
 	border-radius: 10rpx;
 }
-.box .up .l.l1 .fk,.box .up .l.l1 .fk2{background-color: #1287c8;}
+.box .up .l.l1 .fk,.box .up .l.l1 .fk2{background-color: #055586;}
 .box .up .l.l2 .fk,.box .up .l.l2 .fk2{background-color: #ca3828;}
 .box .up .l.l3 .fk,.box .up .l.l3 .fk2{background-color: #aaa;}
 .box .down{

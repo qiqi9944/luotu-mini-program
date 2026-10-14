@@ -43,8 +43,10 @@
 		}
 	],
 	"tabBar": {
-		"selectedColor": "#1287c8",
-		"color": "#333",
+		"selectedColor": "#055586",
+		"color": "#687c8f",
+		"backgroundColor": "#ffffff",
+		"borderStyle": "white",
 		"list": [
 			{
 				"pagePath": "pages/index/index",
@@ -74,10 +76,10 @@
 	},
 	"window": {
 		"backgroundTextStyle": "light",
-		"navigationBarBackgroundColor": "#1287c8",
+		"navigationBarBackgroundColor": "#eaf5ff",
 		"navigationBarTitleText": "洛图科技",
-		"navigationBarTextStyle": "white",
-		"backgroundColor": "#eef6fb",
+		"navigationBarTextStyle": "black",
+		"backgroundColor": "#f5faff",
 		"enablePullDownRefresh": true
 	},
 	"style": "v2",

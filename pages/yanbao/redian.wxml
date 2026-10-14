@@ -127,6 +127,7 @@
 					<channel-video wx:if="{{item.feed_id}}" class="video-pic" feed-id="{{item.feed_id}}" finder-user-name="{{item.finder_user_name}}" object-fit="cover"></channel-video>
 					<channel-video wx:elif="{{item.feed_token}}" class="video-pic" feed-token="{{item.feed_token}}" object-fit="cover"></channel-video>
 					<video wx:elif="{{item.url}}" class="video-pic" src="{{item.url}}" object-fit="cover" controls="{{true}}"></video>
+					<image wx:elif="{{item.pic}}" class="video-pic" src="{{item.pic}}" mode="aspectFill"></image>
 					<view wx:else class="video-pic video-pic--ph"><view class="video-play-badge"></view></view>
 				</view>
 				<view class="video-body">
@@ -176,9 +177,7 @@
 		<swiper class="video-swiper" vertical="{{true}}" current="{{videoCurrent}}" duration="300" bindchange="onVideoChange">
 			<swiper-item wx:for="{{playList}}" wx:key="id" wx:for-item="item" wx:for-index="idx">
 				<view class="video-swiper-item">
-					<channel-video wx:if="{{item.feed_id}}" class="video-player" feed-id="{{item.feed_id}}" finder-user-name="{{item.finder_user_name}}" autoplay="{{idx == videoCurrent}}" object-fit="contain"></channel-video>
-					<channel-video wx:elif="{{item.feed_token}}" class="video-player" feed-token="{{item.feed_token}}" object-fit="contain"></channel-video>
-					<video wx:elif="{{item.url}}" src="{{item.url}}" class="video-player" autoplay="{{idx == videoCurrent}}" controls object-fit="contain"></video>
+					<video wx:if="{{item.url}}" src="{{item.url}}" class="video-player" autoplay="{{idx == videoCurrent}}" controls object-fit="contain"></video>
 					<view class="video-swiper-meta">
 						<view class="video-swiper-title">{{item.name || '洛图视频'}}</view>
 						<view class="video-swiper-desc" wx:if="{{item.description}}">{{item.description}}</view>

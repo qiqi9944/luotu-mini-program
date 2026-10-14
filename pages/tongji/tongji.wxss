@@ -23,13 +23,19 @@ page::before {
 }
 
 /* ---------- 顶部品类切换带（横向滑动：总览 + 动态品类组） ---------- */
+.sellist2-wrap {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	background: var(--header-bg);
+}
 .sellist2 {
 	position: relative;
 	width: 100%;
 	box-sizing: border-box;
 	display: block;
 	white-space: nowrap;
-	background: linear-gradient(160deg, var(--ink-600) 0%, var(--ink-900) 100%);
+	background: var(--header-bg);
 }
 .sellist2 .navrow {
 	position: relative;
@@ -49,10 +55,10 @@ page::before {
 	pointer-events: none;
 	background-image: repeating-linear-gradient(
 			45deg,
-			rgba(255, 255, 255, 0.045) 0 1rpx,
+			rgba(5, 85, 134, 0.045) 0 1rpx,
 			transparent 1rpx 24rpx
 		),
-		repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.03) 0 1rpx, transparent 1rpx 24rpx);
+		repeating-linear-gradient(-45deg, rgba(5, 85, 134, 0.03) 0 1rpx, transparent 1rpx 24rpx);
 }
 
 .sellist2::after {
@@ -64,7 +70,38 @@ page::before {
 	height: 420rpx;
 	border-radius: 50%;
 	pointer-events: none;
-	background: radial-gradient(circle, rgba(66, 170, 225, 0.42) 0%, rgba(66, 170, 225, 0) 70%);
+	background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+/* 内容超出屏幕时，用渐隐和方向箭头提示右侧仍有品类；滚动后由 JS 隐藏。 */
+.category-scroll-hint {
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 4;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	width: 190rpx;
+	padding-right: 18rpx;
+	box-sizing: border-box;
+	background: linear-gradient(90deg, rgba(234, 245, 255, 0) 0%, rgba(234, 245, 255, 0.78) 42%, rgba(234, 245, 255, 0.98) 100%);
+	color: var(--brand);
+	font-size: 20rpx;
+	font-weight: 600;
+	letter-spacing: 0.5rpx;
+	pointer-events: none;
+}
+.category-scroll-arrow {
+	margin-left: 8rpx;
+	font-size: 28rpx;
+	line-height: 1;
+	animation: category-scroll-nudge 1.8s ease-in-out infinite;
+}
+@keyframes category-scroll-nudge {
+	0%, 100% { transform: translateX(0); }
+	50% { transform: translateX(6rpx); }
 }
 
 .sellist2 .item {
@@ -82,12 +119,11 @@ page::before {
 	text-align: center;
 	font-size: var(--fs-body-s);
 	line-height: 1.3;
-	/* 原 rgba(255,255,255,.3) 在深蓝上仅约 1.5:1，属于不可读；提亮带后用 .8 维持对比 */
-	color: rgba(255, 255, 255, 0.8);
+	color: var(--text-2);
 	transition: color 0.2s ease;
 }
 .sellist2 .item.hover .title {
-	color: var(--text-invert);
+	color: var(--ink-700);
 	font-weight: 600;
 }
 .sellist2 .item .pic {
@@ -95,8 +131,8 @@ page::before {
 	height: 84rpx;
 	border-radius: 50%;
 	box-sizing: border-box;
-	background-color: rgba(255, 255, 255, 0.1);
-	border: 1rpx solid rgba(255, 255, 255, 0.16);
+	background-color: var(--brand-soft);
+	border: 1rpx solid var(--hairline);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -107,53 +143,53 @@ page::before {
    注意这几条必须写在 .item.hover .pic 之前——两者选择器权重相同，
    靠书写顺序定胜负，否则选中态的白底会被渐变盖掉。 */
 .sellist2 .item .pic.icon-all {
-	background: linear-gradient(145deg, rgb(104, 151, 184) 0%, rgb(63, 106, 139) 100%);
+	background: linear-gradient(145deg, #d9edff 0%, #b9dcff 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-c0 {
-	background: linear-gradient(145deg, rgb(104, 151, 184) 0%, rgb(63, 106, 139) 100%);
+	background: linear-gradient(145deg, #d9edff 0%, #b9dcff 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-c1 {
-	background: linear-gradient(145deg, rgb(194, 125, 126) 0%, rgb(143, 78, 82) 100%);
+	background: linear-gradient(145deg, #ffe2df 0%, #ffc2bc 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-c2 {
-	background: linear-gradient(145deg, rgb(116, 168, 137) 0%, rgb(70, 122, 94) 100%);
+	background: linear-gradient(145deg, #dff7ea 0%, #bce9d1 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-c3 {
-	background: linear-gradient(145deg, rgb(208, 158, 100) 0%, rgb(157, 105, 56) 100%);
+	background: linear-gradient(145deg, #fff1cf 0%, #ffdc9b 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-c4 {
-	background: linear-gradient(145deg, rgb(133, 137, 184) 0%, rgb(86, 89, 135) 100%);
+	background: linear-gradient(145deg, #e6e9ff 0%, #c9d0ff 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-c5 {
-	background: linear-gradient(145deg, rgb(106, 165, 176) 0%, rgb(63, 117, 128) 100%);
+	background: linear-gradient(145deg, #dcf7ff 0%, #b8e8f5 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-c6 {
-	background: linear-gradient(145deg, rgb(198, 170, 101) 0%, rgb(143, 116, 56) 100%);
+	background: linear-gradient(145deg, #fff1c9 0%, #ffda8e 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-c7 {
-	background: linear-gradient(145deg, rgb(161, 132, 176) 0%, rgb(108, 81, 123) 100%);
+	background: linear-gradient(145deg, #f1e5ff 0%, #dcc4f5 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-c8 {
-	background: linear-gradient(145deg, rgb(200, 135, 156) 0%, rgb(148, 82, 105) 100%);
+	background: linear-gradient(145deg, #ffe5f3 0%, #f8bfdc 100%);
 	border-color: transparent;
 }
 
-/* 选中态：白底 + 一圈琥珀外发光，在蓝色带上形成冷暖双色焦点 */
+/* 选中态：白底 + 一圈琥珀外发光，在浅蓝页眉上形成冷暖双色焦点 */
 .sellist2 .item.hover .pic {
 	background: var(--surface);
 	border-color: var(--surface);
 	box-shadow: 0 0 0 8rpx rgba(255, 201, 60, 0.42);
 }
-/* 选中后底色转白，字必须跟着转墨蓝，否则白底白字 */
+/* 选中后底色转白，字与图标保持深蓝对比 */
 .sellist2 .item.hover .pic .icon-letter {
 	color: var(--ink-700);
 }
@@ -167,7 +203,7 @@ page::before {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: var(--text-invert);
+	color: var(--ink-700);
 	font-size: var(--fs-heading);
 	font-weight: 700;
 	line-height: 1;
@@ -175,11 +211,11 @@ page::before {
 }
 
 /* ---------- 顶部导航图标：复用首页那套线性图标（mask 上色） ----------
-   深色带上默认白色，选中态底色转白后图标保留对应分类色。 */
+   浅色页眉上默认使用深蓝，选中态保留对应分类色。 */
 .sellist2 .svg-icon {
 	width: 48rpx;
 	height: 48rpx;
-	background-color: rgba(255, 255, 255, 0.92);
+	background-color: var(--ink-700);
 	-webkit-mask-repeat: no-repeat;
 	-webkit-mask-position: center;
 	-webkit-mask-size: contain;
@@ -277,19 +313,20 @@ page::before {
 	border-radius: var(--r-lg) var(--r-lg) 0 0;
 	box-shadow: none;
 }
-.con2 {
-	min-height: calc(100vh - 300rpx);
+.empty-state-inline {
+	min-height: 420rpx;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+	padding: 28rpx 0 40rpx;
 }
-.con2 .pic {
+.empty-state-inline .pic {
 	width: 250rpx;
 	margin-bottom: 28rpx;
 	opacity: 0.8;
 }
-.con2 .text {
+.empty-state-inline .text {
 	font-size: var(--fs-body);
 	color: var(--text-3);
 	letter-spacing: 1rpx;
@@ -725,10 +762,12 @@ page::before {
 	color: var(--ink-700);
 }
 
-/* .red 原本在 wxml 里被用于「销售金额」却没有对应样式。
-   这里赋予它琥珀色：量为墨蓝、额为琥珀，一眼区分两类指标。 */
+	/* 指标颜色：销售量与平均价格用品牌蓝；销售金额用品牌红；同比按涨跌语义使用红/绿。 */
+.box .down .tjlist .item .p2 .a1.red {
+	color: var(--rise);
+}
 .box .down .tjlist .item .p2 .a1.red .num {
-	color: var(--signal);
+	color: var(--rise);
 }
 
 /* 同比：做成带底色的小胶囊，涨跌方向比数值本身更先被读到 */
@@ -744,11 +783,11 @@ page::before {
 }
 .box .down .tjlist .item .p2 .a2.a2_1 {
 	color: var(--rise);
-	background-color: rgba(210, 64, 41, 0.08);
+	background-color: rgba(202, 56, 40, 0.08);
 }
 .box .down .tjlist .item .p2 .a2.a2_2 {
 	color: var(--fall);
-	background-color: rgba(11, 143, 99, 0.08);
+	background-color: rgba(0, 176, 80, 0.08);
 }
 
 /* ---------- 表格（继承 app.wxss 的横线体系，此处只补页面语境） ---------- */
@@ -1117,8 +1156,8 @@ ec-canvas {
   flex: 1.05;
 }
 
-/* 市占率与均价是「水平」而非「变化」，一律墨蓝；
-   红色在本项目只留给同比上涨，绝不用来染读数 */
+/* 市占率与均价是「水平」而非「变化」，使用品牌蓝；
+   销售金额与同比上涨使用品牌红。 */
 .price-cell-share,
 .brand-cell-share,
 .brand-cell-price {

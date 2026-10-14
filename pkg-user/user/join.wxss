@@ -1,6 +1,6 @@
 /* pages/user/join.wxss */
 page{
-	background-color: #1287c8;
+	background-color: var(--brand-soft);
 }
 .back{
 	position: fixed;

@@ -100,7 +100,10 @@ Page({
 		chart.clear()
 		const changeId = this.data.changeOptions && this.data.changeOptions[this.data.changeIndex] ? this.data.changeOptions[this.data.changeIndex].id : 'yoy'
 		const showYoy = changeId === 'yoy'
-		const legendData = [showYoy ? '同比' : '环比']
+		const scaleName = this.data.arrval2[this.data.val2] ? this.data.arrval2[this.data.val2].name : '销量'
+		const scaleColor = /销额|金额/.test(scaleName) ? '#CA3828' : '#055586'
+		const changeColor = scaleColor === '#CA3828' ? '#055586' : '#CA3828'
+		const legendData = [scaleName, showYoy ? '同比' : '环比']
 		const lineSeries = []
 		if (showYoy) {
 			lineSeries.push({
@@ -115,10 +118,10 @@ Page({
 				symbolSize: 3.5,
 				lineStyle: {
 					width: 1.5,
-					color: '#e04a5c'
+					color: changeColor
 				},
 				itemStyle: {
-					color: '#e04a5c',
+					color: changeColor,
 					borderColor: '#ffffff',
 					borderWidth: 1
 				},
@@ -139,10 +142,10 @@ Page({
 				symbolSize: 3.5,
 				lineStyle: {
 					width: 1.5,
-					color: '#f39c3d'
+					color: changeColor
 				},
 				itemStyle: {
-					color: '#f39c3d',
+					color: changeColor,
 					borderColor: '#ffffff',
 					borderWidth: 1
 				},
@@ -257,7 +260,7 @@ Page({
 				}
 			],
 			series: [{
-				name: this.data.arrval2[this.data.val2] ? this.data.arrval2[this.data.val2].name : '销量',
+				name: scaleName,
 				type: 'bar',
 				label: {
 					show: false,
@@ -267,35 +270,7 @@ Page({
 				data: this.data.chart1,
 				itemStyle: {
 					borderRadius: [4, 4, 0, 0],
-					color: (params) => {
-						if (0) {
-							return {
-								type: 'linear',
-								x: 0,
-								y: 0,
-								x2: 0,
-								y2: 1,
-								colorStops: [{
-									offset: 0, color: '#f16568'
-								}, {
-									offset: 1, color: '#cd3c29'
-								}],
-							}
-						} else {
-							return {
-								type: 'linear',
-								x: 0,
-								y: 0,
-								x2: 0,
-								y2: 1,
-								colorStops: [{
-									offset: 0, color: '#3d9bbd'
-								}, {
-									offset: 1, color: '#005d99'
-								}],
-							}
-						}
-					}
+					color: scaleColor
 				}
 			}].concat(lineSeries)
 		};
@@ -306,7 +281,7 @@ Page({
 		chart.clear()
 		const changeId = this.data.changeOptions && this.data.changeOptions[this.data.changeIndex] ? this.data.changeOptions[this.data.changeIndex].id : 'yoy'
 		const showYoy = changeId === 'yoy'
-		const legendData = [showYoy ? '同比' : '环比']
+		const legendData = ['平均价格', showYoy ? '同比' : '环比']
 		const lineSeries = []
 		if (showYoy) {
 			lineSeries.push({
@@ -321,10 +296,10 @@ Page({
 				symbolSize: 3.5,
 				lineStyle: {
 					width: 1.5,
-					color: '#e04a5c'
+					color: '#055586'
 				},
 				itemStyle: {
-					color: '#e04a5c',
+					color: '#055586',
 					borderColor: '#ffffff',
 					borderWidth: 1
 				},
@@ -345,10 +320,10 @@ Page({
 				symbolSize: 3.5,
 				lineStyle: {
 					width: 1.5,
-					color: '#f39c3d'
+					color: '#055586'
 				},
 				itemStyle: {
-					color: '#f39c3d',
+					color: '#055586',
 					borderColor: '#ffffff',
 					borderWidth: 1
 				},
@@ -463,7 +438,7 @@ Page({
 				}
 			],
 			series: [{
-				name: '均价',
+				name: '平均价格',
 				type: 'bar',
 				barMaxWidth: 14,
 				label: {
@@ -473,14 +448,7 @@ Page({
 				data: this.data.chart2,
 				itemStyle: {
 					borderRadius: [4, 4, 0, 0],
-					color: {
-						type: 'linear',
-						colorStops: [{
-							offset: 0, color: '#3d9bbd'
-						}, {
-							offset: 1, color: '#005d99'
-						}],
-					},
+					color: '#CA3828',
 				}
 			}].concat(lineSeries)
 		};
@@ -506,7 +474,7 @@ Page({
 					fontSize: 16
 				},
 			},
-			color: ['#005d99', '#cd3c29', '#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'],
+			color: ['#055586', '#CA3828', '#7188F0', '#55BC8A', '#FFD166', '#FF8B8B', '#62C8E8', '#35B5A0', '#FFA56B', '#B18AE0', '#F39BD9'],
 			series: [
 				{
 					name: '',
@@ -570,7 +538,7 @@ Page({
 					fontSize: 16
 				},
 			},
-			color: ['#005d99', '#cd3c29', '#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'],
+			color: ['#055586', '#CA3828', '#7188F0', '#55BC8A', '#FFD166', '#FF8B8B', '#62C8E8', '#35B5A0', '#FFA56B', '#B18AE0', '#F39BD9'],
 			series: [
 				{
 					name: '',

@@ -59,7 +59,7 @@
 
 .box .up .l2 .select .picker {
 	box-sizing: border-box;
-	border: 1rpx solid #1287c8;
+	border: 1rpx solid #055586;
 	min-width: 240rpx;
 	height: 45rpx;
 	font-size: 12px;
@@ -109,14 +109,14 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	color: #2489f0;
-	border: 1px solid #2489f0;
+	color: #055586;
+	border: 1px solid #055586;
 	background-color: #fff;
 	font-size: 11px;
 }
 
 .box .up .r .item.hover {
-	background-color: #2489f0;
+	background-color: #055586;
 	color: #fff;
 }
 
@@ -179,13 +179,13 @@
 	justify-content: flex-start;
 	align-items: flex-end;
 	font-size: 14px;
-	color: #1287c8;
+	color: #055586;
 	margin-right: 30rpx;
 }
 
 .box .down .tjlist .item .p2 .a1 .num {
 	font-size: 26px;
-	color: #1287c8;
+	color: #055586;
 	font-weight: bold;
 	line-height: 25px;
 }
@@ -353,9 +353,9 @@ ec-canvas {
 }
 
 .tabitem.active {
-  color: #1287c8;
+  color: #055586;
   font-weight: 700;
-  border-bottom-color: #1287c8;
+  border-bottom-color: #055586;
 }
 
 .panel {
@@ -395,7 +395,7 @@ ec-canvas {
 }
 
 .price-table {
-  border: 1rpx solid #1287c8;
+  border: 1rpx solid #055586;
   border-bottom: 0;
 }
 
@@ -406,11 +406,11 @@ ec-canvas {
 }
 
 .price-table-head {
-  background: #1287c8;
+  background: #055586;
 }
 
 .price-table-row {
-  border-top: 1rpx solid #1287c8;
+  border-top: 1rpx solid #055586;
   background: #fff;
 }
 
@@ -424,7 +424,7 @@ ec-canvas {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-right: 1rpx solid #1287c8;
+  border-right: 1rpx solid #055586;
 }
 
 .price-table-head .price-cell {
@@ -442,13 +442,13 @@ ec-canvas {
 
 .price-cell-share {
   flex: 1;
-  color: #e04a5c;
+  color: #CA3828;
   font-weight: 700;
 }
 
 .price-cell-change {
   flex: 1.2;
-  color: #e04a5c;
+  color: #CA3828;
   font-weight: 700;
 }
 
@@ -464,25 +464,25 @@ ec-canvas {
 
 .brand-cell-share {
   flex: 1;
-  color: #e04a5c;
+  color: #CA3828;
   font-weight: 700;
 }
 
 .brand-cell-change {
   flex: 1.15;
-  color: #e04a5c;
+  color: #CA3828;
   font-weight: 700;
 }
 
 .brand-cell-price {
   flex: 1.15;
-  color: #1287c8;
+  color: #055586;
   font-weight: 700;
 }
 
 .brand-cell-pricec {
   flex: 1.1;
-  color: #e04a5c;
+  color: #CA3828;
   font-weight: 700;
 }
 
@@ -492,8 +492,12 @@ ec-canvas {
   gap: 6rpx;
 }
 
+.price-change.up {
+	color: var(--rise);
+}
+
 .price-change.down {
-  color: #2f9e79;
+	color: var(--fall);
 }
 
 .price-arrow {
@@ -585,7 +589,7 @@ ec-canvas {
 }
 
 .ai-summary-title {
-  color: #1287c8;
+  color: #055586;
   font-size: 25rpx;
   font-weight: 700;
 }
@@ -607,12 +611,12 @@ ec-canvas {
 
 .ai-summary-value.up,
 .ai-summary-highlight.up {
-  color: #55a36c;
+	color: var(--rise);
 }
 
 .ai-summary-value.down,
 .ai-summary-highlight.down {
-  color: #e04a5c;
+	color: var(--fall);
 }
 
 .ai-summary-value.muted,
@@ -659,7 +663,7 @@ ec-canvas {
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	background-color: #1287c8;
+	background: var(--header-bg);
 }
 
 .sellist2 .item {
@@ -671,18 +675,18 @@ ec-canvas {
 
 .sellist2 .item .title {
 	font-size: 14px;
-	color: rgba(255, 255, 255, 0.3);
+	color: var(--text-2);
 }
 
 .sellist2 .item.hover .title {
-	color: #fff;
+	color: var(--ink-700);
 }
 
 .sellist2 .item .pic {
 	width: 80rpx;
 	height: 80rpx;
 	border-radius: 50%;
-	background-color: #064e7b;
+	background-color: var(--brand-soft);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -700,7 +704,7 @@ ec-canvas {
 .con {
 	padding: 0 25rpx;
 	padding-top: 30rpx;
-	background-color: #ebf6fc;
+	background-color: #f5faff;
 	margin-top: -70rpx;
 	position: relative;
 	z-index: 99;
@@ -787,7 +791,7 @@ ec-canvas {
 	width: 100%;
 	text-align: center;
 	font-size: 12px;
-	color: #1287c8;
+	color: #055586;
 	margin-bottom: 25rpx;
 }
 
@@ -878,7 +882,7 @@ ec-canvas {
 
 .tjlist2 .item .p2 {
 	font-size: 16px;
-	color: #1287c8;
+	color: #055586;
 	font-weight: bold;
 	margin-bottom: 20rpx;
 	display: flex;
@@ -941,7 +945,7 @@ ec-canvas {
 
 .tjlist2 .item.item2 .p2 {
 	font-size: 20px;
-	color: #1287c8;
+	color: #055586;
 	font-weight: bold;
 	margin-bottom: 0;
 	margin-right: 40rpx;

@@ -1,17 +1,16 @@
-/* pages/yanbao/redian.wxss — 观研页：深色页眉（搜索 + 分栏）→ 纸面浮起 → 报告列表 */
+/* pages/yanbao/redian.wxss — 观研页：浅蓝页眉（搜索 + 分栏）→ 纸面浮起 → 报告列表 */
 .redian-page {
 	min-height: 100%;
-	background: var(--ink-900);
+	background: var(--paper);
 }
 
-/* 顶部区域改为墨蓝带，与导航栏品牌蓝 #1287c8 连成一片。
-   原实现 .top-area 是白底、.sellist 又是 #f4f4f4，两者之间会出现一道拼色接缝。 */
+/* 顶部区域使用统一浅蓝页眉，搜索与分栏自然连成一片。 */
 .top-area {
 	position: relative;
 	box-sizing: border-box;
 	padding: 24rpx var(--gutter) 0;
 	overflow: hidden;
-	background: linear-gradient(160deg, var(--ink-600) 0%, var(--ink-900) 100%);
+	background: var(--header-bg);
 }
 .top-area::before {
 	content: "";
@@ -23,10 +22,10 @@
 	pointer-events: none;
 	background-image: repeating-linear-gradient(
 			45deg,
-			rgba(255, 255, 255, 0.045) 0 1rpx,
+			rgba(5, 85, 134, 0.045) 0 1rpx,
 			transparent 1rpx 24rpx
 		),
-		repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.03) 0 1rpx, transparent 1rpx 24rpx);
+		repeating-linear-gradient(-45deg, rgba(5, 85, 134, 0.03) 0 1rpx, transparent 1rpx 24rpx);
 }
 .top-area::after {
 	content: "";
@@ -37,10 +36,10 @@
 	height: 420rpx;
 	border-radius: 50%;
 	pointer-events: none;
-	background: radial-gradient(circle, rgba(66, 170, 225, 0.4) 0%, rgba(66, 170, 225, 0) 70%);
+	background: radial-gradient(circle, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 70%);
 }
 
-/* ---------- 深色底上的搜索框：半透明玻璃质感 ---------- */
+/* ---------- 浅蓝页眉上的搜索框 ---------- */
 .searchbar {
 	position: relative;
 	z-index: 1;
@@ -50,8 +49,8 @@
 	box-sizing: border-box;
 	display: flex;
 	align-items: center;
-	background: rgba(255, 255, 255, 0.12);
-	border: 1rpx solid rgba(255, 255, 255, 0.2);
+	background: var(--surface);
+	border: 1rpx solid var(--hairline);
 	border-radius: 999rpx;
 }
 .search-icon {
@@ -64,10 +63,10 @@
 	flex: 1;
 	height: 100%;
 	font-size: var(--fs-body);
-	color: var(--text-invert);
+	color: var(--text-1);
 }
 .search-placeholder {
-	color: rgba(255, 255, 255, 0.55);
+	color: var(--text-3);
 	font-size: var(--fs-body);
 }
 
@@ -98,7 +97,7 @@
 	justify-content: flex-start;
 	line-height: 1;
 	box-sizing: border-box;
-	color: rgba(255, 255, 255, 0.62);
+	color: var(--text-2);
 	transition: color 0.2s ease;
 }
 .sellist .item text {
@@ -115,7 +114,7 @@
 	transition: background-color 0.2s ease, width 0.2s ease;
 }
 .sellist .item.hover {
-	color: var(--text-invert);
+	color: var(--ink-700);
 	font-weight: 600;
 }
 .sellist .item.hover .underline {
@@ -133,7 +132,7 @@
 	background-color: var(--paper);
 	border-radius: var(--r-sheet) var(--r-sheet) 0 0;
 	border-top: 1rpx solid rgba(255, 255, 255, 0.5);
-	box-shadow: 0 -12rpx 32rpx rgba(3, 37, 60, 0.18);
+	box-shadow: 0 -8rpx 24rpx rgba(5, 85, 134, 0.06);
 }
 
 /* ---------- 资讯 / 视频 / 活动列表 ---------- */
@@ -371,7 +370,7 @@
 	height: 100%;
 }
 .video-grid .video-pic--ph {
-	background: linear-gradient(150deg, #1287c8 0%, #083047 100%);
+	background: linear-gradient(150deg, #7acbff 0%, #055586 100%);
 }
 .video-grid .video-pic--ph::before {
 	content: "";
@@ -397,7 +396,7 @@
 	box-sizing: border-box;
 	border-radius: 50%;
 	border: 2rpx solid rgba(255, 255, 255, 0.66);
-	background: rgba(8, 48, 71, 0.4);
+	background: rgba(21, 101, 179, 0.42);
 	display: flex;
 	justify-content: center;
 	align-items: center;

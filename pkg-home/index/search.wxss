@@ -1,12 +1,12 @@
 /* pages/index/search.wxss */
 page{
-	background-color: #ebf6fc;
+	background-color: #f5faff;
 }
 .con{
 	padding: 0 25rpx;
 	padding-top: 30rpx;
 	padding-bottom: 30rpx;
-	background-color: #ebf6fc;
+	background-color: #f5faff;
 	position: relative;
 	z-index: 99;
 	border-radius: 35rpx 35rpx 0 0 ;
@@ -103,7 +103,7 @@ page{
 	font-size: 14px;
 	color: #aaa;
 	text-align: center;
-	background-color: #ebf6fc;
+	background-color: #f5faff;
 }
 
 /* 相关品类卡片（横向一行胶囊标签，可滑动） */
@@ -132,8 +132,8 @@ page{
 	margin-right: 16rpx;
 	padding: 14rpx 28rpx;
 	border-radius: 999rpx;
-	background-color: #e6f0f7;
-	color: #004b7d;
+	background-color: #eaf5ff;
+	color: #055586;
 	font-size: 14px;
 	font-weight: 600;
 	line-height: 1.2;

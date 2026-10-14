@@ -1,13 +1,13 @@
 /* pages/user/about.wxss */
 page {
-	background-color: #1287c8;
+	background-color: var(--brand-soft);
 }
 .aa{
 	box-sizing: border-box;
 	padding: 0 25rpx;
 	padding-bottom: 30px;
 	width: 100%;
-	background-color: #ebf6fc;
+	background-color: #f5faff;
 	margin-top: 30rpx;
 	border-radius: 15rpx 15rpx 0 0 ;
 }

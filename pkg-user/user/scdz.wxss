@@ -1,12 +1,12 @@
 /* pages/user/scdz.wxss */
 page {
-	background-color: #ebf6fc;
+	background-color: #f5faff;
 }
 
 .con {
 	padding: 0 10rpx;
 	padding-top: 30rpx;
-	background-color: #ebf6fc;
+	background-color: #f5faff;
 	margin-top: -70rpx;
 	position: relative;
 	z-index: 99;

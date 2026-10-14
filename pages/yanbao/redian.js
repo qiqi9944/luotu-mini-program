@@ -109,12 +109,23 @@ Page({
 	},
 	playVideo: function (e) {
 		let d = e.currentTarget.dataset
-		if (!d.url && !d.feedid && !d.feedtoken) {
+		// 视频号条目：跳转由 channel-video 封面原生点击完成(无弹窗)，
+		// 这里不调用 openChannelsActivity(会弹窗)，避免叠加二次跳转
+		if (d.feedid || d.feedtoken) {
+			return
+		}
+		if (!d.url) {
 			return false
 		}
-		let that = this
+		if (d.id) {
+			wx.request({
+				url: app.globalData.siteUrl + '/Wxapi/getvideoclick',
+				data: { id: d.id }
+			})
+		}
+		// 普通视频：应用内全屏竖滑列表
 		let srcList = (this.data.videolist || []).filter(function (v) {
-			return v.url || v.feed_id || v.feed_token
+			return v.url
 		})
 		let cur = 0
 		srcList.forEach(function (v, i) {
@@ -127,12 +138,6 @@ Page({
 			playList: srcList,
 			videoCurrent: cur
 		})
-		if (d.id) {
-			wx.request({
-				url: app.globalData.siteUrl + '/Wxapi/getvideoclick',
-				data: { id: d.id }
-			})
-		}
 	},
 	onVideoChange: function (e) {
 		this.setData({
@@ -196,14 +201,14 @@ Page({
 	 * 生命周期函数--监听页面隐藏
 	 */
 	onHide: function () {
-
+		this.closeVideo()
 	},
 
 	/**
 	 * 生命周期函数--监听页面卸载
 	 */
 	onUnload: function () {
-
+		this.closeVideo()
 	},
 
 	/**

@@ -25,7 +25,7 @@
 
 				<picker class="selector-cell" bindchange="bindPickerChange" data-name="val2" data-real="realval2" value="{{val2}}" range-key="name" range="{{arrval2}}">
 					<view class="selector-main">
-						<text class="selector-label">销售</text>
+						<text class="selector-label">口径</text>
 						<view class="selector-meta">
 							<text class="selector-value">{{arrval2[val2] ? arrval2[val2]['name'] : '全部'}}</text>
 							<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>

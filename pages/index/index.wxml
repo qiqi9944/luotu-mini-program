@@ -50,7 +50,7 @@ module.exports.pad = function (n) { return n > 9 ? '' + n : '0' + n }
                     <block wx:for="{{grp}}" wx:key="id">
                         <view class="item" hover-class="tap-card" hover-stay-time="80" bindtap="nextpage" data-type="{{item.type}}">
                             <view class="icon icon-{{item.iconClass}}">
-                                <view class="svg-icon svg-{{item.iconClass}}"></view>
+                                <image class="icon-img" src="{{item.iconImg}}" mode="aspectFit"></image>
                             </view>
                             <view class="title">{{item.name}}</view>
                         </view>

@@ -134,7 +134,7 @@ page {
 .inditem .num {
   font-size: 40rpx;
   font-weight: 600;
-  color: #1677c8;
+  color: #055586;
 }
 
 .inditem .dw {
@@ -149,11 +149,11 @@ page {
 }
 
 .inditem .p3.up {
-  color: #e04a5c;
+	color: var(--rise);
 }
 
 .inditem .p3.down {
-  color: #2f9e79;
+	color: var(--fall);
 }
 
 /* 图表 */
@@ -171,7 +171,7 @@ page {
   color: #1f2a37;
   margin-bottom: 16rpx;
   padding-left: 12rpx;
-  border-left: 6rpx solid #1677c8;
+  border-left: 6rpx solid #055586;
 }
 
 .chart {
@@ -541,11 +541,11 @@ page {
 }
 
 .tvsrow-yoy.up {
-  color: #e24a5a;
+	color: var(--rise);
 }
 
 .tvsrow-yoy.down {
-  color: #2f9e79;
+	color: var(--fall);
 }
 
 /* 卡片内箭头（周期胶囊 + 同比涨跌）对齐 DSC 尺寸 */

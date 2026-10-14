@@ -1,22 +1,28 @@
 <!--pages/tongji/tongji.wxml-->
-<scroll-view class="sellist2" scroll-x enhanced show-scrollbar="{{false}}" scroll-with-animation>
-	<view class="navrow">
-		<view class="item {{sel==1?'hover':''}}" data-type="1" bindtap="selchage" hover-class="tap-dim" hover-stay-time="80">
-			<view class="pic icon-all">
-				<view class="svg-icon svg-overview"></view>
+<view class="sellist2-wrap">
+	<scroll-view class="sellist2" scroll-x enhanced show-scrollbar="{{false}}" scroll-with-animation bindscroll="onCategoryScroll">
+		<view class="navrow">
+			<view class="item {{sel==1?'hover':''}}" data-type="1" bindtap="selchage" hover-class="tap-dim" hover-stay-time="80">
+				<view class="pic icon-all">
+					<view class="svg-icon svg-overview"></view>
+				</view>
+				<view class="title">总览</view>
 			</view>
-			<view class="title">总览</view>
-		</view>
-		<view class="item {{sel==item.sel?'hover':''}}" wx:for="{{groupList}}" wx:key="sel" data-type="{{item.sel}}" data-id="{{item.type}}" bindtap="selchage" hover-class="tap-dim" hover-stay-time="80">
-			<view class="pic icon-c{{item.colorIndex}}">
-				<view class="svg-icon svg-{{item.iconClass}}"></view>
+			<view class="item {{sel==item.sel?'hover':''}}" wx:for="{{groupList}}" wx:key="sel" data-type="{{item.sel}}" data-id="{{item.type}}" bindtap="selchage" hover-class="tap-dim" hover-stay-time="80">
+				<view class="pic icon-c{{item.colorIndex}}">
+					<view class="svg-icon svg-{{item.iconClass}}"></view>
+				</view>
+				<view class="title">{{item.name}}</view>
 			</view>
-			<view class="title">{{item.name}}</view>
 		</view>
+	</scroll-view>
+	<view class="category-scroll-hint" wx:if="{{showCategoryHint}}">
+		<text>右滑查看更多</text>
+		<text class="category-scroll-arrow">→</text>
 	</view>
-</scroll-view>
+</view>
 
-<view class="con {{((!xqData || xqData.length==0) && sel!=1)?'con2':''}}" >
+<view class="con">
 	<block wx:if="{{sel==1}}">
 		<view class="bigtitle">
 			<view class="l">数据总览</view>
@@ -69,8 +75,8 @@
 					<view class="table">
 						<view class="tr">
 							<view class="th wd26 titleth">品类</view>
-							<view class="th wd38">销售数量（万台）</view>
-							<view class="th wd36">平均价格（元）</view>
+							<view class="th wd38">销售量（万台）及同比</view>
+							<view class="th wd36">平均价格（元）及同比</view>
 						</view>
 						<block wx:for="{{group.sj2}}" wx:for-item="row" wx:key="index">
 							<view class="tr">
@@ -129,7 +135,7 @@
 						<view class="table tvs-table">
 						<view class="tr">
 							<view class="th wd26 titleth">品类</view>
-							<view class="th wd74">销售数量（万台）</view>
+							<view class="th wd74">销售量（万台）及同比</view>
 						</view>
 						<block wx:for="{{listData3}}" wx:key="index">
 							<view class="tr" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
@@ -153,7 +159,7 @@
 						<view class="table tvs-table">
 						<view class="tr">
 							<view class="th wd26 titleth">品类</view>
-							<view class="th wd74">销售数量（万台）</view>
+							<view class="th wd74">销售量（万台）及同比</view>
 						</view>
 						<block wx:for="{{listData4}}" wx:key="index">
 							<view class="tr" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
@@ -177,7 +183,7 @@
 						<view class="table tvs-table">
 						<view class="tr">
 							<view class="th wd26 titleth">品类</view>
-							<view class="th wd74">销售数量（万台）</view>
+							<view class="th wd74">销售量（万台）及同比</view>
 						</view>
 						<block wx:for="{{listData7}}" wx:key="index">
 							<view class="tr" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
@@ -201,7 +207,7 @@
 						<view class="table tvs-table">
 						<view class="tr">
 							<view class="th wd26 titleth">品类</view>
-							<view class="th wd74">销售数量（万台）</view>
+							<view class="th wd74">销售量（万台）及同比</view>
 						</view>
 						<block wx:for="{{listData9}}" wx:key="index">
 							<view class="tr" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
@@ -225,7 +231,7 @@
 						<view class="table tvs-table">
 						<view class="tr">
 							<view class="th wd26 titleth">品类</view>
-							<view class="th wd74">销售数量（万台）</view>
+							<view class="th wd74">销售量（万台）及同比</view>
 						</view>
 						<block wx:for="{{listData8}}" wx:key="index">
 							<view class="tr" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
@@ -249,7 +255,7 @@
 						<view class="table tvs-table">
 						<view class="tr">
 							<view class="th wd26 titleth">品类</view>
-							<view class="th wd74">销售数量（万台）</view>
+							<view class="th wd74">销售量（万台）及同比</view>
 						</view>
 						<block wx:for="{{listData5}}" wx:key="index">
 							<view class="tr" hover-class="tap-row" bindtap="selchage" data-type="{{group.sel}}" data-id="{{item.id}}" data-ids="{{item.ids}}" data-ds="{{item.ds}}" data-dss="{{item.dss}}" data-typename="{{item.t1}}">
@@ -274,11 +280,7 @@
 			</view>
 		</block>
 	</block>
-	<block wx:if="{{(!xqData || xqData.length==0) && sel!=1}}">
-			<image src="/pages/images/error.png" mode="widthFix" class="pic"></image>
-			<view class="text">正在建设中，敬请期待...</view>
-		</block>
-	<view hidden="{{sel==1 || (!xqData || xqData.length==0)}}" style="width: 100%;">
+	<view hidden="{{sel==1}}" style="width: 100%;">
 		<view class="filter-card">
 			<view class="selector-grid">
 				<picker class="selector-cell selector-cell-wide" bindchange="bindPickerChange" data-name="val0" data-real="realval0" value="{{val0}}" range-key="name" range="{{arrval0}}">
@@ -304,7 +306,7 @@
 
 					<picker class="selector-cell" wx:if="{{arrval2.length > 0}}" bindchange="bindPickerChange" data-name="val2" data-real="realval2" value="{{val2}}" range-key="name" range="{{arrval2}}">
 						<view class="selector-main">
-							<text class="selector-label">销售</text>
+							<text class="selector-label">口径</text>
 							<view class="selector-meta">
 								<text class="selector-value">{{arrval2[val2] ? arrval2[val2]['name'] : '全部'}}</text>
 								<image src="/pages/images/sanjiao2.png" mode="widthFix" class="selector-arrow"></image>
@@ -356,6 +358,13 @@
 				</view>
 			</view>
 		</view>
+			<block wx:if="{{!xqData || xqData.length==0}}">
+				<view class="empty-state-inline">
+					<image src="/pages/images/error.png" mode="widthFix" class="pic"></image>
+					<view class="text">正在建设中，敬请期待...</view>
+				</view>
+			</block>
+			<block wx:if="{{xqData && xqData.length}}">
 
 		<view class="tabbar">
 			<view class="tabitem {{activeTab=='scale'?'active':''}}" hover-class="tap-dim" bindtap="switchTab" data-tab="scale">行业规模</view>
@@ -490,6 +499,7 @@
 		</view>
 
 		<view class="source-note">{{tips}}</view>
+			</block>
 	</view>
 	<view class="blank20"></view>
 </view>
