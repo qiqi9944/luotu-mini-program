@@ -290,6 +290,10 @@ Page({
 	isQuarterCategory: function (type) {
 		return ['5', '6', '7', '8', '18'].indexOf(String(type || '')) > -1
 	},
+	// 单一时间粒度品类（商用显示PID + 上游供应链）：时间锁定为数据实际粒度，不可切换到无数据的粒度
+	isPeriodLockType: function (type) {
+		return ['5', '6', '7', '8', '18', '9', '10', '11', '12', '17', '21'].indexOf(String(type || '')) > -1
+	},
 	// 根据接口返回的周期名称识别实际时间粒度，避免接口无季度数据时仍显示季度。
 	getPeriodModeFromList: function (list) {
 		const item = (Array.isArray(list) ? list : []).find((entry) => entry && entry.name && String(entry.name) !== '年累计')
@@ -1185,14 +1189,15 @@ Page({
 		const enter = () => {
 			const group = that.data.groupList.find((g) => g.sel == sel) || {}
 			const enteringCategory = sel > 1
-			const locked = that.isQuarterCategory(id || that.data.realval0)
+			const typeId = id || that.data.realval0
+			const isQuarter = that.isQuarterCategory(typeId)
 			const nextData = {
 				sel: sel,
 				realval0: id || that.data.realval0,
 				curTypes: group.types || [],
 				curGroupName: group.name || '',
-				periodIndex: locked ? 1 : 0,
-				periodLocked: locked,
+				periodIndex: isQuarter ? 1 : 0,
+				periodLocked: that.isPeriodLockType(typeId),
 				periodCache: { month: [], quarter: [] },
 			}
 			if (sel > 1) {
@@ -1295,8 +1300,8 @@ Page({
 		if (name == 'yjn' || name == 'yjn2' || name == 'yjn3' || name == 'yjn4' || name == 'yjn5' || name == 'yjn6' || name == 'yjn7' || name == 'yjn8' || name == 'yjn9') {
 			setTimeout(() => { that.getzonglan() })
 		} else if (name == 'val0') {
-			const locked = that.isQuarterCategory(realval)
-			that.setData({ periodIndex: locked ? 1 : 0, periodLocked: locked, periodCache: { month: [], quarter: [] } })
+			const isQuarter = that.isQuarterCategory(realval)
+			that.setData({ periodIndex: isQuarter ? 1 : 0, periodLocked: that.isPeriodLockType(realval), periodCache: { month: [], quarter: [] } })
 			that.resetdspt()
 			setTimeout(() => { that.getshuju(1) })
 		} else if (name == 'val1') {
@@ -1579,6 +1584,7 @@ data: {
 					arrval2: res.data.arr_xl ? res.data.arr_xl : [],
 					arrval3: periodList,
 					periodIndex: effectivePeriodIndex,
+					periodLocked: that.isPeriodLockType(type),
 					xqData: res.data.arr_sj1 ? res.data.arr_sj1.map(row => {
 						if (!row || row.t3 === undefined || row.t3 === '') return row
 						return Object.assign({}, row, { t3: that.fmtPct(row.t3) })
@@ -1697,12 +1703,12 @@ data: {
 		const jumped = !!(sjtype && sjsel)
 		console.log(sjtype, sjsel)
 		if (jumped) {
-			const locked = that.isQuarterCategory(sjtype)
+			const isQuarter = that.isQuarterCategory(sjtype)
 			that.setData({
 				realval0: sjtype,
 				sel: Number(sjsel),
-				periodIndex: locked ? 1 : 0,
-				periodLocked: locked,
+				periodIndex: isQuarter ? 1 : 0,
+				periodLocked: that.isPeriodLockType(sjtype),
 				periodCache: { month: [], quarter: [] }
 			})
 			wx.setStorageSync('sjtype', null)

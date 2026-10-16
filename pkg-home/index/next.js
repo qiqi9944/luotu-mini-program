@@ -607,6 +607,13 @@ Page({
 		if (/^\d{4}\/\d{2}$/.test(name)) return 'month'
 		return ''
 	},
+	// 单一时间粒度品类（商用显示PID + 上游供应链）：时间锁定为数据实际粒度，不可切换到无数据的粒度
+	isPeriodLockType: function (type) {
+		return ['5', '6', '7', '8', '18', '9', '10', '11', '12', '17', '21'].indexOf(String(type || '')) > -1
+	},
+	isQuarterCategory: function (type) {
+		return ['5', '6', '7', '8', '18'].indexOf(String(type || '')) > -1
+	},
 	getDistributionPresentation: function (response, list, type) {
 		const structure = response && response.arr_sj6 ? response.arr_sj6 : {}
 		const enabled = !response || (response.price_dist !== false && String(response.price_dist) !== '0')
@@ -929,10 +936,10 @@ Page({
 		})
 		if (name == 'val0') {
 			that.resetdspt()
-			const locked = ['5', '6', '7', '8', '18'].indexOf(String(realval)) >= 0
+			const isQuarter = that.isQuarterCategory(realval)
 			that.setData({
-				periodIndex: locked ? 1 : 0,
-				periodLocked: locked,
+				periodIndex: isQuarter ? 1 : 0,
+				periodLocked: that.isPeriodLockType(realval),
 				periodCache: { month: [], quarter: [] }
 			})
     }
@@ -1249,6 +1256,7 @@ Page({
 					arrval2: res.data.arr_xl ? res.data.arr_xl : [],
 					arrval3: periodList,
 					periodIndex: effectivePeriodIndex,
+					periodLocked: that.isPeriodLockType(type),
 					xqData: res.data.arr_sj1 ? res.data.arr_sj1.map(row => {
 						if (!row || row.t3 === undefined || row.t3 === '') return row
 						return Object.assign({}, row, { t3: that.fmtPct(row.t3) })
@@ -1358,11 +1366,11 @@ Page({
 			})
 		}
 		console.log(type)
-		const periodLocked = ['5', '6', '7', '8', '18'].indexOf(String(type)) >= 0
+		const isQuarter = that.isQuarterCategory(type)
 		that.setData({
 			realval0: type,
-			periodIndex: periodLocked ? 1 : 0,
-			periodLocked: periodLocked,
+			periodIndex: isQuarter ? 1 : 0,
+			periodLocked: that.isPeriodLockType(type),
 			periodCache: { month: [], quarter: [] }
 		})
 		var type2 = that.options.type2
