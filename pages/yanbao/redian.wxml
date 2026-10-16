@@ -149,37 +149,47 @@
 		</view>
 	</view>
 	<view class="redian" wx:if="{{pagetype==4}}">
-		<view class="activity-list" wx:if="{{activityBanners.length}}">
-			<block wx:for="{{activityBanners}}" wx:key="id">
-				<navigator url="/pkg-research/yanbao/view?id={{item.id}}" class="activity-banner" hover-class="tap-dim" hover-stay-time="80">
-					<image wx:if="{{item.bannerpic || item.pic}}" src="{{item.bannerpic || item.pic}}" mode="widthFix" class="activity-banner-img" data-id="{{item.id}}" binderror="bannerImgError"></image>
-					<view wx:else class="activity-banner-fallback">
-						<view class="activity-banner-title">{{item.name}}</view>
-						<view class="activity-banner-date">{{item.addtime}}</view>
-					</view>
-				</navigator>
-			</block>
-		</view>
-		<view class="newsbox" wx:if="{{newslist2.length}}">
-			<view class="main">
-				<view class="down">
-					<block wx:for="{{newslist2}}" wx:key="id">
-						<navigator url="/pkg-research/yanbao/view?id={{item.id}}" class="item" hover-class="tap-row">
-							<view class="l">
-								<view class="shang">
-									<view class="title">
-										<image src="/pages/images/liststyle2.png" mode="widthFix" class="pic"></image>{{item.name}}
+		<block wx:for="{{activityGroups}}" wx:key="id" wx:for-item="group">
+		<view class="video-group" wx:if="{{group.banners.length || group.list.length}}">
+			<view class="video-group-head">
+				<view class="video-group-bar"></view>
+				<view class="video-group-name">{{group.name}}</view>
+			</view>
+			<view class="activity-list" wx:if="{{group.banners.length}}">
+				<block wx:for="{{group.banners}}" wx:key="id">
+					<navigator url="/pkg-research/yanbao/view?id={{item.id}}" class="activity-banner" hover-class="tap-dim" hover-stay-time="80">
+						<image wx:if="{{item.bannerpic || item.pic}}" src="{{item.bannerpic || item.pic}}" mode="widthFix" class="activity-banner-img" data-id="{{item.id}}" binderror="bannerImgError"></image>
+						<view wx:else class="activity-banner-fallback">
+							<view class="activity-banner-title">{{item.name}}</view>
+							<view class="activity-banner-date">{{item.addtime}}</view>
+						</view>
+					</navigator>
+				</block>
+			</view>
+			<view class="newsbox" wx:if="{{group.list.length}}">
+				<view class="main">
+					<view class="down">
+						<block wx:for="{{group.list}}" wx:key="id">
+							<navigator url="/pkg-research/yanbao/view?id={{item.id}}" class="item" hover-class="tap-row">
+								<view class="l">
+									<view class="shang">
+										<view class="title">
+											<image src="/pages/images/liststyle2.png" mode="widthFix" class="pic"></image>{{item.name}}
+										</view>
 									</view>
+									<view class="xia">{{item.addtime}}</view>
 								</view>
-								<view class="xia">{{item.addtime}}</view>
-							</view>
-							<image src="{{item.pic}}" mode="widthFix" wx:if="{{item.pic}}" class="r"></image>
-						</navigator>
-					</block>
+								<image src="{{item.pic}}" mode="widthFix" wx:if="{{item.pic}}" class="r"></image>
+							</navigator>
+						</block>
+					</view>
 				</view>
 			</view>
 		</view>
-		<view class="more" wx:if="{{!lastpage2}}" bindtap="getnews3">查看更多></view>
+		</block>
+		<view class="video-empty" wx:if="{{!newslist2.length}}">
+			<text>暂无活动</text>
+		</view>
 	</view>
 	<view class="video-mask" wx:if="{{showVideoMask}}">
 		<swiper class="video-swiper" vertical="{{true}}" current="{{videoCurrent}}" duration="300" bindchange="onVideoChange">

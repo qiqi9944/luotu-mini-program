@@ -19,6 +19,7 @@ Page({
 		newslist2: [],
 		lastpage2: 0,
 		activityBanners: [],
+		activityGroups: [],
 		videolist: [],
 		videoGroups: [],
 		playList: [],
@@ -60,42 +61,45 @@ Page({
 	},
 	getnews3: function () {
 		let that = this;
-		let p = that.data.p2;
 		wx.request({
 			url: app.globalData.siteUrl + '/Wxapi/getnews',
-			data: { type: 1, p: p },
+			data: { type: 1, p: 1 },
 			success: function (res) {
-				console.log(res);
-				let oldData = that.data.newslist2;
-				let oldBanners = that.data.activityBanners;
-				let pageData = res.data.datalist || [];
-				let banners = [];
-				let rest = [];
-				pageData.forEach(function (item) {
-					if (item.isbanner == 1) {
-						banners.push(item);
-					} else {
-						rest.push(item);
-					}
-				});
-				if (pageData.length > 0) {
-					p = p + 1;
-				}
+				let groups = (res.data && res.data.groups) || []
+				let flat = []
+				groups.forEach(function (g) {
+					let banners = []
+					let list = []
+					;(g.items || []).forEach(function (item) {
+						flat.push(item)
+						if (item.isbanner == 1) {
+							banners.push(item)
+						} else {
+							list.push(item)
+						}
+					})
+					g.banners = banners
+					g.list = list
+				})
 				that.setData({
-					p2: p,
-					newslist2: oldData.concat(rest),
-					activityBanners: oldBanners.concat(banners),
-					lastpage2: res.data.lastpage
+					activityGroups: groups,
+					newslist2: flat,
+					activityBanners: [],
+					p2: 1,
+					lastpage2: 1
 				})
 			}
 		})
 	},
 	bannerImgError: function (e) {
 		let id = e.currentTarget.dataset.id
-		let banners = this.data.activityBanners.map(function (b) {
-			return b.id == id ? Object.assign({}, b, { bannerpic: '', pic: '' }) : b
+		let groups = this.data.activityGroups.map(function (g) {
+			let banners = (g.banners || []).map(function (b) {
+				return b.id == id ? Object.assign({}, b, { bannerpic: '', pic: '' }) : b
+			})
+			return Object.assign({}, g, { banners: banners })
 		})
-		this.setData({ activityBanners: banners })
+		this.setData({ activityGroups: groups })
 	},
 	getvideo: function () {
 		let that = this;
@@ -246,6 +250,7 @@ Page({
 				p2: 1,
 				newslist2: [],
 				activityBanners: [],
+				activityGroups: [],
 			})
 			this.getnews3()
 		}
