@@ -60,10 +60,6 @@
 			<image src="/pages/images/jiantou.png" mode="widthFix" class="r"></image>
 		</view>
 		-->
-	</view>
-
-	<view class="group-title rise rise-3">关于</view>
-	<view class="list rise rise-3">
 		<navigator class="item" url="/pkg-user/user/about" hover-class="tap-row">
 			<view class="l">
 				<view class="ico"><image mode="widthFix" class="img" src="/pages/images/u4.png"></image></view>关于我们
