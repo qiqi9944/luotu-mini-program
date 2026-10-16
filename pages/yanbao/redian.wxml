@@ -121,23 +121,31 @@
 		</view>
 	</view>
 	<view class="redian" wx:if="{{pagetype==3}}">
-		<view class="video-grid">
-			<view class="video-card" wx:for="{{videolist}}" wx:key="id" data-url="{{item.url}}" data-feedid="{{item.feed_id}}" data-feedtoken="{{item.feed_token}}" data-finder="{{item.finder_user_name}}" data-id="{{item.id}}" bindtap="playVideo" hover-class="tap-card">
-				<view class="video-cover">
-					<channel-video wx:if="{{item.feed_id}}" class="video-pic" feed-id="{{item.feed_id}}" finder-user-name="{{item.finder_user_name}}" object-fit="cover"></channel-video>
-					<channel-video wx:elif="{{item.feed_token}}" class="video-pic" feed-token="{{item.feed_token}}" object-fit="cover"></channel-video>
-					<video wx:elif="{{item.url}}" class="video-pic" src="{{item.url}}" object-fit="cover" controls="{{true}}"></video>
-					<image wx:elif="{{item.pic}}" class="video-pic" src="{{item.pic}}" mode="aspectFill"></image>
-					<view wx:else class="video-pic video-pic--ph"><view class="video-play-badge"></view></view>
-				</view>
-				<view class="video-body">
-					<view class="video-title">{{item.name || '洛图视频'}}</view>
-					<view class="video-desc" wx:if="{{item.description}}">{{item.description}}</view>
+		<block wx:for="{{videoGroups}}" wx:key="id" wx:for-item="group">
+		<view class="video-group" wx:if="{{group.videos.length}}">
+			<view class="video-group-head">
+				<view class="video-group-bar"></view>
+				<view class="video-group-name">{{group.name}}</view>
+			</view>
+			<view class="video-grid">
+				<view class="video-card" wx:for="{{group.videos}}" wx:key="id" data-url="{{item.url}}" data-feedid="{{item.feed_id}}" data-feedtoken="{{item.feed_token}}" data-finder="{{item.finder_user_name}}" data-id="{{item.id}}" bindtap="playVideo" hover-class="tap-card">
+					<view class="video-cover">
+						<channel-video wx:if="{{item.feed_id}}" class="video-pic" feed-id="{{item.feed_id}}" finder-user-name="{{item.finder_user_name}}" object-fit="cover"></channel-video>
+						<channel-video wx:elif="{{item.feed_token}}" class="video-pic" feed-token="{{item.feed_token}}" object-fit="cover"></channel-video>
+						<video wx:elif="{{item.url}}" class="video-pic" src="{{item.url}}" object-fit="cover" controls="{{true}}"></video>
+						<image wx:elif="{{item.pic}}" class="video-pic" src="{{item.pic}}" mode="aspectFill"></image>
+						<view wx:else class="video-pic video-pic--ph"><view class="video-play-badge"></view></view>
+					</view>
+					<view class="video-body">
+						<view class="video-title">{{item.name || '洛图视频'}}</view>
+						<view class="video-desc" wx:if="{{item.description}}">{{item.description}}</view>
+					</view>
 				</view>
 			</view>
-			<view class="video-empty" wx:if="{{!videolist.length}}">
-				<text>暂无视频</text>
-			</view>
+		</view>
+		</block>
+		<view class="video-empty" wx:if="{{!videolist.length}}">
+			<text>暂无视频</text>
 		</view>
 	</view>
 	<view class="redian" wx:if="{{pagetype==4}}">

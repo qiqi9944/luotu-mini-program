@@ -20,6 +20,7 @@ Page({
 		lastpage2: 0,
 		activityBanners: [],
 		videolist: [],
+		videoGroups: [],
 		playList: [],
 		videoCurrent: 0,
 		showVideoMask: false,
@@ -101,8 +102,19 @@ Page({
 		wx.request({
 			url: app.globalData.siteUrl + '/Wxapi/getvideo',
 			success: function (res) {
+				let groups = (res.data && res.data.groups) || []
+				let flat = []
+				groups.forEach(function (g) {
+					;(g.videos || []).forEach(function (v) {
+						flat.push(v)
+					})
+				})
+				if (!groups.length && res.data && res.data.datalist) {
+					flat = res.data.datalist
+				}
 				that.setData({
-					videolist: res.data.datalist
+					videoGroups: groups,
+					videolist: flat
 				})
 			}
 		})
