@@ -163,33 +163,33 @@ page::before {
 	background: linear-gradient(145deg, #d9edff 0%, #b9dcff 100%);
 	border-color: transparent;
 }
-/* 未选中：与首页金刚区同一套分类底色（按品类图标映射） */
+/* 未选中：按品类取色（与首页同一色相，但更亮/更饱和） */
 .sellist2 .item .pic.icon-life {
-	background: var(--c-blue-soft);
+	background: linear-gradient(145deg, #c9e5ff 0%, #9fcdf7 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-edu {
-	background: var(--c-indigo-soft);
+	background: linear-gradient(145deg, #dbe0ff 0%, #b8c2ff 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-ent {
-	background: var(--c-cyan-soft);
+	background: linear-gradient(145deg, #c3f0ff 0%, #9ce0f5 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-sport {
-	background: var(--c-green-soft);
+	background: linear-gradient(145deg, #c5f0da 0%, #9ce2c0 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-screen {
-	background: var(--c-red-soft);
+	background: linear-gradient(145deg, #ffd3c9 0%, #ffaf9f 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-core {
-	background: var(--c-violet-soft);
+	background: linear-gradient(145deg, #e2d4ff 0%, #c7abf5 100%);
 	border-color: transparent;
 }
 .sellist2 .item .pic.icon-more {
-	background: var(--ink-050);
+	background: linear-gradient(145deg, #dbe0ff 0%, #b8c2ff 100%);
 	border-color: transparent;
 }
 
