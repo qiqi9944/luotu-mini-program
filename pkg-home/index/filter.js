@@ -313,9 +313,24 @@ Page({
     this.loadData()
   },
 
+  // 上游供应链品类（tvs）只有出货量，无“额”维度，指标下拉只保留出货量
+  syncXlOptions() {
+    const supplyChainTypes = ['9', '10', '11', '12', '17', '21']
+    const isSupply = supplyChainTypes.indexOf(String(this.data.selType || '')) > -1
+    const list = isSupply
+      ? [{ id: '1', name: '出货量' }]
+      : [{ id: '1', name: '销量' }, { id: '2', name: '销额' }]
+    const cur = this.data.xlList || []
+    const changed = cur.length !== list.length || (cur[0] && list[0] && cur[0].name !== list[0].name)
+    if (changed) {
+      this.setData({ xlList: list, xlIdx: 0, selXl: '1', selXlName: list[0].name })
+    }
+  },
+
   // 请求数据
   loadData() {
     const that = this
+    this.syncXlOptions()
     const userData = wx.getStorageSync('userData')
     if (!userData || !userData.id) return
     wx.request({
