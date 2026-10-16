@@ -13,7 +13,7 @@
 		</view>
 		<view class="l" wx:else >
 			<view class="p5">洛图科技 · 产业数据</view>
-			<button class="p3" bindtap="dologin" hover-class="tap-card">微信快捷登录</button>
+			<button class="p3" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" hover-class="tap-card">微信手机号快捷登录</button>
 			<view class="p4">
 				您还未登录账号
 			</view>
