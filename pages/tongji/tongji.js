@@ -10,6 +10,7 @@ Page({
 	data: {
 		sel: 1,
 		groupList: [],
+		catIntoView: '',
 		showCategoryHint: false,
 		arr_groups: [],
 		curTypes: [],
@@ -150,6 +151,8 @@ Page({
 			{ id: 'mom', name: '环比' }
 		],
 		periodIndex: 0,
+		periodLocked: false,
+		periodCache: { month: [], quarter: [] },
 		periodOptions: [
 			{ id: 'month', name: '月度' },
 			{ id: 'quarter', name: '季度' }
@@ -283,6 +286,19 @@ Page({
 		}
 		return []
 	},
+	// 季度品类（商用显示：交互平板/数字标牌/激光投影/小间距LED）数据按季度，时间必须为季度
+	isQuarterCategory: function (type) {
+		return ['5', '6', '7', '8', '18'].indexOf(String(type || '')) > -1
+	},
+	// 根据接口返回的周期名称识别实际时间粒度，避免接口无季度数据时仍显示季度。
+	getPeriodModeFromList: function (list) {
+		const item = (Array.isArray(list) ? list : []).find((entry) => entry && entry.name && String(entry.name) !== '年累计')
+		if (!item) return ''
+		const name = String(item.name)
+		if (/\/Q[1-4]$/i.test(name)) return 'quarter'
+		if (/^\d{4}\/\d{2}$/.test(name)) return 'month'
+		return ''
+	},
 	getBrandPresentation: function (type, selDs, list) {
 		const supplyChainTypes = ['9', '11', '12', '17', '21']
 		const typeId = String(type || '')
@@ -301,7 +317,7 @@ Page({
 			brandHasPrice
 		}
 	},
-	buildAiSummary: function (response, rateSeries, brandList, productList, priceList, changeName) {
+	buildAiSummary: function (response, rateSeries, brandList, productList, priceList, changeName, avgSeries, structure2List) {
 		const trend = response && response.arr_sj2 ? response.arr_sj2 : {}
 		const firstValid = (values) => {
 			if (!Array.isArray(values)) return null
@@ -316,72 +332,105 @@ Page({
 			if (value === null || value === undefined || !isFinite(Number(value))) return '--'
 			return (Number(value) > 0 ? '+' : '') + Number(value).toFixed(1) + '%'
 		}
-		const rate = firstValid(rateSeries || trend.yoy)
-		const scaleName = this.data.arrval2[this.data.val2] ? this.data.arrval2[this.data.val2].name : '销量'
-		const brandRows = Array.isArray(brandList) ? brandList.slice(0, 20) : []
-		const risingBrands = brandRows.filter((item) => {
-			const value = parseFloat(String(item.share_c || '').replace('%', ''))
-			return isFinite(value) && value > 0
-		}).length
-		const brandChanges = brandRows.filter((item) => isFinite(parseFloat(String(item.share_c || '').replace('%', '')))).length
-		const productRows = Array.isArray(productList) ? productList : []
-		const priceRows = Array.isArray(priceList) ? priceList : []
-		const topProduct = productRows.length ? productRows[0].name : ''
-		const productName = response && response.arr_sj6 && response.arr_sj6.t1 ? response.arr_sj6.t1 : '产品类型'
-		// 中高端价格段（下界 ≥ 300 元）占比变化：各段 t3 为份额增减，求和得出整体变化
-		const priceLower = (name) => {
-			const m = String(name).match(/(\d+)\s*[-+]?/)
-			return m ? parseInt(m[1], 10) : null
+		const formatShare = (value) => (isFinite(Number(value)) ? Number(value).toFixed(1) + '%' : '--')
+		const dirWord = (value) => (value === null || !isFinite(Number(value)) ? '' : Number(value) > 0 ? '上升' : Number(value) < 0 ? '下降' : '持平')
+		const toNumber = (value) => {
+			const num = parseFloat(String(value === undefined || value === null ? '' : value).replace('%', ''))
+			return isFinite(num) ? num : null
 		}
-		const midHighRows = priceRows.filter((item) => {
-			const lb = priceLower(item.name)
-			return lb !== null && lb >= 300
-		})
-		const midHighChanges = midHighRows.map((item) => parseFloat(String(item.t3 || '').replace('%', ''))).filter((v) => isFinite(v))
-		const midHighTotal = midHighChanges.reduce((sum, v) => sum + v, 0)
-		const midHighRising = midHighChanges.filter((v) => v > 0).length
-		const hasMidHighData = midHighRows.length > 0 && midHighChanges.length > 0
-		return [
-			{
-				key: 'scale',
-				title: '行业规模',
-				icon: '↗',
-				before: scaleName + (changeName || '同比'),
-				value: rate === null ? '--' : (rate > 0 ? '上升 ' : rate < 0 ? '下降 ' : '持平 '),
-				highlight: rate === null ? '--' : formatRate(rate),
-				tone: rate === null ? 'muted' : rate < 0 ? 'down' : 'up'
-			},
-			{
-				key: 'brand',
-				title: '畅销品牌',
-				icon: '◆',
-				before: 'TOP20品牌中',
-				value: brandChanges ? risingBrands + '个品牌' : '',
-				after: brandChanges ? '市占同比上升' : '暂无同比数据',
-				highlight: '',
-				tone: brandChanges ? 'up' : 'muted'
-			},
-			{
+		const scaleName = this.data.arrval2[this.data.val2] ? this.data.arrval2[this.data.val2].name : '销量'
+		const rate = firstValid(rateSeries || trend.yoy)
+		const avgRate = firstValid(avgSeries || trend.avg_yoy)
+
+		// 10-1 行业规模：销量/销额同比 + 平均价格变化
+		const scaleItem = {
+			key: 'scale',
+			title: '行业规模',
+			icon: '↗',
+			before: scaleName + (changeName || '同比'),
+			value: rate === null ? '--' : (rate > 0 ? '上升 ' : rate < 0 ? '下降 ' : '持平 '),
+			highlight: rate === null ? '--' : formatRate(rate),
+			after: avgRate === null ? '' : '；平均价格' + dirWord(avgRate) + ' ' + formatRate(avgRate),
+			tone: rate === null ? 'muted' : rate < 0 ? 'down' : 'up'
+		}
+
+		// 10-2 畅销品牌：注明销量/销额口径 + 品牌平均价格变化
+		const brandRows = Array.isArray(brandList) ? brandList.slice(0, 20) : []
+		const brandChanges = brandRows.filter((item) => toNumber(item.share_c) !== null).length
+		const risingBrands = brandRows.filter((item) => (toNumber(item.share_c) || 0) > 0).length
+		const brandPriceChanges = brandRows.map((item) => toNumber(item.price_c)).filter((v) => v !== null)
+		const brandPriceUp = brandRows.filter((item) => item.price_czf === '+').length
+		const avgBrandPrice = brandPriceChanges.length ? brandPriceChanges.reduce((sum, v) => sum + v, 0) / brandPriceChanges.length : null
+		let brandAfter = brandChanges ? '（按' + scaleName + '口径）市占同比' + (risingBrands > 0 ? '上升' : '下降') : '暂无同比数据'
+		if (avgBrandPrice !== null) {
+			brandAfter += '；品牌均价' + dirWord(avgBrandPrice) + '，' + brandPriceUp + '个品牌均价上涨'
+		}
+		const brandItem = {
+			key: 'brand',
+			title: '畅销品牌',
+			icon: '◆',
+			before: 'TOP20品牌中',
+			value: brandChanges ? risingBrands + '个品牌' : '',
+			highlight: '',
+			after: brandAfter,
+			tone: brandChanges ? (risingBrands * 2 >= brandChanges ? 'up' : 'down') : 'muted'
+		}
+
+		// 10-3 产品趋势：解读产品结构的两层数据（如 投影技术 / 亮度）
+		const structureLayers = []
+		const pushLayer = (title, rows) => {
+			const list = Array.isArray(rows) ? rows.filter((r) => r && r.name !== undefined && isFinite(Number(r.value))) : []
+			if (title && String(title).trim() && list.length) structureLayers.push({ title: String(title).trim(), rows: list })
+		}
+		pushLayer(response && response.arr_sj6 ? response.arr_sj6.t1 : '', productList)
+		pushLayer(response && response.arr_sj6 ? response.arr_sj6.t2 : '', structure2List)
+		const layerSummary = (layer) => {
+			const total = layer.rows.reduce((sum, r) => sum + Number(r.value), 0)
+			const sorted = layer.rows.slice().sort((a, b) => Number(b.value) - Number(a.value))
+			const top = sorted[0]
+			const share = total > 0 ? Number(top.value) / total * 100 : 0
+			const rising = layer.rows.filter((r) => (toNumber(r.t3) || 0) > 0).length
+			return { title: layer.title, top, share, rising }
+		}
+		let productItem
+		if (!structureLayers.length) {
+			productItem = { key: 'product', title: '产品趋势', icon: '☷', before: '产品结构暂无数据', value: '', highlight: '', after: '', tone: 'muted' }
+		} else {
+			const first = layerSummary(structureLayers[0])
+			const parts = []
+			if (structureLayers[1]) {
+				const second = layerSummary(structureLayers[1])
+				let seg = '；' + second.title + '中' + second.top.name + '占比最高（' + formatShare(second.share) + '）'
+				if (second.rising) seg += '，' + second.rising + '个细分占比同比上升'
+				parts.push(seg)
+			}
+			productItem = {
 				key: 'product',
 				title: '产品趋势',
 				icon: '☷',
-				before: topProduct ? productName + '中' : '产品结构暂无数据',
-				value: topProduct ? topProduct : '',
-				highlight: topProduct ? '占比最高' : '',
-				after: '',
-				tone: topProduct ? 'up' : 'muted'
-			},
-			{
-				key: 'price',
-				title: '价格趋势',
-				icon: '▥',
-				before: hasMidHighData ? '中高端价格段（300元及以上）占比' : '价格分布暂无数据',
-				value: hasMidHighData ? (midHighTotal > 0 ? '整体上升' : midHighTotal < 0 ? '整体下降' : '基本持平') : '',
-				highlight: hasMidHighData ? formatRate(midHighTotal) : '',
-				tone: hasMidHighData ? (midHighTotal > 0 ? 'up' : midHighTotal < 0 ? 'down' : 'muted') : 'muted',
-				after: hasMidHighData && midHighRising ? midHighRising + '个价格段上涨' : ''
+				before: first.title + '中',
+				value: first.top.name,
+				highlight: '占比' + formatShare(first.share),
+				after: parts.join(''),
+				tone: 'up'
 			}
-		]
+		}
+
+		// 10-4 价格趋势：以平均价格变化为主口径，价格段结构变化为补充
+		const segRows = Array.isArray(priceList) ? priceList : []
+		const segRising = segRows.filter((r) => (toNumber(r.t3) || 0) > 0).length
+		const priceItem = {
+			key: 'price',
+			title: '价格趋势',
+			icon: '▥',
+			before: '平均价格' + (changeName || '同比'),
+			value: avgRate === null ? '暂无数据' : dirWord(avgRate) + ' ',
+			highlight: avgRate === null ? '' : formatRate(avgRate),
+			after: segRows.length && segRising ? '；' + segRising + '个价格段占比同比上升' : '',
+			tone: avgRate === null ? 'muted' : avgRate < 0 ? 'down' : 'up'
+		}
+
+		return [scaleItem, brandItem, productItem, priceItem]
 	},
 	setOption: function (chart) {
 		let that = this
@@ -1046,10 +1095,7 @@ Page({
 	},
 	ensureMenu: function (cb) {
 		let that = this
-		if (that.data.groupList && that.data.groupList.length) {
-			if (cb) cb()
-			return
-		}
+		// 每次进入数据页都重新拉取首页菜单，避免后台改了品类组后 Tab 仍显示旧分组
 		wx.request({
 			url: app.globalData.siteUrl + '/Wxapi/getindexmenu',
 			success(res) {
@@ -1078,6 +1124,44 @@ Page({
 			}
 		})
 	},
+	// 让顶部品类 Tab 横向滚动到当前选中的那一项（跳转/点行进入时也能定位）
+	scrollCatIntoView: function (sel) {
+		const target = 'tab-' + sel
+		this.setData({ catIntoView: '' }, () => {
+			this.setData({ catIntoView: target })
+		})
+	},
+	// 预取另一「时间」口径的周期列表，切换时间时即可立即更新，无需等待网络
+	prefetchPeriodList: function (modeId) {
+		const that = this
+		if (!modeId) return
+		const cached = that.data.periodCache && that.data.periodCache[modeId]
+		if (cached && cached.length) return
+		that._prefetching = that._prefetching || {}
+		if (that._prefetching[modeId]) return
+		that._prefetching[modeId] = true
+		const userData = wx.getStorageSync('userData')
+		wx.request({
+			url: app.globalData.siteUrl + '/Wxapi/getshuju',
+			data: {
+				type: that.data.realval0,
+				sel_ds: that.data.realval1,
+				sel_xl: that.data.realval2,
+				sel_yd: 1,
+				sel_period: modeId,
+				sel_ytd: that.data.ytdOptions[that.data.ytdIndex].id,
+				uid: userData.id ? userData.id : 0
+			},
+			success(res) {
+				const list = res.data && res.data.arr_yd ? res.data.arr_yd : []
+				const actualModeId = that.getPeriodModeFromList(list) || modeId
+				if (list.length) that.setData({ ['periodCache.' + actualModeId]: list })
+			},
+			complete() {
+				that._prefetching[modeId] = false
+			}
+		})
+	},
 	selchage: function (e) {
 		let that = this
 		let sel = Number(e.currentTarget.dataset.type)
@@ -1100,18 +1184,30 @@ Page({
 		}
 		const enter = () => {
 			const group = that.data.groupList.find((g) => g.sel == sel) || {}
-			if (sel > 1) {
-				that.resetdspt()
-				that.setData({
-					val0: 0,
-					realval0: id || '',
-				})
-			}
-			that.setData({
+			const enteringCategory = sel > 1
+			const locked = that.isQuarterCategory(id || that.data.realval0)
+			const nextData = {
 				sel: sel,
 				realval0: id || that.data.realval0,
 				curTypes: group.types || [],
 				curGroupName: group.name || '',
+				periodIndex: locked ? 1 : 0,
+				periodLocked: locked,
+				periodCache: { month: [], quarter: [] },
+			}
+			if (sel > 1) {
+				that.resetdspt()
+				nextData.val0 = 0
+				nextData.realval0 = id || ''
+				nextData.activeTab = 'scale'
+			}
+			that.setData(nextData, () => {
+				// 顶部品类 Tab 同步定位选中，效果与直接点选该 Tab 一致。
+				that.scrollCatIntoView(sel)
+				// 从总览/其他品类进入详情时，回到页面顶部并定位到第一个内容 Tab。
+				if (enteringCategory) {
+					wx.pageScrollTo({ scrollTop: 0, duration: 0 })
+				}
 			})
 			setTimeout(() => {
 				that.autorealval()
@@ -1199,6 +1295,8 @@ Page({
 		if (name == 'yjn' || name == 'yjn2' || name == 'yjn3' || name == 'yjn4' || name == 'yjn5' || name == 'yjn6' || name == 'yjn7' || name == 'yjn8' || name == 'yjn9') {
 			setTimeout(() => { that.getzonglan() })
 		} else if (name == 'val0') {
+			const locked = that.isQuarterCategory(realval)
+			that.setData({ periodIndex: locked ? 1 : 0, periodLocked: locked, periodCache: { month: [], quarter: [] } })
 			that.resetdspt()
 			setTimeout(() => { that.getshuju(1) })
 		} else if (name == 'val1') {
@@ -1227,6 +1325,23 @@ Page({
 			this.setData(patch, () => {
 				this.getshuju(1)
 			})
+			return
+		}
+		// 时间(月度/季度)切换：优先用缓存的周期列表立即切换，避免等待网络
+		if (name === 'periodIndex') {
+			const modeId = this.data.periodOptions[value] ? this.data.periodOptions[value].id : ''
+			const cached = (this.data.periodCache && this.data.periodCache[modeId]) || []
+			if (cached.length) {
+				const idx = this.data.ytdIndex === 1 ? cached.length - 1 : 0
+				this.setData({ periodIndex: value, arrval3: cached, val3: idx, realval3: cached[idx].id }, () => {
+					this.getshuju(1)
+				})
+			} else {
+				// 没有缓存时用首个周期请求目标时间粒度，避免空周期被接口按月度兜底。
+				this.setData({ periodIndex: value, val3: 0, realval3: 1 }, () => {
+					this.getshuju(1)
+				})
+			}
 			return
 		}
 		this.setData({
@@ -1382,6 +1497,9 @@ success(res) {
 		let sel_ds = that.data.realval1
 		let sel_xl = that.data.realval2
 		let sel_yd = that.data.realval3
+		const periodId = that.data.periodOptions[that.data.periodIndex].id
+		that._getshujuRequestId = (that._getshujuRequestId || 0) + 1
+		const requestId = that._getshujuRequestId
     console.log('===============type:' + type + '=================')
     const userData = wx.getStorageSync('userData')
 		wx.request({
@@ -1391,11 +1509,19 @@ data: {
 				sel_ds: sel_ds,
 				sel_xl: sel_xl,
 				sel_yd: sel_yd,
-				sel_period: that.data.periodOptions[that.data.periodIndex].id,
+				sel_period: periodId,
 				sel_ytd: that.data.ytdOptions[that.data.ytdIndex].id,
 				uid:userData.id?userData.id:0
 			},
 			success(res) {
+				// 时间/筛选条件快速切换时，丢弃旧请求，避免月度响应覆盖季度周期列表。
+				if (requestId !== that._getshujuRequestId) return
+				const periodList = Array.isArray(res.data.arr_yd) ? res.data.arr_yd : []
+				const responsePeriodId = that.getPeriodModeFromList(periodList)
+				const effectivePeriodIndex = responsePeriodId === 'quarter' ? 1 : responsePeriodId === 'month' ? 0 : that.data.periodIndex
+				if (periodId === 'quarter' && responsePeriodId === 'month') {
+					wx.showToast({ title: '当前筛选条件暂无季度数据，已切回月度', icon: 'none', duration: 1800 })
+				}
 				if (!res.data.arr_sj1) {
 					// wx.navigateTo({
 					//   url: '/pages/error/error',
@@ -1439,12 +1565,14 @@ data: {
 				const changeId = that.data.changeOptions && that.data.changeOptions[that.data.changeIndex] ? that.data.changeOptions[that.data.changeIndex].id : 'yoy'
 				const changeName = changeId === 'yoy' ? '同比' : '环比'
 				const rateSeries = changeId === 'yoy' ? chartYoy : chartMom
-				const aiSummary = that.buildAiSummary(res.data, rateSeries, brandList, res.data.arr_sj4 ? res.data.arr_sj4 : [], distribution.isPrice ? priceList : [], changeName)
+				const avgSeries = changeId === 'yoy' ? chartYoy2 : chartMom2
+				const aiSummary = that.buildAiSummary(res.data, rateSeries, brandList, res.data.arr_sj4 ? res.data.arr_sj4 : [], distribution.isPrice ? priceList : [], changeName, avgSeries, res.data.arr_sj5 ? res.data.arr_sj5 : [])
 				that.setData({
 					arrval0: that.data.curTypes && that.data.curTypes.length ? that.data.curTypes : (res.data.arr_type ? res.data.arr_type : []),
 					arrval1: res.data.arr_ds ? res.data.arr_ds : [],
 					arrval2: res.data.arr_xl ? res.data.arr_xl : [],
-					arrval3: res.data.arr_yd ? res.data.arr_yd : [],
+					arrval3: periodList,
+					periodIndex: effectivePeriodIndex,
 					xqData: res.data.arr_sj1 ? res.data.arr_sj1.map(row => {
 						if (!row || row.t3 === undefined || row.t3 === '') return row
 						return Object.assign({}, row, { t3: that.fmtPct(row.t3) })
@@ -1475,7 +1603,39 @@ data: {
 					is_ck:res.data.is_ck,
 					activeTab: activeTab
 				})
+				// 上游供应链：时间(月度/季度)由数据口径决定，避免出现「月度 + 季度周期」的不一致
+				const tvsTypes = ['9', '10', '11', '12', '17', '21']
+				if (tvsTypes.indexOf(String(type)) > -1 && that.data.sel > 1) {
+					const ydList = res.data.arr_yd || []
+					const isQuarter = ydList.some((p) => String(p && p.name || '').indexOf('Q') > -1)
+					const wantIdx = isQuarter ? 1 : 0
+					if (that.data.periodIndex !== wantIdx) that.setData({ periodIndex: wantIdx })
+				}
 				setTimeout(() => {
+					if (requestId !== that._getshujuRequestId) return
+					// 周期与「时间/累计」自动联动：保证「周期」始终落在当前可选范围内，避免选到不匹配的口径
+					const ydArr = that.data.arrval3 || []
+					if (ydArr.length) {
+						let tv = that.data.realval3
+						if (that.data.ytdIndex === 1) {
+							tv = ydArr[ydArr.length - 1].id
+						} else if (!ydArr.some((x) => String(x.id) === String(that.data.realval3))) {
+							tv = ydArr[0].id
+						}
+						let idx = 0
+						ydArr.forEach((x, i) => { if (String(x.id) === String(tv)) idx = i })
+						that.setData({ val3: idx, realval3: tv })
+					}
+					// 缓存当前口径周期列表，并预取另一口径（非锁定品类），便于切换时间时立即更新
+					const modeId = responsePeriodId || periodId
+					if (ydArr.length) that.setData({ ['periodCache.' + modeId]: ydArr })
+					if (periodId === 'quarter' && responsePeriodId === 'month') {
+						that.setData({ 'periodCache.quarter': [] })
+					}
+					if (!that.data.periodLocked) {
+						const otherMethod = that.data.periodOptions[1 - that.data.periodIndex]
+						if (otherMethod) that.prefetchPeriodList(otherMethod.id)
+					}
 					that.autorealval()
 					that.chuli()
 					that.init()
@@ -1533,11 +1693,16 @@ data: {
 		}
 		let sjtype = wx.getStorageSync('sjtype')
 		let sjsel = wx.getStorageSync('sjsel')
+		const jumped = !!(sjtype && sjsel)
 		console.log(sjtype, sjsel)
-		if (sjtype && sjsel) {
+		if (jumped) {
+			const locked = that.isQuarterCategory(sjtype)
 			that.setData({
 				realval0: sjtype,
-				sel: Number(sjsel)
+				sel: Number(sjsel),
+				periodIndex: locked ? 1 : 0,
+				periodLocked: locked,
+				periodCache: { month: [], quarter: [] }
 			})
 			wx.setStorageSync('sjtype', null)
 			wx.setStorageSync('sjsel', null)
@@ -1549,6 +1714,10 @@ data: {
 				curTypes: group ? group.types : [],
 				curGroupName: group ? group.name : '',
 			})
+			// 从其他页面跳转进来时，顶部 Tab 同步定位选中
+			if (jumped) {
+				that.scrollCatIntoView(sel)
+			}
 			if (sel > 1) {
 				app.checkws()
 				that.resetdspt(1)

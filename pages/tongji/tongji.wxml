@@ -1,14 +1,14 @@
 <!--pages/tongji/tongji.wxml-->
 <view class="sellist2-wrap">
-	<scroll-view class="sellist2" scroll-x enhanced show-scrollbar="{{false}}" scroll-with-animation bindscroll="onCategoryScroll">
+	<scroll-view class="sellist2" scroll-x enhanced show-scrollbar="{{false}}" scroll-with-animation scroll-into-view="{{catIntoView}}" bindscroll="onCategoryScroll">
 		<view class="navrow">
-			<view class="item {{sel==1?'hover':''}}" data-type="1" bindtap="selchage" hover-class="tap-dim" hover-stay-time="80">
+			<view id="tab-1" class="item {{sel==1?'hover':''}}" data-type="1" bindtap="selchage" hover-class="tap-dim" hover-stay-time="80">
 				<view class="pic icon-all">
 					<view class="svg-icon svg-overview"></view>
 				</view>
 				<view class="title">总览</view>
 			</view>
-			<view class="item {{sel==item.sel?'hover':''}}" wx:for="{{groupList}}" wx:key="sel" data-type="{{item.sel}}" data-id="{{item.type}}" bindtap="selchage" hover-class="tap-dim" hover-stay-time="80">
+			<view id="tab-{{item.sel}}" class="item {{sel==item.sel?'hover':''}}" wx:for="{{groupList}}" wx:key="sel" data-type="{{item.sel}}" data-id="{{item.type}}" bindtap="selchage" hover-class="tap-dim" hover-stay-time="80">
 				<view class="pic icon-c{{item.colorIndex}}">
 					<view class="svg-icon svg-{{item.iconClass}}"></view>
 				</view>
@@ -294,7 +294,7 @@
 				</picker>
 
 				<view class="selector-row">
-					<picker class="selector-cell" wx:if="{{arrval1.length > 1}}" bindchange="bindPickerChange" data-name="val1" data-real="realval1" value="{{val1}}" range-key="name" range="{{arrval1}}">
+					<picker class="selector-cell" wx:if="{{arrval1.length > 0}}" bindchange="bindPickerChange" data-name="val1" data-real="realval1" value="{{val1}}" range-key="name" range="{{arrval1}}">
 						<view class="selector-main">
 							<text class="selector-label">渠道</text>
 							<view class="selector-meta">
@@ -326,7 +326,7 @@
 				</view>
 
 				<view class="selector-row">
-					<picker class="selector-cell" bindchange="bindLocalPickerChange" data-name="periodIndex" value="{{periodIndex}}" range-key="name" range="{{periodOptions}}">
+					<picker class="selector-cell {{periodLocked?'selector-locked':''}}" disabled="{{periodLocked}}" bindchange="bindLocalPickerChange" data-name="periodIndex" value="{{periodIndex}}" range-key="name" range="{{periodOptions}}">
 						<view class="selector-main">
 							<text class="selector-label">时间</text>
 							<view class="selector-meta">
