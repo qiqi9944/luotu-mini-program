@@ -43,7 +43,7 @@
                 </view>
             </picker>
 
-            <picker class="picker-item" mode="selector" range="{{timeList}}" range-key="name" value="{{timeIdx}}" bindchange="onPickerTime">
+            <picker class="picker-item" wx:if="{{!isSupplyChain}}" mode="selector" range="{{timeList}}" range-key="name" value="{{timeIdx}}" bindchange="onPickerTime">
                 <view class="fsel">
                     <text class="flabel">时间</text>
                     <view class="fmeta">

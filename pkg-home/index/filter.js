@@ -43,6 +43,7 @@ Page({
     typeDisp: '请选择',
     xlDisp: '销量',
     timeDisp: '',
+    isSupplyChain: false,
 
     empty: false,
     xqData: [],
@@ -313,7 +314,7 @@ Page({
     this.loadData()
   },
 
-  // 上游供应链品类（tvs）只有出货量，无“额”维度，指标下拉只保留出货量
+  // 上游供应链品类（tvs）：指标只保留出货量；时间维度由各品类自身决定，隐藏「时间」筛选
   syncXlOptions() {
     const supplyChainTypes = ['9', '10', '11', '12', '17', '21']
     const isSupply = supplyChainTypes.indexOf(String(this.data.selType || '')) > -1
@@ -321,9 +322,9 @@ Page({
       ? [{ id: '1', name: '出货量' }]
       : [{ id: '1', name: '销量' }, { id: '2', name: '销额' }]
     const cur = this.data.xlList || []
-    const changed = cur.length !== list.length || (cur[0] && list[0] && cur[0].name !== list[0].name)
+    const changed = cur.length !== list.length || (cur[0] && list[0] && cur[0].name !== list[0].name) || this.data.isSupplyChain !== isSupply
     if (changed) {
-      this.setData({ xlList: list, xlIdx: 0, selXl: '1', selXlName: list[0].name })
+      this.setData({ isSupplyChain: isSupply, xlList: list, xlIdx: 0, selXl: '1', selXlName: list[0].name })
     }
   },
 
