@@ -199,8 +199,8 @@ page::before {
 	border-color: transparent;
 }
 .sellist2 .item.hover .pic.icon-all {
-	background: linear-gradient(145deg, #8a97a8 0%, #5d6b7d 100%);
-	box-shadow: 0 0 0 6rpx rgba(93, 107, 125, 0.26), 0 8rpx 18rpx rgba(93, 107, 125, 0.30);
+	background: linear-gradient(145deg, #c3ccd8 0%, #9aa7b7 100%);
+	box-shadow: 0 0 0 6rpx rgba(154, 167, 183, 0.26), 0 8rpx 18rpx rgba(154, 167, 183, 0.28);
 }
 .sellist2 .item.hover .pic.icon-life {
 	background: linear-gradient(145deg, #4a9fe0 0%, #1f6bb0 100%);
@@ -276,6 +276,10 @@ page::before {
 /* 选中后图标统一转白，突出加深后的分类实底 */
 .sellist2 .item.hover .pic .svg-icon {
 	background-color: #fff;
+}
+/* 总览选中底为浅灰蓝，图标保持深色以保证对比 */
+.sellist2 .item.hover .pic.icon-all .svg-icon {
+	background-color: #47535f;
 }
 .svg-overview {
 	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4.5' width='18' height='12' rx='2'/%3E%3Cpath d='M9 20h6M12 16.5v3.5'/%3E%3Cpath d='M8 13v-2.5M12 13v-5M16 13v-3.5'/%3E%3C/svg%3E");
