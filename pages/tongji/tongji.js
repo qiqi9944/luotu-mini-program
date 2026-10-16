@@ -1329,6 +1329,7 @@ Page({
 		}
 		// 时间(月度/季度)切换：优先用缓存的周期列表立即切换，避免等待网络
 		if (name === 'periodIndex') {
+			this._periodUserPicked = true
 			const modeId = this.data.periodOptions[value] ? this.data.periodOptions[value].id : ''
 			const cached = (this.data.periodCache && this.data.periodCache[modeId]) || []
 			if (cached.length) {
@@ -1522,6 +1523,11 @@ data: {
 				if (periodId === 'quarter' && responsePeriodId === 'month') {
 					wx.showToast({ title: '当前筛选条件暂无季度数据，已切回月度', icon: 'none', duration: 1800 })
 				}
+				// 反向：选了「月度」但该筛选条件只有季度数据时，提示并自动跳到季度（仅用户手动切换时提示，避免进入品类时打扰）
+				if (that._periodUserPicked && periodId === 'month' && responsePeriodId === 'quarter') {
+					wx.showToast({ title: '当前筛选条件暂无月度数据，已切回季度', icon: 'none', duration: 1800 })
+				}
+				that._periodUserPicked = false
 				if (!res.data.arr_sj1) {
 					// wx.navigateTo({
 					//   url: '/pages/error/error',
@@ -1603,14 +1609,6 @@ data: {
 					is_ck:res.data.is_ck,
 					activeTab: activeTab
 				})
-				// 上游供应链：时间(月度/季度)由数据口径决定，避免出现「月度 + 季度周期」的不一致
-				const tvsTypes = ['9', '10', '11', '12', '17', '21']
-				if (tvsTypes.indexOf(String(type)) > -1 && that.data.sel > 1) {
-					const ydList = res.data.arr_yd || []
-					const isQuarter = ydList.some((p) => String(p && p.name || '').indexOf('Q') > -1)
-					const wantIdx = isQuarter ? 1 : 0
-					if (that.data.periodIndex !== wantIdx) that.setData({ periodIndex: wantIdx })
-				}
 				setTimeout(() => {
 					if (requestId !== that._getshujuRequestId) return
 					// 周期与「时间/累计」自动联动：保证「周期」始终落在当前可选范围内，避免选到不匹配的口径
@@ -1631,6 +1629,9 @@ data: {
 					if (ydArr.length) that.setData({ ['periodCache.' + modeId]: ydArr })
 					if (periodId === 'quarter' && responsePeriodId === 'month') {
 						that.setData({ 'periodCache.quarter': [] })
+					}
+					if (periodId === 'month' && responsePeriodId === 'quarter') {
+						that.setData({ 'periodCache.month': [] })
 					}
 					if (!that.data.periodLocked) {
 						const otherMethod = that.data.periodOptions[1 - that.data.periodIndex]
