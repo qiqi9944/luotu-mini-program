@@ -1109,15 +1109,20 @@ Page({
 					'家电家居': 'life', '教育办公': 'edu', '智能数码': 'ent',
 					'运动户外': 'sport', '商用显示': 'screen', '上游供应链': 'core'
 				}
-				const gl = dl.map((m, i) => ({
-					sel: i + 2,
-					id: m.id,
-					type: m.type,
-					name: m.name || ('组' + (i + 1)),
-					iconClass: iconClassMap[m.name] || 'more',
-					colorIndex: i % 9,
-					types: (m.types || []).map((t) => ({ id: String(t.id), name: t.name }))
-				}))
+				const gl = dl.map((m, i) => {
+					const cls = iconClassMap[m.name] || 'more'
+					return {
+						sel: i + 2,
+						id: m.id,
+						type: m.type,
+						name: m.name || ('组' + (i + 1)),
+						iconClass: cls,
+						// 与首页金刚区同一套图标图片，保证两处图标一致
+						iconImg: '/pages/images/menu-' + cls + '.png',
+						colorIndex: i % 9,
+						types: (m.types || []).map((t) => ({ id: String(t.id), name: t.name }))
+					}
+				})
 				that.setData({
 					groupList: gl,
 					showCategoryHint: gl.length + 1 > 4

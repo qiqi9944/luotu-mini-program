@@ -123,9 +123,28 @@ page::before {
 	transition: color 0.2s ease;
 }
 .sellist2 .item.hover .title {
-	color: var(--ink-700);
-	font-weight: 600;
+	font-weight: 700;
 }
+.sellist2 .item.hover .title::after {
+	content: '';
+	display: block;
+	width: 36rpx;
+	height: 6rpx;
+	margin: 8rpx auto 0;
+	border-radius: 3rpx;
+	background: currentColor;
+}
+/* 选中文字/下划线取当前分类色的加深版（与圆圈同色相） */
+.sellist2 .item.hover .pic.icon-all ~ .title,
+.sellist2 .item.hover .pic.icon-c0 ~ .title { color: #1f6bb0; }
+.sellist2 .item.hover .pic.icon-c1 ~ .title { color: #d9584f; }
+.sellist2 .item.hover .pic.icon-c2 ~ .title { color: #3f9e6e; }
+.sellist2 .item.hover .pic.icon-c3 ~ .title { color: #d99510; }
+.sellist2 .item.hover .pic.icon-c4 ~ .title { color: #6470d4; }
+.sellist2 .item.hover .pic.icon-c5 ~ .title { color: #2fa6c4; }
+.sellist2 .item.hover .pic.icon-c6 ~ .title { color: #e07a0f; }
+.sellist2 .item.hover .pic.icon-c7 ~ .title { color: #8f5fc0; }
+.sellist2 .item.hover .pic.icon-c8 ~ .title { color: #dd5f9c; }
 .sellist2 .item .pic {
 	width: 84rpx;
 	height: 84rpx;
@@ -137,7 +156,7 @@ page::before {
 	justify-content: center;
 	align-items: center;
 	margin-bottom: 16rpx;
-	transition: background-color 0.2s ease, box-shadow 0.2s ease;
+	transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 /* 顶部品类色：使用更明确的 RGB 分类色，循环取色（index % 9），相邻品类色相尽量拉开。
    注意这几条必须写在 .item.hover .pic 之前——两者选择器权重相同，
@@ -183,19 +202,63 @@ page::before {
 	border-color: transparent;
 }
 
-/* 选中态：白底 + 一圈琥珀外发光，在浅蓝页眉上形成冷暖双色焦点 */
+/* 选中态 = 当前分类色的加深版：同色相压深 + 上浮放大，图标转白 */
 .sellist2 .item.hover .pic {
-	background: var(--surface);
-	border-color: var(--surface);
-	box-shadow: 0 0 0 8rpx rgba(255, 201, 60, 0.42);
+	transform: translateY(-2rpx) scale(1.06);
+	border-color: transparent;
 }
-/* 选中后底色转白，字与图标保持深蓝对比 */
+.sellist2 .item.hover .pic.icon-all,
+.sellist2 .item.hover .pic.icon-c0 {
+	background: linear-gradient(145deg, #4a9fe0 0%, #1f6bb0 100%);
+	box-shadow: 0 0 0 6rpx rgba(63, 143, 214, 0.30), 0 8rpx 18rpx rgba(31, 107, 176, 0.32);
+}
+.sellist2 .item.hover .pic.icon-c1 {
+	background: linear-gradient(145deg, #f0958c 0%, #d9584f 100%);
+	box-shadow: 0 0 0 6rpx rgba(217, 88, 79, 0.28), 0 8rpx 18rpx rgba(217, 88, 79, 0.30);
+}
+.sellist2 .item.hover .pic.icon-c2 {
+	background: linear-gradient(145deg, #7fd0a2 0%, #3f9e6e 100%);
+	box-shadow: 0 0 0 6rpx rgba(63, 158, 110, 0.28), 0 8rpx 18rpx rgba(63, 158, 110, 0.30);
+}
+.sellist2 .item.hover .pic.icon-c3 {
+	background: linear-gradient(145deg, #ffcb5c 0%, #d99510 100%);
+	box-shadow: 0 0 0 6rpx rgba(217, 149, 16, 0.28), 0 8rpx 18rpx rgba(217, 149, 16, 0.30);
+}
+.sellist2 .item.hover .pic.icon-c4 {
+	background: linear-gradient(145deg, #9aa4ee 0%, #6470d4 100%);
+	box-shadow: 0 0 0 6rpx rgba(100, 112, 212, 0.28), 0 8rpx 18rpx rgba(100, 112, 212, 0.30);
+}
+.sellist2 .item.hover .pic.icon-c5 {
+	background: linear-gradient(145deg, #7fd6ec 0%, #2fa6c4 100%);
+	box-shadow: 0 0 0 6rpx rgba(47, 166, 196, 0.28), 0 8rpx 18rpx rgba(47, 166, 196, 0.30);
+}
+.sellist2 .item.hover .pic.icon-c6 {
+	background: linear-gradient(145deg, #ffb74a 0%, #e07a0f 100%);
+	box-shadow: 0 0 0 6rpx rgba(224, 122, 15, 0.28), 0 8rpx 18rpx rgba(224, 122, 15, 0.30);
+}
+.sellist2 .item.hover .pic.icon-c7 {
+	background: linear-gradient(145deg, #bf9ce4 0%, #8f5fc0 100%);
+	box-shadow: 0 0 0 6rpx rgba(143, 95, 192, 0.28), 0 8rpx 18rpx rgba(143, 95, 192, 0.30);
+}
+.sellist2 .item.hover .pic.icon-c8 {
+	background: linear-gradient(145deg, #f39cc4 0%, #dd5f9c 100%);
+	box-shadow: 0 0 0 6rpx rgba(221, 95, 156, 0.28), 0 8rpx 18rpx rgba(221, 95, 156, 0.30);
+}
+/* 选中后图标转白，压在加深的分类底上 */
 .sellist2 .item.hover .pic .icon-letter {
-	color: var(--ink-700);
+	color: #fff;
 }
 .sellist2 .item .pic image {
 	width: 40rpx;
 	max-height: 44rpx;
+}
+/* 品类图标：与首页金刚区同一套图片（menu-*.png）；未选中为原色，选中转白压在深色分类底上 */
+.sellist2 .item .pic .nav-icon {
+	width: 46rpx;
+	height: 46rpx;
+}
+.sellist2 .item.hover .pic .nav-icon {
+	filter: brightness(0) invert(1);
 }
 .sellist2 .item .pic .icon-letter {
 	width: 100%;
@@ -211,7 +274,7 @@ page::before {
 }
 
 /* ---------- 顶部导航图标：复用首页那套线性图标（mask 上色） ----------
-   浅色页眉上默认使用深蓝，选中态保留对应分类色。 */
+   浅色页眉上默认使用深蓝，选中态随分类色加深而转白。 */
 .sellist2 .svg-icon {
 	width: 48rpx;
 	height: 48rpx;
@@ -224,36 +287,19 @@ page::before {
 	mask-size: contain;
 	transition: background-color 0.2s ease;
 }
-.sellist2 .item.hover .pic .svg-icon {
-	background-color: var(--ink-700);
-}
+/* 选中后图标统一转白，突出加深后的分类实底 */
+.sellist2 .item.hover .pic .svg-icon,
 .sellist2 .item.hover .pic.icon-all .svg-icon,
-.sellist2 .item.hover .pic.icon-c0 .svg-icon {
-	background-color: rgb(78, 126, 160);
-}
-.sellist2 .item.hover .pic.icon-c1 .svg-icon {
-	background-color: rgb(171, 99, 102);
-}
-.sellist2 .item.hover .pic.icon-c2 .svg-icon {
-	background-color: rgb(86, 143, 110);
-}
-.sellist2 .item.hover .pic.icon-c3 .svg-icon {
-	background-color: rgb(181, 128, 72);
-}
-.sellist2 .item.hover .pic.icon-c4 .svg-icon {
-	background-color: rgb(108, 112, 163);
-}
-.sellist2 .item.hover .pic.icon-c5 .svg-icon {
-	background-color: rgb(78, 137, 148);
-}
-.sellist2 .item.hover .pic.icon-c6 .svg-icon {
-	background-color: rgb(169, 141, 71);
-}
-.sellist2 .item.hover .pic.icon-c7 .svg-icon {
-	background-color: rgb(132, 100, 148);
-}
+.sellist2 .item.hover .pic.icon-c0 .svg-icon,
+.sellist2 .item.hover .pic.icon-c1 .svg-icon,
+.sellist2 .item.hover .pic.icon-c2 .svg-icon,
+.sellist2 .item.hover .pic.icon-c3 .svg-icon,
+.sellist2 .item.hover .pic.icon-c4 .svg-icon,
+.sellist2 .item.hover .pic.icon-c5 .svg-icon,
+.sellist2 .item.hover .pic.icon-c6 .svg-icon,
+.sellist2 .item.hover .pic.icon-c7 .svg-icon,
 .sellist2 .item.hover .pic.icon-c8 .svg-icon {
-	background-color: rgb(171, 102, 127);
+	background-color: #fff;
 }
 .svg-overview {
 	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4.5' width='18' height='12' rx='2'/%3E%3Cpath d='M9 20h6M12 16.5v3.5'/%3E%3Cpath d='M8 13v-2.5M12 13v-5M16 13v-3.5'/%3E%3C/svg%3E");
@@ -935,6 +981,15 @@ ec-canvas {
 .selector-cell-wide {
   width: 100%;
   flex: none;
+}
+
+/* 单一口径品类：时间锁定为对应口径，去掉下拉箭头 */
+.selector-locked .selector-main {
+  background: var(--surface);
+  border-style: dashed;
+}
+.selector-locked .selector-arrow {
+  display: none;
 }
 
 .selector-main {
