@@ -9,7 +9,7 @@
 				<view class="title">总览</view>
 			</view>
 			<view id="tab-{{item.sel}}" class="item {{sel==item.sel?'hover':''}}" wx:for="{{groupList}}" wx:key="sel" data-type="{{item.sel}}" data-id="{{item.type}}" bindtap="selchage" hover-class="tap-dim" hover-stay-time="80">
-				<view class="pic icon-c{{item.colorIndex}}">
+				<view class="pic icon-{{item.iconClass}}">
 					<image class="nav-icon" src="{{item.iconImg}}" mode="aspectFit"></image>
 				</view>
 				<view class="title">{{item.name}}</view>

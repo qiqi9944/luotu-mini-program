@@ -136,15 +136,13 @@ page::before {
 }
 /* 选中文字/下划线取当前分类色的加深版（与圆圈同色相） */
 .sellist2 .item.hover .pic.icon-all ~ .title,
-.sellist2 .item.hover .pic.icon-c0 ~ .title { color: #1f6bb0; }
-.sellist2 .item.hover .pic.icon-c1 ~ .title { color: #d9584f; }
-.sellist2 .item.hover .pic.icon-c2 ~ .title { color: #3f9e6e; }
-.sellist2 .item.hover .pic.icon-c3 ~ .title { color: #d99510; }
-.sellist2 .item.hover .pic.icon-c4 ~ .title { color: #6470d4; }
-.sellist2 .item.hover .pic.icon-c5 ~ .title { color: #2fa6c4; }
-.sellist2 .item.hover .pic.icon-c6 ~ .title { color: #e07a0f; }
-.sellist2 .item.hover .pic.icon-c7 ~ .title { color: #8f5fc0; }
-.sellist2 .item.hover .pic.icon-c8 ~ .title { color: #dd5f9c; }
+.sellist2 .item.hover .pic.icon-life ~ .title { color: #1f6bb0; }
+.sellist2 .item.hover .pic.icon-edu ~ .title { color: #6470d4; }
+.sellist2 .item.hover .pic.icon-ent ~ .title { color: #2fa6c4; }
+.sellist2 .item.hover .pic.icon-sport ~ .title { color: #3f9e6e; }
+.sellist2 .item.hover .pic.icon-screen ~ .title { color: #d9584f; }
+.sellist2 .item.hover .pic.icon-core ~ .title { color: #8f5fc0; }
+.sellist2 .item.hover .pic.icon-more ~ .title { color: #6470d4; }
 .sellist2 .item .pic {
 	width: 84rpx;
 	height: 84rpx;
@@ -165,40 +163,33 @@ page::before {
 	background: linear-gradient(145deg, #d9edff 0%, #b9dcff 100%);
 	border-color: transparent;
 }
-.sellist2 .item .pic.icon-c0 {
-	background: linear-gradient(145deg, #d9edff 0%, #b9dcff 100%);
+/* 未选中：与首页金刚区同一套分类底色（按品类图标映射） */
+.sellist2 .item .pic.icon-life {
+	background: var(--c-blue-soft);
 	border-color: transparent;
 }
-.sellist2 .item .pic.icon-c1 {
-	background: linear-gradient(145deg, #ffe2df 0%, #ffc2bc 100%);
+.sellist2 .item .pic.icon-edu {
+	background: var(--c-indigo-soft);
 	border-color: transparent;
 }
-.sellist2 .item .pic.icon-c2 {
-	background: linear-gradient(145deg, #dff7ea 0%, #bce9d1 100%);
+.sellist2 .item .pic.icon-ent {
+	background: var(--c-cyan-soft);
 	border-color: transparent;
 }
-.sellist2 .item .pic.icon-c3 {
-	background: linear-gradient(145deg, #fff1cf 0%, #ffdc9b 100%);
+.sellist2 .item .pic.icon-sport {
+	background: var(--c-green-soft);
 	border-color: transparent;
 }
-.sellist2 .item .pic.icon-c4 {
-	background: linear-gradient(145deg, #e6e9ff 0%, #c9d0ff 100%);
+.sellist2 .item .pic.icon-screen {
+	background: var(--c-red-soft);
 	border-color: transparent;
 }
-.sellist2 .item .pic.icon-c5 {
-	background: linear-gradient(145deg, #dcf7ff 0%, #b8e8f5 100%);
+.sellist2 .item .pic.icon-core {
+	background: var(--c-violet-soft);
 	border-color: transparent;
 }
-.sellist2 .item .pic.icon-c6 {
-	background: linear-gradient(145deg, #fff1c9 0%, #ffda8e 100%);
-	border-color: transparent;
-}
-.sellist2 .item .pic.icon-c7 {
-	background: linear-gradient(145deg, #f1e5ff 0%, #dcc4f5 100%);
-	border-color: transparent;
-}
-.sellist2 .item .pic.icon-c8 {
-	background: linear-gradient(145deg, #ffe5f3 0%, #f8bfdc 100%);
+.sellist2 .item .pic.icon-more {
+	background: var(--ink-050);
 	border-color: transparent;
 }
 
@@ -208,41 +199,33 @@ page::before {
 	border-color: transparent;
 }
 .sellist2 .item.hover .pic.icon-all,
-.sellist2 .item.hover .pic.icon-c0 {
+.sellist2 .item.hover .pic.icon-life {
 	background: linear-gradient(145deg, #4a9fe0 0%, #1f6bb0 100%);
 	box-shadow: 0 0 0 6rpx rgba(63, 143, 214, 0.30), 0 8rpx 18rpx rgba(31, 107, 176, 0.32);
 }
-.sellist2 .item.hover .pic.icon-c1 {
+.sellist2 .item.hover .pic.icon-screen {
 	background: linear-gradient(145deg, #f0958c 0%, #d9584f 100%);
 	box-shadow: 0 0 0 6rpx rgba(217, 88, 79, 0.28), 0 8rpx 18rpx rgba(217, 88, 79, 0.30);
 }
-.sellist2 .item.hover .pic.icon-c2 {
+.sellist2 .item.hover .pic.icon-sport {
 	background: linear-gradient(145deg, #7fd0a2 0%, #3f9e6e 100%);
 	box-shadow: 0 0 0 6rpx rgba(63, 158, 110, 0.28), 0 8rpx 18rpx rgba(63, 158, 110, 0.30);
 }
-.sellist2 .item.hover .pic.icon-c3 {
-	background: linear-gradient(145deg, #ffcb5c 0%, #d99510 100%);
-	box-shadow: 0 0 0 6rpx rgba(217, 149, 16, 0.28), 0 8rpx 18rpx rgba(217, 149, 16, 0.30);
-}
-.sellist2 .item.hover .pic.icon-c4 {
+.sellist2 .item.hover .pic.icon-edu {
 	background: linear-gradient(145deg, #9aa4ee 0%, #6470d4 100%);
 	box-shadow: 0 0 0 6rpx rgba(100, 112, 212, 0.28), 0 8rpx 18rpx rgba(100, 112, 212, 0.30);
 }
-.sellist2 .item.hover .pic.icon-c5 {
+.sellist2 .item.hover .pic.icon-ent {
 	background: linear-gradient(145deg, #7fd6ec 0%, #2fa6c4 100%);
 	box-shadow: 0 0 0 6rpx rgba(47, 166, 196, 0.28), 0 8rpx 18rpx rgba(47, 166, 196, 0.30);
 }
-.sellist2 .item.hover .pic.icon-c6 {
-	background: linear-gradient(145deg, #ffb74a 0%, #e07a0f 100%);
-	box-shadow: 0 0 0 6rpx rgba(224, 122, 15, 0.28), 0 8rpx 18rpx rgba(224, 122, 15, 0.30);
-}
-.sellist2 .item.hover .pic.icon-c7 {
+.sellist2 .item.hover .pic.icon-core {
 	background: linear-gradient(145deg, #bf9ce4 0%, #8f5fc0 100%);
 	box-shadow: 0 0 0 6rpx rgba(143, 95, 192, 0.28), 0 8rpx 18rpx rgba(143, 95, 192, 0.30);
 }
-.sellist2 .item.hover .pic.icon-c8 {
-	background: linear-gradient(145deg, #f39cc4 0%, #dd5f9c 100%);
-	box-shadow: 0 0 0 6rpx rgba(221, 95, 156, 0.28), 0 8rpx 18rpx rgba(221, 95, 156, 0.30);
+.sellist2 .item.hover .pic.icon-more {
+	background: linear-gradient(145deg, #9aa4ee 0%, #6470d4 100%);
+	box-shadow: 0 0 0 6rpx rgba(100, 112, 212, 0.28), 0 8rpx 18rpx rgba(100, 112, 212, 0.30);
 }
 /* 选中后图标转白，压在加深的分类底上 */
 .sellist2 .item.hover .pic .icon-letter {
@@ -288,17 +271,7 @@ page::before {
 	transition: background-color 0.2s ease;
 }
 /* 选中后图标统一转白，突出加深后的分类实底 */
-.sellist2 .item.hover .pic .svg-icon,
-.sellist2 .item.hover .pic.icon-all .svg-icon,
-.sellist2 .item.hover .pic.icon-c0 .svg-icon,
-.sellist2 .item.hover .pic.icon-c1 .svg-icon,
-.sellist2 .item.hover .pic.icon-c2 .svg-icon,
-.sellist2 .item.hover .pic.icon-c3 .svg-icon,
-.sellist2 .item.hover .pic.icon-c4 .svg-icon,
-.sellist2 .item.hover .pic.icon-c5 .svg-icon,
-.sellist2 .item.hover .pic.icon-c6 .svg-icon,
-.sellist2 .item.hover .pic.icon-c7 .svg-icon,
-.sellist2 .item.hover .pic.icon-c8 .svg-icon {
+.sellist2 .item.hover .pic .svg-icon {
 	background-color: #fff;
 }
 .svg-overview {
