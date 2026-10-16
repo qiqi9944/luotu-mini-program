@@ -39,7 +39,8 @@ page {
 .filter-grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  column-gap: 12rpx;
+  justify-content: flex-start;
 }
 
 .picker-item {
