@@ -1196,6 +1196,7 @@ Page({
 				realval0: id || that.data.realval0,
 				curTypes: group.types || [],
 				curGroupName: group.name || '',
+				periodOptions: [{ id: 'month', name: '月度' }, { id: 'quarter', name: '季度' }],
 				periodIndex: isQuarter ? 1 : 0,
 				periodLocked: that.isPeriodLockType(typeId),
 				periodCache: { month: [], quarter: [] },
@@ -1301,7 +1302,7 @@ Page({
 			setTimeout(() => { that.getzonglan() })
 		} else if (name == 'val0') {
 			const isQuarter = that.isQuarterCategory(realval)
-			that.setData({ periodIndex: isQuarter ? 1 : 0, periodLocked: that.isPeriodLockType(realval), periodCache: { month: [], quarter: [] } })
+			that.setData({ periodOptions: [{ id: 'month', name: '月度' }, { id: 'quarter', name: '季度' }], periodIndex: isQuarter ? 1 : 0, periodLocked: that.isPeriodLockType(realval), periodCache: { month: [], quarter: [] } })
 			that.resetdspt()
 			setTimeout(() => { that.getshuju(1) })
 		} else if (name == 'val1') {
@@ -1578,13 +1579,20 @@ data: {
 				const rateSeries = changeId === 'yoy' ? chartYoy : chartMom
 				const avgSeries = changeId === 'yoy' ? chartYoy2 : chartMom2
 				const aiSummary = that.buildAiSummary(res.data, rateSeries, brandList, res.data.arr_sj4 ? res.data.arr_sj4 : [], distribution.isPrice ? priceList : [], changeName, avgSeries, res.data.arr_sj5 ? res.data.arr_sj5 : [])
+				// 单一粒度品类：时间下拉只保留数据实际的那一个粒度（仍可点击，只是只有一项）
+				const lockPeriod = that.isPeriodLockType(type)
+				const isQuarterResp = responsePeriodId === 'quarter'
+				const periodOpts = lockPeriod
+					? [{ id: isQuarterResp ? 'quarter' : 'month', name: isQuarterResp ? '季度' : '月度' }]
+					: [{ id: 'month', name: '月度' }, { id: 'quarter', name: '季度' }]
 				that.setData({
 					arrval0: that.data.curTypes && that.data.curTypes.length ? that.data.curTypes : (res.data.arr_type ? res.data.arr_type : []),
 					arrval1: res.data.arr_ds ? res.data.arr_ds : [],
 					arrval2: res.data.arr_xl ? res.data.arr_xl : [],
 					arrval3: periodList,
-					periodIndex: effectivePeriodIndex,
-					periodLocked: that.isPeriodLockType(type),
+					periodOptions: periodOpts,
+					periodIndex: lockPeriod ? 0 : effectivePeriodIndex,
+					periodLocked: lockPeriod,
 					xqData: res.data.arr_sj1 ? res.data.arr_sj1.map(row => {
 						if (!row || row.t3 === undefined || row.t3 === '') return row
 						return Object.assign({}, row, { t3: that.fmtPct(row.t3) })
@@ -1707,6 +1715,7 @@ data: {
 			that.setData({
 				realval0: sjtype,
 				sel: Number(sjsel),
+				periodOptions: [{ id: 'month', name: '月度' }, { id: 'quarter', name: '季度' }],
 				periodIndex: isQuarter ? 1 : 0,
 				periodLocked: that.isPeriodLockType(sjtype),
 				periodCache: { month: [], quarter: [] }
