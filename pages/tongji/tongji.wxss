@@ -135,7 +135,7 @@ page::before {
 	background: currentColor;
 }
 /* 选中文字/下划线取当前分类色的加深版（与圆圈同色相） */
-.sellist2 .item.hover .pic.icon-all ~ .title,
+.sellist2 .item.hover .pic.icon-all ~ .title { color: #5d6b7d; }
 .sellist2 .item.hover .pic.icon-life ~ .title { color: #1f6bb0; }
 .sellist2 .item.hover .pic.icon-edu ~ .title { color: #6470d4; }
 .sellist2 .item.hover .pic.icon-ent ~ .title { color: #2fa6c4; }
@@ -160,7 +160,7 @@ page::before {
    注意这几条必须写在 .item.hover .pic 之前——两者选择器权重相同，
    靠书写顺序定胜负，否则选中态的白底会被渐变盖掉。 */
 .sellist2 .item .pic.icon-all {
-	background: linear-gradient(145deg, #d9edff 0%, #b9dcff 100%);
+	background: linear-gradient(145deg, #e8ecf2 0%, #cdd6e2 100%);
 	border-color: transparent;
 }
 /* 未选中：按品类取色（与首页同一色相，但更亮/更饱和） */
@@ -198,7 +198,10 @@ page::before {
 	transform: translateY(-2rpx) scale(1.06);
 	border-color: transparent;
 }
-.sellist2 .item.hover .pic.icon-all,
+.sellist2 .item.hover .pic.icon-all {
+	background: linear-gradient(145deg, #8a97a8 0%, #5d6b7d 100%);
+	box-shadow: 0 0 0 6rpx rgba(93, 107, 125, 0.26), 0 8rpx 18rpx rgba(93, 107, 125, 0.30);
+}
 .sellist2 .item.hover .pic.icon-life {
 	background: linear-gradient(145deg, #4a9fe0 0%, #1f6bb0 100%);
 	box-shadow: 0 0 0 6rpx rgba(63, 143, 214, 0.30), 0 8rpx 18rpx rgba(31, 107, 176, 0.32);
